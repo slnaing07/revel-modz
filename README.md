@@ -1,4 +1,4 @@
 revel-modz
 ==========
 
-modules for the Revel Framework
+skeletons & modules for the Revel Framework
