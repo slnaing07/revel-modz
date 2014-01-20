@@ -9,10 +9,7 @@
     <link rel="stylesheet" type="text/css" charset="utf-8" href="/public/css/bootstrap.css" />
     {{end}}
     
-    <link rel="stylesheet" type="text/css" charset="utf-8" href="/public/css/iassic.css" />
-    {{if .user}}
-    <link rel="stylesheet" type="text/css" charset="utf-8" href="/public/css/iassic-app.css" />
-    {{end}}
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="/public/css/myapp.css" />
 
     <!-- font based icons -->
     <link href="/public/fonts/whhq/css/icons.css" rel="stylesheet" type='text/css'>
@@ -31,9 +28,7 @@
         .js({foundation: "/public/js/foundation.min.js"})
         {{end}}
 
-        {{if .bootstrap}}
-        .js({foundation: "/public/js/foundation.min.js"})
-        {{end}}
+        .js({myapp: "/public/js/myapp.min.js"})
 
     </script>
     <script src="/public/js/vendor/custom.modernizr.js" type="text/javascript" charset="utf-8"></script>
