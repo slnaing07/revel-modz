@@ -1,0 +1,1 @@
+GET     /iam/public/*filepath       Static.ServeModule(asset_mgmt,public)
