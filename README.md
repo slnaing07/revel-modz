@@ -3,9 +3,27 @@ revel-modz
 
 skeletons & modules for the Revel Framework
 
+this is a work in progress and requires my patch to the `revel new` command
+which allows third party skeletons
 
-any sample views for the modules probably rely
-on the basic skeleton and assets found here
+see: github.com/robfig/revel/pull/472
 
-this is to avoid repeating the header material, assets, and such
-of a web page in each module directory. 
+
+Installation
+--------------
+
+The following instructions will setup a new app with
+a skeleton and a grunt file for asset management
+
+`go get github.com/iassic/revel-modz`
+
+`cd $GOPATH/github.com/iassic/revel-modz/modules/asset-mgmt/scripts`
+`sh install_dependencies.sh`
+
+
+Usage
+---------------
+
+`revel new <APP_NAME> github.com/iassic/revel-modz/skeleton`
+`cd <APP_NAME>`
+`sh npminit.sh`
