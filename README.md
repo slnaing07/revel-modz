@@ -6,7 +6,7 @@ skeletons & modules for the Revel Framework
 this is a work in progress and requires my patch to the `revel new` command
 which allows third party skeletons
 
-see: [revel pull #472](github.com/robfig/revel/pull/472)
+see: [revel pull #472](https://github.com/robfig/revel/pull/472)
 
 ``` Bash
 go get github.com/robfig/revel
