@@ -11,7 +11,8 @@ see: [revel pull #472](github.com/robfig/revel/pull/472)
 ``` Bash
 go get github.com/robfig/revel
 cd github.com/robfig/revel
-git remote add iassic github.com/iassic/revel
+git remote add iassic https://github.com/iassic/revel
+git pull iassic
 git checkout feature/new-cmd-skeleton-arg
 ```
 
