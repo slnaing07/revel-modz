@@ -89,19 +89,24 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+        sourceMap: true,
+        report: 'min'
       },
       foundation_js: {
-        src: 'public/js/foundation.js',
-        dest: 'public/js/fountation.min.js'
+        files: {
+          'public/js/foundation.min.js': myfiles.foundation_js
+        }
       },
       bootstrap_js: {
-        src: 'public/js/bootstrap.js',
-        dest: 'public/js/bootstrap.min.js'
+        files: {
+          'public/js/bootstrap.min.js': myfiles.bootstrap_js
+        }
       },
       myapp_js: {
-        src: 'public/js/<%= pkg.name %>.js',
-        dest: 'public/js/<%= pkg.name %>.min.js'
+        files: {
+          'public/js/<%= pkg.name %>.min.js': myfiles.myapp_js
+        }
       }
     }
 
@@ -149,7 +154,8 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Register tasks.
-  grunt.registerTask('default', ['concat','uglify']);
+  grunt.registerTask('default', ['uglify']);
+  // grunt.registerTask('default', ['concat','uglify']);
   // grunt.registerTask('test', ['jshint', 'qunit']);
 
 };
