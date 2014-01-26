@@ -6,8 +6,38 @@
     <title>myapp - {{.title}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width" />
-
     {{template "templates/asset-mgmt.html" .}}
+
+    <!--  app css includes -->
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="/public/css/myapp.css" />
+
+    <!-- app js files loaded asychronously -->
+    <script>
+    head.ready("foundation", function() {
+        {{if .foundation}}
+        $(document).foundation();
+        {{end}}
+    })
+    head.js({
+
+    	jquery: "/iam/public/js/vendor/jquery/jquery-2.0.3.min.js"})
+
+        {{if .foundation_js}}
+        .js({foundation: "/iam/public/js/vendor/foundation.min.js"})
+        {{end}}
+        {{if .foundation_custom}}
+        .js({foundation: "/public/js/foundation.min.js"})
+        {{end}}
+        {{if .bootstrap_js}}
+        .js({bootstrap: "/iam/public/js/vendor/bootstrap.min.js"})
+        {{end}}
+        {{if .bootstrap_custom}}
+        .js({bootstrap: "/public/js/bootstrap.min.js"})
+        {{end}}
+
+        .js({myapp: "/public/js/myapp.js"})
+
+    </script>
 
 </head>
 
