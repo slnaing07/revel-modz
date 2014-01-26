@@ -1,0 +1,61 @@
+{
+  "name": "{{ .AppName }}",
+  "version": "0.1.0",
+
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-jshint": "~0.7.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-uglify": "~0.2.4", 
+    "grunt-contrib-watch": "~0.5.3"
+  },
+
+  "foundation_js": [
+	"public/js/foundation-5.0.3/foundation.abide.js",
+	"public/js/foundation-5.0.3/foundation.accordion.js",
+	"public/js/foundation-5.0.3/foundation.alert.js",
+	"public/js/foundation-5.0.3/foundation.clearing.js",
+	"public/js/foundation-5.0.3/foundation.dropdown.js",
+	"public/js/foundation-5.0.3/foundation.interchange.js",
+	"public/js/foundation-5.0.3/foundation.joyride.js",
+	"public/js/foundation-5.0.3/foundation.js",
+	"public/js/foundation-5.0.3/foundation.magellan.js",
+	"public/js/foundation-5.0.3/foundation.offcanvas.js",
+	"public/js/foundation-5.0.3/foundation.orbit.js",
+	"public/js/foundation-5.0.3/foundation.reveal.js",
+	"public/js/foundation-5.0.3/foundation.tab.js",
+	"public/js/foundation-5.0.3/foundation.tooltip.js",
+	"public/js/foundation-5.0.3/foundation.topbar.js"
+  ],
+  "bootstrap_js": [
+	"public/js/bootstrap-3.0.3/transition.js",
+	"public/js/bootstrap-3.0.3/alert.js",
+	"public/js/bootstrap-3.0.3/button.js",
+	"public/js/bootstrap-3.0.3/carousel.js",
+	"public/js/bootstrap-3.0.3/collapse.js",
+	"public/js/bootstrap-3.0.3/dropdown.js",
+	"public/js/bootstrap-3.0.3/modal.js",
+	"public/js/bootstrap-3.0.3/tooltip.js",
+	"public/js/bootstrap-3.0.3/popover.js",
+	"public/js/bootstrap-3.0.3/scrollspy.js",
+	"public/js/bootstrap-3.0.3/tab.js",
+	"public/js/bootstrap-3.0.3/affix.js"
+  ],
+
+  "myapp_js": [
+  	"public/js/myapp/myapp_sample1.js",
+  	"public/js/myapp/myapp_sample2.js"
+  ],
+
+  "myapp_md": [
+  	"app/views/markdown/sample1.md",
+  	"app/views/markdown/sample2.md"
+  ],
+
+  "myapp_coffee": [
+  	"public/coffee/myapp/myapp_sample1.coffee",
+  	"public/coffee/myapp/myapp_sample2.coffee"
+  ]
+
+}

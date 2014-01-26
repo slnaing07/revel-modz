@@ -34,7 +34,7 @@ mode.dev=true
 results.pretty=true
 watch=true
 
-db.spec   = user={{ .DB_dev_user }} password={{ .DB_dev_pass }} dbname={{ .DB_dev_name }} sslmode=require
+db.spec   = user=DBDEVUSER password=DBDEVPASS dbname=DBDEVNAME sslmode=require
 
 module.testrunner = github.com/robfig/revel/modules/testrunner
 
@@ -49,7 +49,7 @@ mode.dev=false
 results.pretty=false
 watch=false
 
-db.spec   = user={{ .DB_prod_user }} password={{ .DB_prod_pass }} dbname={{ .DB_prod_name }} sslmode=require
+db.spec   = user=DBPRODUSER password=DBPRODPASS dbname=DBPRODNAME sslmode=require
 
 module.testrunner =
 
