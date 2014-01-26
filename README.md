@@ -18,6 +18,7 @@ a skeleton and a grunt file for asset management
 `go get github.com/iassic/revel-modz`
 
 `cd $GOPATH/github.com/iassic/revel-modz/modules/asset-mgmt/scripts`
+
 `sh install_dependencies.sh`
 
 
@@ -25,5 +26,7 @@ Usage
 ---------------
 
 `revel new <APP_NAME> github.com/iassic/revel-modz/skeleton`
+
 `cd <APP_NAME>`
+
 `sh npminit.sh`
