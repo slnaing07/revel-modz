@@ -14,6 +14,8 @@ cd github.com/robfig/revel
 git remote add iassic https://github.com/iassic/revel
 git pull iassic
 git checkout feature/new-cmd-skeleton-arg
+cd revel
+go install
 ```
 
 Installation
