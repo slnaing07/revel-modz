@@ -1,7 +1,7 @@
 package app
 
 import (
-	AM "github.com/iassic/revel-modz/modules/asset-mgmt"
+	"github.com/iassic/revel-modz/modules/grunt"
 	"github.com/robfig/revel"
 )
 
@@ -40,58 +40,18 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 	fc[0](c, fc[1:]) // Execute the next filter stage.
 }
 
-var compilers = []AM.AssetCompiler{
-	AM.AssetCompiler{
-		Name:  "Gruntfile.js",
-		Path:  "Gruntfile.js",
-		Grunt: "default",
-	},
+var compilers = []grunt.GruntCompiler{
+	grunt.GruntCompiler{Name: "Gruntfile.js", Path: "Gruntfile.js", Grunt: "default"},
 
-	AM.AssetCompiler{
-		Name:  "Foundation JS Folder",
-		Path:  "public/js/foundation-5.0.3",
-		Grunt: "uglify:foundation_js",
-	},
-	AM.AssetCompiler{
-		Name:  "Foundation SASS Folder",
-		Path:  "public/sass/foundation-5.0.3",
-		Grunt: "sass:foundation_sass",
-	},
+	grunt.GruntCompiler{Name: "Foundation JS", Path: "public/js/foundation-5.0.3", Grunt: "uglify:foundation_js"},
+	grunt.GruntCompiler{Name: "Foundation SASS", Path: "public/sass/foundation-5.0.3", Grunt: "sass:foundation_sass"},
 
-	AM.AssetCompiler{
-		Name:  "Bootstrap JS Folder",
-		Path:  "public/js/bootstrap-3.0.3",
-		Grunt: "uglify:bootstrap_js",
-	},
-	AM.AssetCompiler{
-		Name:  "Bootstrap LESS Folder",
-		Path:  "public/less/bootstrap-3.0.3",
-		Grunt: "less:bootstrap_less",
-	},
+	grunt.GruntCompiler{Name: "Bootstrap JS", Path: "public/js/bootstrap-3.0.3", Grunt: "uglify:bootstrap_js"},
+	grunt.GruntCompiler{Name: "Bootstrap LESS", Path: "public/less/bootstrap-3.0.3", Grunt: "less:bootstrap_less"},
 
-	AM.AssetCompiler{
-		Name:  "MyApp Coffee Folder",
-		Path:  "public/coffeescript",
-		Grunt: "coffee:myapp_coffee",
-	},
-	AM.AssetCompiler{
-		Name:  "MyApp JS Folder",
-		Path:  "public/js/myapp",
-		Grunt: "uglify:myapp_js",
-	},
-	AM.AssetCompiler{
-		Name:  "MyApp SASS Folder",
-		Path:  "public/sass/myapp",
-		Grunt: "sass:myapp_sass",
-	},
-	AM.AssetCompiler{
-		Name:  "MyApp LESS Folder",
-		Path:  "public/less/myapp",
-		Grunt: "less:myapp_less",
-	},
-	AM.AssetCompiler{
-		Name:  "MyApp Markdown Folder",
-		Path:  "views/markdown",
-		Grunt: "markdown:myapp_md",
-	},
+	// grunt.GruntCompiler{Name: "MyApp Coffee", Path: "public/coffeescript", Grunt: "coffee:myapp_coffee"},
+	// grunt.GruntCompiler{Name: "MyApp JS", Path: "public/js/myapp", Grunt: "uglify:myapp_js"},
+	// grunt.GruntCompiler{Name: "MyApp SASS", Path: "public/sass/myapp", Grunt: "sass:myapp_sass"},
+	// grunt.GruntCompiler{Name: "MyApp LESS", Path: "public/less/myapp", Grunt: "less:myapp_less"},
+	// grunt.GruntCompiler{Name: "MyApp Markdown", Path: "views/markdown", Grunt: "markdown:myapp_md"},
 }

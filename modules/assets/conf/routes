@@ -1,0 +1,1 @@
+GET     /ipa/*filepath       Static.ServeModule(ipa,public)

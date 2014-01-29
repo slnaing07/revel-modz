@@ -1,4 +1,4 @@
-package assetmgmt
+package grunt
 
 import (
 	"os"
@@ -8,21 +8,21 @@ import (
 	"github.com/robfig/revel"
 )
 
-type AssetCompiler struct {
+type GruntCompiler struct {
 	Name  string
 	Path  string
 	Grunt string
 }
 
-func (AC AssetCompiler) Refresh() *revel.Error {
+func (c GruntCompiler) Refresh() *revel.Error {
 	// It's start-up or a file changed.  Re-compile...
-	revel.INFO.Println("Compiling: ", AC.Name)
+	revel.INFO.Println("Compiling: ", c.Name)
 
 	os.Chdir(revel.BasePath)
 
-	out, err := exec.Command("grunt", AC.Grunt).Output()
+	out, err := exec.Command("grunt", c.Grunt).Output()
 	if err != nil {
-		revel.ERROR.Println("Failed to compile", AC.Path, err)
+		revel.ERROR.Println("Failed to compile", c.Path, err)
 		return nil
 	}
 	revel.TRACE.Println(string(out))
@@ -31,12 +31,12 @@ func (AC AssetCompiler) Refresh() *revel.Error {
 	return nil
 }
 
-func (c *AssetCompiler) WatchDir(info os.FileInfo) bool {
+func (c *GruntCompiler) WatchDir(info os.FileInfo) bool {
 	// Watch all directories, except the ones starting with a dot.
 	return !strings.HasPrefix(info.Name(), ".")
 }
 
-func (c *AssetCompiler) WatchFile(basename string) bool {
+func (c *GruntCompiler) WatchFile(basename string) bool {
 	// Watch all files, except the ones starting with a dot.
 	return !strings.HasPrefix(basename, ".")
 }

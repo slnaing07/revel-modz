@@ -25,8 +25,9 @@ db.import = github.com/lib/pq
 db.driver = postgres
 
 # modules 
-module.static      = github.com/robfig/revel/modules/static
-module.asset_mgmt  = github.com/iassic/revel-modz/modules/asset-mgmt
+module.static  = github.com/robfig/revel/modules/static
+module.ipa     = github.com/iassic/revel-modz/modules/assets
+module.grunt   = github.com/iassic/revel-modz/modules/grunt
 
 
 [dev]

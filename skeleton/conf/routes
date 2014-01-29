@@ -7,8 +7,8 @@ module:testrunner
 GET     /                                       App.Index
 
 
-# github.com/iassic/revel-modz/module/asset-mgmt
-module:asset_mgmt
+# github.com/iassic/revel-modz/module/assets   (/ipa)
+module:ipa
 
 
 
