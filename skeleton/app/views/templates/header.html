@@ -13,8 +13,9 @@
 
     <!-- app js files loaded asychronously -->
     <script>
-    head.ready("foundation", function() {
-        {{if .foundation}}
+    head.ready(function() {
+
+        {{if .foundation_js}}
         $(document).foundation();
         {{end}}
     })
@@ -43,4 +44,3 @@
 
 <body>
 
-{{template "templates/menu.html" .}}
