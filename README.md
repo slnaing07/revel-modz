@@ -26,7 +26,7 @@ a skeleton and a grunt file for asset management
 
 ``` Bash
 go get github.com/iassic/revel-modz
-cd github.com/iassic/revel-modz/modules/asset-mgmt/scripts
+cd github.com/iassic/revel-modz/modules/grunt/scripts
 sh install_dependencies.sh
 ```
 
