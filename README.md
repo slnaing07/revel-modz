@@ -10,7 +10,7 @@ see: [revel pull #472](https://github.com/robfig/revel/pull/472)
 
 ``` Bash
 go get github.com/robfig/revel
-cd github.com/robfig/revel
+cd $GOPATH/github.com/robfig/revel
 git remote add iassic https://github.com/iassic/revel
 git pull iassic
 git checkout feature/new-cmd-skeleton-arg
@@ -26,7 +26,7 @@ a skeleton and a grunt file for asset management
 
 ``` Bash
 go get github.com/iassic/revel-modz
-cd github.com/iassic/revel-modz/modules/grunt/scripts
+cd $GOPATH/github.com/iassic/revel-modz/modules/grunt
 sh install_dependencies.sh
 ```
 
