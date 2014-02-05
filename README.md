@@ -59,7 +59,9 @@ The following instructions will setup a new app from the revel-modz skeleton
 ``` Bash
 revel new <APP_NAME> github.com/iassic/revel-modz/skeleton
 cd <APP_NAME>
-sh npminit.sh
+sh npminit.sh  (hit ctrl-c when prompted)
 cd ..
 revel run <APP_NAME>
 ```
+
+now point your browser at `localhost:9000`

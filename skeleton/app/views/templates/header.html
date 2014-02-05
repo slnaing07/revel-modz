@@ -23,9 +23,12 @@
     })
     head
         .js({jquery: "/ipa/js/jquery-2.0.3.min.js"})
-        .js({foundation_css: "/ipa/css/foundation.min.css"})
-        .js({foundation_js: "/ipa/js/foundation.min.js"})
-        .js({myapp: "/public/js/myapp.js"})
+        // .js({foundation_css: "/ipa/css/foundation.min.css"})  // default foundation css
+        // .js({foundation_js: "/ipa/js/foundation.min.js"})     // default foundation js
+        .js({foundation_css: "/public/css/foundation-custom.min.css"})  // custom foundation css
+        .js({foundation_js: "/public/js/foundation-custom.min.js"})     // custom foundation js
+        // .js({myapp_css: "/public/css/myapp.css"})
+        // .js({myapp_js: "/public/js/myapp.js"})
 
     </script>
 

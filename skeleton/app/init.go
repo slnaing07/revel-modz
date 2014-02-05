@@ -44,10 +44,7 @@ var compilers = []grunt.GruntCompiler{
 	grunt.GruntCompiler{Name: "Gruntfile.js", Path: "Gruntfile.js", Grunt: "default"},
 
 	grunt.GruntCompiler{Name: "Foundation JS", Path: "public/js/foundation-5.0.3", Grunt: "uglify:foundation_js"},
-	grunt.GruntCompiler{Name: "Foundation SASS", Path: "public/sass/foundation-5.0.3", Grunt: "sass:foundation_sass"},
-
-	grunt.GruntCompiler{Name: "Bootstrap JS", Path: "public/js/bootstrap-3.0.3", Grunt: "uglify:bootstrap_js"},
-	grunt.GruntCompiler{Name: "Bootstrap LESS", Path: "public/less/bootstrap-3.0.3", Grunt: "less:bootstrap_less"},
+	grunt.GruntCompiler{Name: "Foundation SASS", Path: "public/sass/foundation-5.0.3", Grunt: "sass:foundation_css"},
 
 	// grunt.GruntCompiler{Name: "MyApp Coffee", Path: "public/coffeescript", Grunt: "coffee:myapp_coffee"},
 	// grunt.GruntCompiler{Name: "MyApp JS", Path: "public/js/myapp", Grunt: "uglify:myapp_js"},

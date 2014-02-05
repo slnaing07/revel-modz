@@ -73,7 +73,7 @@ module.exports = function(grunt) {
       },
       foundation_js: {
         files: {
-          'public/js/foundation.min.js': myfiles.foundation_js
+          'public/js/foundation-custom.min.js': myfiles.foundation_js
         }
       },
       myapp_js: {
@@ -81,21 +81,27 @@ module.exports = function(grunt) {
           'public/js/<%= pkg.name %>.min.js': myfiles.myapp_js
         }
       }
-    }
+    },
 
-    // sass: {
-    //   options: {
-    //     includePaths: ['bower_components/foundation/scss']
-    //   },
-    //   dist: {
-    //     options: {
-    //       outputStyle: 'compressed'
-    //     },
-    //     files: {
-    //       'css/app.css': 'scss/app.scss'
-    //     }        
-    //   }
-    // },
+    sass: {
+      foundation_css: {
+        options: {
+          style: 'compressed'
+        },
+        files: {
+          'public/css/foundation-custom.min.css': 'public/sass/foundation_custom.scss'
+        }        
+      },
+      myapp_css: {
+        options: {
+          style: 'expanded',
+          lineNumbers: true
+        },
+        files: {
+          'public/css/myapp.css': 'public/sass/foundation_custom.scss'
+        }        
+      }
+    },
 
 
   });
@@ -110,12 +116,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  // grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   // grunt.loadNpmTasks('grunt-contrib-qunit');
   // grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Register tasks.
-  grunt.registerTask('default', ['uglify']);
+  grunt.registerTask('default', ['uglify','sass']);
   // grunt.registerTask('default', ['concat','uglify']);
   // grunt.registerTask('test', ['jshint', 'qunit']);
 
