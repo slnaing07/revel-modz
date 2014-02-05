@@ -65,28 +65,6 @@ module.exports = function(grunt) {
       }
     },
 
-    concat: {
-      options: {
-        separator: ';'
-      },
-
-      foundation_js: {
-        files: {
-          'public/js/foundation.js': myfiles.foundation_js,
-        },
-      },
-      bootstrap_js: {
-        files: {
-          'public/js/bootstrap.js': myfiles.bootstrap_js,
-        },
-      },
-      myapp_js: {
-        files: {
-          'public/js/<%= pkg.name %>.js': myfiles.myapp_js,
-        },
-      },
-    },
-
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
@@ -96,11 +74,6 @@ module.exports = function(grunt) {
       foundation_js: {
         files: {
           'public/js/foundation.min.js': myfiles.foundation_js
-        }
-      },
-      bootstrap_js: {
-        files: {
-          'public/js/bootstrap.min.js': myfiles.bootstrap_js
         }
       },
       myapp_js: {
@@ -123,18 +96,6 @@ module.exports = function(grunt) {
     //     }        
     //   }
     // },
-
-    // watch: {
-    //   gruntfile: {
-    //     files: 'Gruntfile.js',
-    //     tasks: ['jshint:gruntfile'],
-    //   },
-
-    //   sass: {
-    //     files: 'scss/**/*.scss',
-    //     tasks: ['sass']
-    //   }
-    // }
 
 
   });

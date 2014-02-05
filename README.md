@@ -18,25 +18,48 @@ cd revel
 go install
 ```
 
+
+Get the dependencies
+--------------
+
+grunt:
+
+``` Bash
+sudo apt-get install nodejs npm ruby
+sudo gem install sass
+sudo npm install -g grunt-cli highlight.js
+sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
+```
+
+databases: [postgres, mysql, sqlite] MongoDB
+
+postgres
+
+mysql
+
+sqlite
+
+mongo
+
+
 Installation
 --------------
 
-The following instructions will setup a new app with
-a skeleton and a grunt file for asset management
+`go get` revel-modz
 
 ``` Bash
 go get github.com/iassic/revel-modz
-cd $GOPATH/github.com/iassic/revel-modz/modules/grunt
-sh install_dependencies.sh
 ```
 
 
 Usage
 ---------------
+The following instructions will setup a new app from the revel-modz skeleton 
 
 ``` Bash
 revel new <APP_NAME> github.com/iassic/revel-modz/skeleton
 cd <APP_NAME>
 sh npminit.sh
+cd ..
 revel run <APP_NAME>
 ```

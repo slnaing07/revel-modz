@@ -1,4 +1,13 @@
 revel-modz/skeleton
 ======================
 
-My skeleton for new Revel apps
+A good starting point for a new Revel app IMHO ;]
+
+
+Features
+-----------
+
+revel modules:
+
+- github.com/iassic/revel-modz/modules/assets
+- github.com/iassic/revel-modz/modules/grunt
