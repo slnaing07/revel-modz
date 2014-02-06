@@ -21,13 +21,8 @@ var (
 	fill = false
 )
 
-type AuthDbController struct {
-	*revel.Controller
-	Txn *gorp.Transaction
-}
-
-func (c *AuthDbController) Begin() r.Result {
-	txn, err := Dbm.Begin()
+func (c *AuthController) Begin() r.Result {
+	txn, err := AuthDbMap.Begin()
 	if err != nil {
 		panic(err)
 	}
@@ -35,7 +30,7 @@ func (c *AuthDbController) Begin() r.Result {
 	return nil
 }
 
-func (c *AuthDbController) Commit() r.Result {
+func (c *AuthController) Commit() r.Result {
 	if c.Txn == nil {
 		return nil
 	}
@@ -46,7 +41,7 @@ func (c *AuthDbController) Commit() r.Result {
 	return nil
 }
 
-func (c *AuthDbController) Rollback() r.Result {
+func (c *AuthController) Rollback() r.Result {
 	if c.Txn == nil {
 		return nil
 	}
@@ -65,20 +60,20 @@ func setColumnSizes(t *gorp.TableMap, colSizes map[string]int) {
 
 func InitAuthDb() {
 	db.Init()
-	Dbm = &gorp.DbMap{Db: db.Db, Dialect: gorp.PostgresDialect{}}
+	AuthDbMap = &gorp.DbMap{Db: db.Db, Dialect: gorp.PostgresDialect{}}
 
-	ub := Dbm.AddTable(models.UserBase{}).SetKeys(true, "UserId")
-	ub.ColMap("Email").Unique = true
-	setColumnSizes(ub, map[string]int{
-		"UserName": 32,
-		"Email":    64,
-	})
+	// ub := AuthDbMap.AddTable(models.UserBase{}).SetKeys(true, "UserId")
+	// ub.ColMap("Email").Unique = true
+	// setColumnSizes(ub, map[string]int{
+	// 	"UserName": 32,
+	// 	"Email":    64,
+	// })
 
-	Dbm.AddTable(models.UserVolatile{}).SetKeys(true, "UserId")
-	Dbm.AddTable(models.UserAuth{}).SetKeys(true, "UserId")
+	// AuthDbMap.AddTable(models.UserVolatile{}).SetKeys(true, "UserId")
+	AuthDbMap.AddTable(models.UserAuth{}).SetKeys(true, "UserId")
 
-	Dbm.TraceOn("[gorp]", log.New(GLogger{glog.Info}, "", 0))
-	Dbm.CreateTablesIfNotExists()
+	AuthDbMap.TraceOn("[gorp]", log.New(GLogger{glog.Info}, "", 0))
+	AuthDbMap.CreateTablesIfNotExists()
 
 	// TODO:  change fill to some check against the db
 	// TODO:  add a test fill option for development
@@ -86,16 +81,16 @@ func InitAuthDb() {
 		now := time.Now().UnixNano()
 
 		demoUser := &models.UserBase{0, "demo", "demo@domain.com"}
-		errU := Dbm.Insert(demoUser)
+		errU := AuthDbMap.Insert(demoUser)
 		checkFail(errU)
 
 		demoVolatile := &models.UserVolatile{demoUser.UserId, now, 0, 0, 0, now}
-		errV := Dbm.Insert(demoVolatile)
+		errV := AuthDbMap.Insert(demoVolatile)
 		checkFail(errV)
 
 		demoPassword, _ := bcrypt.GenerateFromPassword([]byte("demo"), bcrypt.DefaultCost)
 		demoAuth := &models.UserAuth{demoUser.UserId, demoPassword, "", 0, 0, 0, 0}
-		errA := Dbm.Insert(demoAuth)
+		errA := AuthDbMap.Insert(demoAuth)
 		checkFail(errA)
 	}
 
