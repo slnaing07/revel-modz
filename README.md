@@ -10,7 +10,7 @@ see: [revel pull #472](https://github.com/robfig/revel/pull/472)
 
 ``` Bash
 go get github.com/robfig/revel
-cd $GOPATH/github.com/robfig/revel
+cd $GOPATH/src/github.com/robfig/revel
 git remote add iassic https://github.com/iassic/revel
 git pull iassic
 git checkout feature/new-cmd-skeleton-arg
