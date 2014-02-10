@@ -31,16 +31,23 @@ sudo npm install -g grunt-cli highlight.js
 sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
 ```
 
-databases: [postgres, mysql, sqlite] MongoDB
+databases: [postgres, mysql, sqlite] CouchDB
 
-postgres
+Postgres:
 
-mysql
+...
 
-sqlite
+Mysql:
 
-mongo
+...
 
+Sqlite:
+
+...
+
+CouchDB:
+
+...
 
 Installation
 --------------
@@ -54,7 +61,7 @@ go get github.com/iassic/revel-modz
 
 Usage
 ---------------
-The following instructions will setup a new app from the revel-modz skeleton 
+The following instructions will setup a new app from the revel-modz skeleton
 
 ``` Bash
 revel new <APP_NAME> github.com/iassic/revel-modz/skeleton
