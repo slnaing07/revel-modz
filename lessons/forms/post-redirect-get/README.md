@@ -125,7 +125,7 @@ create a new file called `Results.html` with the following content.
 ```
 
 
-To add the new routes, in app/conf/routes:
+To add the new routes, in PRG/conf/routes:
 
 add the following lines below the first route
 
@@ -135,11 +135,8 @@ GET 	/result 		App.Result
 ```
 
 
-
-
-
-
-
+And now we should be good, try refreshing your browser.
+No need to restart the webserver!
 
 
 The final version of each file:
@@ -224,7 +221,7 @@ PRG/app/views/App/Result.html:
 {{template "templates/footer.html" .}}
 ```
 
-PRG/app/conf/routes:
+PRG/conf/routes:
 
 ```
 # Routes
