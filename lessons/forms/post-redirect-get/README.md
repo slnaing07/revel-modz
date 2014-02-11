@@ -150,13 +150,13 @@ Now we are going to use Revel's template system and Flash mechanism in order to 
 The first item of business is to add a template for displaying the message. Templates in Revel are derived from Go which is basically a text replacement engine. In Revel's case, we are using the 'html/template' package which html-escapes the substituted input.
 This prevents the user from entering malicious input such as `<script src="http://badguy.com/mynastyscript.js">`
 
-In `Result.html`, add the following line below `<h5>`:
+In `Result.html`, add the following line below `<h5>Results</h5>`:
 
 ```
 you said: {{.flash.message}}
 ```
 
-and in `app.go`, replace `fmt.Println(...)` in IndexPost() with
+and in `app.go`, replace `fmt.Println(...)` in `IndexPost()` with
 
 ``` Go
 c.Flash.Out["message"] = said
