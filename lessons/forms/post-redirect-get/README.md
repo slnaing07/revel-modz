@@ -124,7 +124,10 @@ GET 	/result 		App.Result
 
 
 
-The final version of app.go
+The final version of each file:
+---------------------------------
+
+PRG/app/controllers/app.go
 
 ``` Go
 package controllers
@@ -151,4 +154,85 @@ func (c App) IndexPost(said string) revel.Result {
 func (c App) Result() revel.Result {
 	return c.Render()
 }
+```
+
+PRG/app/views/App/Index.html:
+
+``` HTML
+{{set . "title" "Results"}}
+
+{{set . "foundation_css" true}}
+{{set . "foundation_js" true}}
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+    <div class="large-6 large-centered columns">
+        <div class="panel">
+            <h5>Results</h5>
+        </div>
+    </div>
+</div>
+
+{{template "templates/links.html" .}}
+{{template "templates/footer.html" .}}
+
+```
+
+PRG/app/views/App/Result.html:
+
+``` HTML
+{{set . "title" "Results"}}
+
+{{set . "foundation_css" true}}
+{{set . "foundation_js" true}}
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+    <div class="large-6 large-centered columns">
+        <div class="panel">
+            <h5>Results</h5>
+        </div>
+    </div>
+</div>
+
+{{template "templates/links.html" .}}
+{{template "templates/footer.html" .}}
+
+```
+
+PRG/app/conf/routes:
+
+```
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+module:testrunner
+
+GET     /                                       App.Index
+
+POST    /ipost									App.IndexPost
+
+GET 	/result									App.Result
+
+# github.com/iassic/revel-modz/module/assets   (/ipa)
+module:ipa
+
+
+
+# Don't ignore favicon requests
+GET     /favicon.ico                            Static.Serve("public/img","favicon.png")
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/*filepath                       Static.Serve("public")
+
+# 404 Catch all
+*       /:controller/:action                    404
+
+# Catch all
+# *       /:controller/:action                    :controller.:action
 ```
