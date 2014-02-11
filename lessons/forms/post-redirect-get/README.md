@@ -83,7 +83,7 @@ func (c App) Result() revel.Result {
 
 Now we need to add some imports for our new handlers:
 
-`fmt` for the `Println` function and `PRG/app/routes` for the `routes.App.Result()`
+`"fmt"` for the `Println` function and `"PRG/app/routes"` for the `routes.App.Result()`
 inside of `c.Redirect(...)`
 
 Change the line `import "github.com/robfig/revel"`
