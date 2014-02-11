@@ -1,0 +1,107 @@
+Post-Redirect-Get
+===================
+
+This lesson introduces you to the [Post-Redirect-Get (PRG)](http://en.wikipedia.org/wiki/Post/Redirect/Get) pattern
+for submitting forms.
+
+The PRG pattern is used by web developers to prevent the resubmission of form data when refreshing the browser or opening a bookmark. For example, this can save you and your customers from the headache of an unintentional double purchase.
+
+In PRG, a user fills out a form and submits it with a POST request.
+The server receives the request, does whatever processing it needs to with
+the form contents, and then uses a REDIRECT to point the user to a new page which is obtained with a GET request.
+It is this REDIRECT-GET which prevents the POST from being double submitted.
+Generally speaking, the page which the user is redirected to will contain some confirmation of the POST data being acceptable. In an upcoming lesson, we will explore how to deal with bad input provided by the user.
+
+Create a new app
+------------------
+
+Let's start by making a new Revel app
+
+``` Bash
+revel new PRG github.com/iassic/revel-modz/skeleton
+cd PRG
+sh npminit.sh
+cd ..
+revel run PRG
+```
+
+You should now have a new Revel app named `PRG` running from your terminal. Check by directing your browser to `localhost:9000`.
+
+
+Adding a form to Index.html
+---------------------------
+
+Open the file `PRG/app/views/App/Index.html`
+
+Replace line: `{{template "templates/ipsum.html" .}}`
+
+with:
+
+``` HTML
+<div class="row">
+    <div class="large-6 large-centered columns">
+        <div class="panel">
+            <h5>My First Form</h5>
+        </div>
+    </div>
+</div>
+```
+
+Refresh your app in the browser and you should see the changes.
+
+Now let's add an actual form.
+
+``` HTML
+...
+    <h5>My First Form</h5>
+    <form action="/ipost" method="POST">
+        Say something: <input type="text" name="said">
+        <input type="submit">
+	</form>
+...
+```
+
+If you try to refresh again, you will see we temporarily broke the application. What we need is a handler for our new POST method.
+
+
+``` Go
+func (c App) IndexPost(said string) revel.Result {
+	fmt.Println("said:", said)
+	return c.Redirect(routes.App.Index())
+}
+```
+
+
+
+
+
+
+
+The final version of app.go
+
+``` Go
+package controllers
+
+import (
+	"fmt"
+	"github.com/robfig/revel"
+	"test/app/routes"
+)
+
+type App struct {
+	*revel.Controller
+}
+
+func (c App) Index() revel.Result {
+	return c.Render()
+}
+
+func (c App) IndexPost(said string) revel.Result {
+	fmt.Println("said:", said)
+	return c.Redirect(routes.App.Result())
+}
+
+func (c App) Result() revel.Result {
+	return c.Render()
+}
+```
