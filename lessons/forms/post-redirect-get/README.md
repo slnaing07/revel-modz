@@ -61,15 +61,62 @@ Now let's add an actual form.
 ...
 ```
 
-If you try to refresh again, you will see we temporarily broke the application. What we need is a handler for our new POST method.
+If you try to refresh again, you will see we temporarily broke the application. What we need is a handler for our new POST method and a new page to Redirect to.
 
+Fixing this, or adding the POST-REDIRECT-GET loop involves several changes at this point.
+
+Adding new handlers and routes
+------------------------------
+
+To add the new handlers, in app/controllers/app.go:
 
 ``` Go
 func (c App) IndexPost(said string) revel.Result {
 	fmt.Println("said:", said)
-	return c.Redirect(routes.App.Index())
+	return c.Redirect(routes.App.Result())
+}
+
+func (c App) Result() revel.Result {
+	return c.Render()
 }
 ```
+
+To add the new view for App.Result(), in app/views/App
+create a new file called `Results.html` with the following content.
+
+``` HTML
+{{set . "title" "Results"}}
+
+{{set . "foundation_css" true}}
+{{set . "foundation_js" true}}
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+    <div class="large-6 large-centered columns">
+        <div class="panel">
+            <h5>Results</h5>
+        </div>
+    </div>
+</div>
+
+{{template "templates/links.html" .}}
+{{template "templates/footer.html" .}}
+
+```
+
+
+To add the new routes, in app/conf/routes:
+
+add the following lines below the first route
+
+```
+POST 	/ipost 			App.IndexPost
+GET 	/result 		App.Reselt
+```
+
+
 
 
 
