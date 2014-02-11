@@ -156,7 +156,7 @@ In `Result.html`, add the following line below `<h5>`:
 you said: {{.flash.message}}
 ```
 
-and in `app.go`, replace `fmt.Println(...)` with
+and in `app.go`, replace `fmt.Println(...)` in IndexPost() with
 
 ``` Go
 c.Flash.Out["message"] = said
@@ -189,7 +189,7 @@ func (c App) Index() revel.Result {
 }
 
 func (c App) IndexPost(said string) revel.Result {
-	fmt.Println("said:", said)
+	c.Flash.Out["message"] = said
 	return c.Redirect(routes.App.Result())
 }
 
@@ -240,6 +240,7 @@ PRG/app/views/App/Result.html:
     <div class="large-6 large-centered columns">
         <div class="panel">
             <h5>Results</h5>
+            You said: {{.flash.message}}
         </div>
     </div>
 </div>
