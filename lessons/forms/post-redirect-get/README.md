@@ -113,7 +113,7 @@ add the following lines below the first route
 
 ```
 POST 	/ipost 			App.IndexPost
-GET 	/result 		App.Reselt
+GET 	/result 		App.Result
 ```
 
 
@@ -132,7 +132,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/robfig/revel"
-	"test/app/routes"
+	"PRG/app/routes"
 )
 
 type App struct {

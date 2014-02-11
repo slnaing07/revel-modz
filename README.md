@@ -55,7 +55,7 @@ Installation
 `go get` revel-modz
 
 ``` Bash
-go get github.com/iassic/revel-modz
+go get -u github.com/iassic/revel-modz
 ```
 
 
