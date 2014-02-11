@@ -81,6 +81,24 @@ func (c App) Result() revel.Result {
 }
 ```
 
+Now we need to add some imports for our new handlers:
+
+`fmt` for the `Println` function and `PRG/app/routes` for the `routes.App.Result()`
+inside of `c.Redirect(...)`
+
+Change the line `import "github.com/robfig/revel"`
+
+``` Go
+import (
+	"fmt"
+
+	"github.com/robfig/revel"
+	
+	"PRG/app/routes"
+)
+```
+
+
 To add the new view for App.Result(), in app/views/App
 create a new file called `Results.html` with the following content.
 
@@ -127,7 +145,7 @@ GET 	/result 		App.Result
 The final version of each file:
 ---------------------------------
 
-PRG/app/controllers/app.go
+PRG/app/controllers/app.go:
 
 ``` Go
 package controllers
@@ -159,7 +177,7 @@ func (c App) Result() revel.Result {
 PRG/app/views/App/Index.html:
 
 ``` HTML
-{{set . "title" "Results"}}
+{{set . "title" "Index"}}
 
 {{set . "foundation_css" true}}
 {{set . "foundation_js" true}}
@@ -170,14 +188,17 @@ PRG/app/views/App/Index.html:
 <div class="row">
     <div class="large-6 large-centered columns">
         <div class="panel">
-            <h5>Results</h5>
+            <h5>My First Form</h5>
+            <form action="/ipost" method="POST">
+		        Say something: <input type="text" name="said">
+		        <input type="submit">
+		    </form>
         </div>
     </div>
 </div>
 
 {{template "templates/links.html" .}}
 {{template "templates/footer.html" .}}
-
 ```
 
 PRG/app/views/App/Result.html:
@@ -201,7 +222,6 @@ PRG/app/views/App/Result.html:
 
 {{template "templates/links.html" .}}
 {{template "templates/footer.html" .}}
-
 ```
 
 PRG/app/conf/routes:
