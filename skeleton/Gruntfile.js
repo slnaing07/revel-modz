@@ -91,16 +91,17 @@ module.exports = function(grunt) {
         files: {
           'public/css/foundation-custom.min.css': 'public/sass/foundation_custom.scss'
         }        
-      },
-      myapp_css: {
-        options: {
-          style: 'expanded',
-          lineNumbers: true
-        },
-        files: {
-          'public/css/myapp.css': 'public/sass/foundation_custom.scss'
-        }        
       }
+      // ,
+      // myapp_css: {
+      //   options: {
+      //     style: 'expanded',
+      //     lineNumbers: true
+      //   },
+      //   files: {
+      //     'public/css/myapp.css': 'public/sass/foundation_custom.scss'
+      //   }        
+      // }
     },
 
 

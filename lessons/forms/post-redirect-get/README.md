@@ -65,6 +65,9 @@ If you try to refresh again, you will see we temporarily broke the application. 
 
 Fixing this, or adding the POST-REDIRECT-GET loop involves several changes at this point.
 
+
+
+
 Adding new handlers and routes
 ------------------------------
 
@@ -100,7 +103,7 @@ import (
 
 
 To add the new view for App.Result(), in app/views/App
-create a new file called `Results.html` with the following content.
+create a new file called `Result.html` with the following content.
 
 ``` HTML
 {{set . "title" "Results"}}
@@ -138,6 +141,30 @@ GET 	/result 		App.Result
 And now we should be good, try refreshing your browser.
 No need to restart the webserver!
 
+
+Getting the message to show up in Result.html
+-------------------------------------------
+
+Now we are going to use Revel's template system and Flash mechanism in order to have the text entered and submitted show up in the Result page.
+
+The first item of business is to add a template for displaying the message. Templates in Revel are derived from Go which is basically a text replacement engine. In Revel's case, we are using the 'html/template' package which html-escapes the substituted input.
+This prevents the user from entering malicious input such as `<script src="http://badguy.com/mynastyscript.js">`
+
+In `Result.html`, add the following line below `<h5>`:
+
+```
+you said: {{.flash.message}}
+```
+
+and in `app.go`, replace `fmt.Println(...)` with
+
+``` Go
+c.Flash.Out["message"] = said
+```
+
+Notice that `.message` in the template matches `"message"` in the POST handler.
+
+Once you have made these changes, try loading the index page and submitting a message. You should see that message displayed on the results page.
 
 The final version of each file:
 ---------------------------------
