@@ -53,11 +53,11 @@ Now let's add an actual form.
 
 ``` HTML
 ...
-    <h5>My First Form</h5>
-    <form action="/ipost" method="POST">
-        Say something: <input type="text" name="said">
-        <input type="submit">
-	</form>
+<h5>My First Form</h5>
+<form action="/ipost" method="POST">
+    Say something: <input type="text" name="said">
+    <input type="submit">
+</form>
 ...
 ```
 
@@ -75,12 +75,12 @@ To add the new handlers, in app/controllers/app.go:
 
 ``` Go
 func (c App) IndexPost(said string) revel.Result {
-	fmt.Println("said:", said)
-	return c.Redirect(routes.App.Result())
+fmt.Println("said:", said)
+return c.Redirect(routes.App.Result())
 }
 
 func (c App) Result() revel.Result {
-	return c.Render()
+return c.Render()
 }
 ```
 
@@ -93,11 +93,11 @@ Change the line `import "github.com/robfig/revel"`
 
 ``` Go
 import (
-	"fmt"
+"fmt"
 
-	"github.com/robfig/revel"
-	
-	"PRG/app/routes"
+"github.com/robfig/revel"
+
+"PRG/app/routes"
 )
 ```
 
@@ -175,26 +175,25 @@ PRG/app/controllers/app.go:
 package controllers
 
 import (
-	"fmt"
-	"github.com/robfig/revel"
-	"PRG/app/routes"
+"github.com/robfig/revel"
+"PRG/app/routes"
 )
 
 type App struct {
-	*revel.Controller
+*revel.Controller
 }
 
 func (c App) Index() revel.Result {
-	return c.Render()
+return c.Render()
 }
 
 func (c App) IndexPost(said string) revel.Result {
-	c.Flash.Out["message"] = said
-	return c.Redirect(routes.App.Result())
+c.Flash.Out["message"] = said
+return c.Redirect(routes.App.Result())
 }
 
 func (c App) Result() revel.Result {
-	return c.Render()
+return c.Render()
 }
 ```
 
@@ -214,11 +213,11 @@ PRG/app/views/App/Index.html:
         <div class="panel">
             <h5>My First Form</h5>
             <form action="/ipost" method="POST">
-		        Say something: <input type="text" name="said">
-		        <input type="submit">
-		    </form>
-        </div>
-    </div>
+              Say something: <input type="text" name="said">
+              <input type="submit">
+          </form>
+      </div>
+  </div>
 </div>
 
 {{template "templates/links.html" .}}
