@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Revel-modz by iassic</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/iassic/revel-modz">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/iassic/revel-modz/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/iassic/revel-modz/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Revel-modz</h1>
+          <p>modules, samples, lessons, and a skeleton for the Revel Framework</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/iassic">iassic</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="revel-modz" class="anchor" href="#revel-modz"><span class="octicon octicon-link"></span></a>revel-modz</h1>
+
+<p>skeletons &amp; modules for the Revel Framework</p>
+
+<p>this is a work in progress and requires my patch to the <code>revel new</code> command
+which allows third party skeletons</p>
+
+<p>see: <a href="https://github.com/robfig/revel/pull/472">revel pull #472</a></p>
+
+<div class="highlight highlight-Bash"><pre>go get github.com/robfig/revel
+<span class="nb">cd</span> <span class="nv">$GOPATH</span>/src/github.com/robfig/revel
+git remote add iassic https://github.com/iassic/revel
+git pull iassic
+git checkout feature/new-cmd-skeleton-arg
+<span class="nb">cd </span>revel
+go install
+</pre></div>
+
+<h2>
+<a name="get-the-dependencies" class="anchor" href="#get-the-dependencies"><span class="octicon octicon-link"></span></a>Get the dependencies</h2>
+
+<p>grunt:</p>
+
+<div class="highlight highlight-Bash"><pre>sudo apt-get install nodejs npm ruby
+sudo gem install sass
+sudo npm install -g grunt-cli highlight.js
+sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
+</pre></div>
+
+<p>databases: [postgres, mysql, sqlite] CouchDB</p>
+
+<p>Postgres:</p>
+
+<p>...</p>
+
+<p>Mysql:</p>
+
+<p>...</p>
+
+<p>Sqlite:</p>
+
+<p>...</p>
+
+<p>CouchDB:</p>
+
+<p>...</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p><code>go get</code> revel-modz</p>
+
+<div class="highlight highlight-Bash"><pre>go get -u github.com/iassic/revel-modz
+</pre></div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>The following instructions will setup a new app from the revel-modz skeleton</p>
+
+<div class="highlight highlight-Bash"><pre>revel new &lt;APP_NAME&gt; github.com/iassic/revel-modz/skeleton
+<span class="nb">cd</span> &lt;APP_NAME&gt;
+sh npminit.sh  <span class="o">(</span>hit ctrl-c when prompted<span class="o">)</span> <span class="o">[</span>you will see a bunch of errors initially<span class="o">]</span>
+<span class="nb">cd</span> ..
+revel run &lt;APP_NAME&gt;
+</pre></div>
+
+<p>now point your browser at <code>localhost:9000</code></p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
