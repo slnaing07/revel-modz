@@ -1,4 +1,4 @@
-{{set . "title" "Index"}}
+{{set . "title" "Results"}}
 
 {{set . "foundation_css" true}}
 {{set . "foundation_js" true}}
@@ -9,12 +9,8 @@
 <div class="row">
     <div class="large-6 large-centered columns">
         <div class="panel">
-            <h5>My First Form</h5>
-            <form action="/" method="POST">
-                <input type="hidden" name="csrf_token" value="{{ .csrf_token }}" />
-                Say something: <input type="text" name="said">
-                <input type="submit">
-            </form>
+            <h5>Results</h5>
+            You said: {{.flash.message}}
         </div>
     </div>
 </div>

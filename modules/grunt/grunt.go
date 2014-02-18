@@ -23,6 +23,7 @@ func (c GruntCompiler) Refresh() *revel.Error {
 	out, err := exec.Command("grunt", c.Grunt).Output()
 	if err != nil {
 		revel.ERROR.Println("Failed to compile", c.Path, err)
+		revel.ERROR.Println("Output:\n", string(out))
 		return nil
 	}
 	revel.TRACE.Println(string(out))

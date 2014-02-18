@@ -5,6 +5,11 @@
 module:testrunner
 
 GET     /                                       App.Index
+POST    / 		                                App.IndexPost
+GET     /result                                 App.Result
+
+GET		/register								App.Register
+POST	/register								App.RegisterPost
 
 
 # github.com/iassic/revel-modz/module/assets   (/ipa)

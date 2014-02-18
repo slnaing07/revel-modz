@@ -3,12 +3,12 @@
 <html lang="en">
 
 <head>
-    <title>myapp - {{.title}}</title>
+    <title>{{.AppName}} - {{.title}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width" />
 
     <!--  app css includes -->
-    <link rel="stylesheet" type="text/css" charset="utf-8" href="/public/css/myapp.css" />
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="/public/css/{{.AppName}}.css" />
 
     <script src="/ipa/js/head.load.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/ipa/js/modernizr.js" type="text/javascript" charset="utf-8"></script>
@@ -27,8 +27,8 @@
         .js({foundation_js: "/ipa/js/foundation.min.js"})     // default foundation js
         // .js({foundation_css: "/public/css/foundation-custom.min.css"})  // custom foundation css
         // .js({foundation_js: "/public/js/foundation-custom.min.js"})     // custom foundation js
-        // .js({myapp_css: "/public/css/myapp.css"})
-        // .js({myapp_js: "/public/js/myapp.js"})
+        .js({ {{.AppName}}_css: "/public/css/{{.AppName}}.css"})
+        .js({ {{.AppName}}_js: "/public/js/{{.AppName}}.min.js"})
 
     </script>
 

@@ -1,4 +1,4 @@
-var myfiles = {
+var files = {
   "foundation_js": [
   "app/assets/js/foundation-5.0.3/foundation.abide.js",
   "app/assets/js/foundation-5.0.3/foundation.accordion.js",
@@ -17,9 +17,8 @@ var myfiles = {
   "app/assets/js/foundation-5.0.3/foundation.topbar.js"
   ],
   
-  "myapp_js": [
-    "app/assets/js/myapp/myapp_file1.js",
-    "app/assets/js/myapp/myapp_file2.js"
+  "{{ .AppName }}_js": [
+    "app/assets/js/{{ .AppName }}/{{ .AppName }}_util.js"
   ]
 }
 
@@ -49,12 +48,12 @@ module.exports = function(grunt) {
       },
       foundation_js: {
         files: {
-          'public/js/foundation-custom.min.js': myfiles.foundation_js
+          'public/js/foundation-custom.min.js': files.foundation_js
         }
       },
-      myapp_js: {
+      {{ .AppName }}_js: {
         files: {
-          'public/js/<%= pkg.name %>.min.js': myfiles.myapp_js
+          'public/js/{{ .AppName }}.min.js': files.{{ .AppName }}_js
         }
       }
     },
@@ -69,13 +68,13 @@ module.exports = function(grunt) {
         }        
       }
       ,
-      myapp_css: {
+      {{ .AppName }}_css: {
         options: {
           style: 'expanded',
           lineNumbers: true
         },
         files: {
-          'public/css/myapp.css': 'app/assets/sass/myapp.sass'
+          'public/css/{{ .AppName }}.css': 'app/assets/sass/{{ .AppName }}.sass'
         }        
       }
     },

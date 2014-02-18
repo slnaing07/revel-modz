@@ -48,6 +48,6 @@ var compilers = []grunt.GruntCompiler{
 	grunt.GruntCompiler{Name: "Foundation JS", Path: "app/assets/js/foundation-5.0.3", Grunt: "uglify:foundation_js"},
 	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation-5.0.3", Grunt: "sass:foundation_css"},
 
-	grunt.GruntCompiler{Name: "MyApp JS", Path: "app/assets/js/myapp", Grunt: "uglify:myapp_js"},
-	grunt.GruntCompiler{Name: "MyApp SASS", Path: "app/assets/sass/myapp", Grunt: "sass:myapp_sass"},
+	grunt.GruntCompiler{Name: "{{.AppName}} JS", Path: "app/assets/js/{{.AppName}}", Grunt: "uglify:{{.AppName}}_js"},
+	grunt.GruntCompiler{Name: "{{.AppName}} SASS", Path: "app/assets/sass/{{.AppName}}", Grunt: "sass:{{.AppName}}_css"},
 }
