@@ -43,12 +43,9 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 var compilers = []grunt.GruntCompiler{
 	grunt.GruntCompiler{Name: "Gruntfile.js", Path: "Gruntfile.js", Grunt: "default"},
 
-	grunt.GruntCompiler{Name: "Foundation JS", Path: "public/js/foundation-5.0.3", Grunt: "uglify:foundation_js"},
-	grunt.GruntCompiler{Name: "Foundation SASS", Path: "public/sass/foundation-5.0.3", Grunt: "sass:foundation_css"},
+	grunt.GruntCompiler{Name: "Foundation JS", Path: "app/assets/js/foundation-5.0.3", Grunt: "uglify:foundation_js"},
+	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation-5.0.3", Grunt: "sass:foundation_css"},
 
-	// grunt.GruntCompiler{Name: "MyApp Coffee", Path: "public/coffeescript", Grunt: "coffee:myapp_coffee"},
-	// grunt.GruntCompiler{Name: "MyApp JS", Path: "public/js/myapp", Grunt: "uglify:myapp_js"},
-	// grunt.GruntCompiler{Name: "MyApp SASS", Path: "public/sass/myapp", Grunt: "sass:myapp_sass"},
-	// grunt.GruntCompiler{Name: "MyApp LESS", Path: "public/less/myapp", Grunt: "less:myapp_less"},
-	// grunt.GruntCompiler{Name: "MyApp Markdown", Path: "views/markdown", Grunt: "markdown:myapp_md"},
+	grunt.GruntCompiler{Name: "MyApp JS", Path: "app/assets/js/myapp", Grunt: "uglify:myapp_js"},
+	grunt.GruntCompiler{Name: "MyApp SASS", Path: "app/assets/sass/myapp", Grunt: "sass:myapp_sass"},
 }
