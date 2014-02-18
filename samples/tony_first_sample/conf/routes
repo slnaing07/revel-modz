@@ -1,0 +1,30 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+module:testrunner
+
+GET     /                                       App.Index
+POST    / 		                                App.IndexPost
+GET     /result                                 App.Result
+
+GET		/register								App.Register
+POST	/register								App.RegisterPost
+
+
+# github.com/iassic/revel-modz/module/assets   (/ipa)
+module:ipa
+
+
+
+# Don't ignore favicon requests
+GET     /favicon.ico                            Static.Serve("public/img","favicon.png")
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/*filepath                       Static.Serve("public")
+
+# 404 Catch all
+*       /:controller/:action                    404
+
+# Catch all
+# *       /:controller/:action                    :controller.:action
