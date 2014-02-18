@@ -24,6 +24,9 @@ i18n.default_language=en
 db.import = github.com/lib/pq
 db.driver = postgres
 
+csrf.ajax = false
+csrf.token.length = 128
+
 # modules
 module.static  = github.com/robfig/revel/modules/static
 
