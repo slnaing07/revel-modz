@@ -1,6 +1,8 @@
 package app
 
 import (
+	"path/filepath"
+
 	"github.com/cbonello/revel-csrf"
 	"github.com/iassic/revel-modz/modules/grunt"
 	"github.com/robfig/revel"
@@ -25,9 +27,11 @@ func init() {
 	}
 
 	revel.OnAppStart(func() {
+		appPath := revel.BasePath
 		for _, AC := range compilers {
-			revel.INFO.Printf("Listening: %q\n", AC.Path)
-			revel.MainWatcher.Listen(AC, revel.AppName+"/"+AC.Path)
+			path := filepath.Join(appPath, AC.Path)
+			revel.INFO.Printf("Listening: %q\n", path)
+			revel.MainWatcher.Listen(AC, path)
 		}
 	})
 
