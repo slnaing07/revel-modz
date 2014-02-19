@@ -1,0 +1,19 @@
+{{set . "title" "Results"}}
+
+{{set . "foundation_css" true}}
+{{set . "foundation_js" true}}
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+    <div class="large-6 large-centered columns">
+        <div class="panel">
+            <h5>Results</h5>
+            You said: {{.flash.message}}
+        </div>
+    </div>
+</div>
+
+{{template "templates/links.html" .}}
+{{template "templates/footer.html" .}}

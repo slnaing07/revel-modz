@@ -1,0 +1,23 @@
+{{set . "title" "Index"}}
+
+{{set . "foundation_css" true}}
+{{set . "foundation_js" true}}
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+    <div class="large-6 large-centered columns">
+        <div class="panel">
+            <h5>My First Form</h5>
+            <form action="/" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ .csrf_token }}" />
+                Say something: <input type="text" name="said">
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+</div>
+
+{{template "templates/links.html" .}}
+{{template "templates/footer.html" .}}
