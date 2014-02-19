@@ -1,20 +1,20 @@
 var files = {
   "foundation_js": [
-  "app/assets/js/foundation-5.0.3/foundation.abide.js",
-  "app/assets/js/foundation-5.0.3/foundation.accordion.js",
-  "app/assets/js/foundation-5.0.3/foundation.alert.js",
-  "app/assets/js/foundation-5.0.3/foundation.clearing.js",
-  "app/assets/js/foundation-5.0.3/foundation.dropdown.js",
-  "app/assets/js/foundation-5.0.3/foundation.interchange.js",
-  "app/assets/js/foundation-5.0.3/foundation.joyride.js",
-  "app/assets/js/foundation-5.0.3/foundation.js",
-  "app/assets/js/foundation-5.0.3/foundation.magellan.js",
-  "app/assets/js/foundation-5.0.3/foundation.offcanvas.js",
-  "app/assets/js/foundation-5.0.3/foundation.orbit.js",
-  "app/assets/js/foundation-5.0.3/foundation.reveal.js",
-  "app/assets/js/foundation-5.0.3/foundation.tab.js",
-  "app/assets/js/foundation-5.0.3/foundation.tooltip.js",
-  "app/assets/js/foundation-5.0.3/foundation.topbar.js"
+  "app/assets/js/foundation/foundation.abide.js",
+  "app/assets/js/foundation/foundation.accordion.js",
+  "app/assets/js/foundation/foundation.alert.js",
+  "app/assets/js/foundation/foundation.clearing.js",
+  "app/assets/js/foundation/foundation.dropdown.js",
+  "app/assets/js/foundation/foundation.interchange.js",
+  "app/assets/js/foundation/foundation.joyride.js",
+  "app/assets/js/foundation/foundation.js",
+  "app/assets/js/foundation/foundation.magellan.js",
+  "app/assets/js/foundation/foundation.offcanvas.js",
+  "app/assets/js/foundation/foundation.orbit.js",
+  "app/assets/js/foundation/foundation.reveal.js",
+  "app/assets/js/foundation/foundation.tab.js",
+  "app/assets/js/foundation/foundation.tooltip.js",
+  "app/assets/js/foundation/foundation.topbar.js"
   ],
   
   "{{ .AppName }}_js": [
@@ -88,7 +88,6 @@ module.exports = function(grunt) {
 
 
   // Load the plugin that provides the tasks.
-  // grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');

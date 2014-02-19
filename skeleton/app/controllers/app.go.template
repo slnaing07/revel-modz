@@ -5,7 +5,7 @@ import (
 
 	"github.com/robfig/revel"
 
-	"{{.AppName}}/app/routes"
+	"{{.BasePath}}/{{.AppName}}/app/routes"
 )
 
 type App struct {
