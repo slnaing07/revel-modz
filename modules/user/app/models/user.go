@@ -1,5 +1,9 @@
 package models
 
+import (
+	"time"
+)
+
 type User struct {
 	UserBase
 }
@@ -17,11 +21,12 @@ type UserBase struct {
 
 type UserVolatile struct {
 	UserId         int64
-	CreatedAt      int64
-	UpdatedAt      int64
-	LastLoginAt    int64
-	LastLogoutAt   int64
-	LastActivityAt int64
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+	DeletedAt      time.Time
+	LastLoginAt    time.Time
+	LastLogoutAt   time.Time
+	LastActivityAt time.Time
 }
 
 type UserDetail struct {
