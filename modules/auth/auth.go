@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"code.google.com/p/go.crypto/bcrypt"
-	gorm "github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm"
 	"github.com/robfig/revel"
 )
 
@@ -14,11 +14,16 @@ type UserAuthInterface interface {
 }
 
 type UserAuth struct {
-	Id                int64
-	UserId            int64  `sql:"not null;unique"`
-	HashedPassword    []byte `sql:"not null"`
+	Id             int64
+	UserId         int64  `sql:"not null;unique"`
+	HashedPassword []byte `sql:"not null"`
+
 	FailedLoginsCount int32
 	LockExpiresAt     time.Time
+
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
 
 	Activated bool
 	ResetPass bool
