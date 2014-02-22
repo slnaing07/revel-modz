@@ -70,6 +70,16 @@ func AddUserAuth(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
 		}
 	}
 
+	created_at := ua.CreatedAt
+	updated_at := ua.UpdatedAt
+
+	if created_at.IsZero() {
+		revel.ERROR.Println("Should have created_at after auth create")
+	}
+	if updated_at.IsZero() {
+		revel.ERROR.Println("Should have updated_at after auth create")
+	}
+
 	return &ua, nil
 
 }
