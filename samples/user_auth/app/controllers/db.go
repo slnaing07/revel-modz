@@ -80,7 +80,7 @@ func SetupDevDB() {
 	dropTables()
 	addTables()
 	fillTables()
-	// testDevTables()
+	testDevDB()
 	return
 
 }
@@ -113,10 +113,10 @@ func fillTables() {
 			UserId:   up.UserId,
 			UserName: up.UserName,
 		}
-		user.AddUserBasic(trans, ub)
+		err = user.AddUserBasic(trans, ub)
 		checkERROR(err)
 
-		auth.AddUserAuth(trans, up)
+		_, err = auth.AddUserAuth(trans, up)
 		checkERROR(err)
 	}
 
@@ -140,4 +140,23 @@ var dev_users = []*user.UserPass{
 	&user.UserPass{UserId: 100006, UserName: "demo6@domain.com", Password: "demopass"},
 	&user.UserPass{UserId: 100007, UserName: "demo7@domain.com", Password: "demopass"},
 	&user.UserPass{UserId: 100008, UserName: "demo8@domain.com", Password: "demopass"},
+}
+
+func testDevDB() {
+	for _, up := range dev_users {
+		u := user.GetUserBasicByUserId(TestDB, up.UserId)
+		if u == nil {
+			revel.ERROR.Println("Failed to look up user by id:", up.UserId)
+		}
+		u = user.GetUserBasicByName(TestDB, up.UserName)
+		if u == nil {
+			revel.ERROR.Println("Failed to look up user by name:", up.UserName)
+		}
+
+		a, err := auth.Authenticate(TestDB, up)
+		checkERROR(err)
+		if a == nil {
+			revel.ERROR.Printf("Failed to authenticate user: %+v\n", *up)
+		}
+	}
 }

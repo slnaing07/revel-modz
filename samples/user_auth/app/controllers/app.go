@@ -14,7 +14,32 @@ type App struct {
 	DbController
 }
 
+func (c App) RenderArgsFill() revel.Result {
+	if u := c.connected(); u != nil {
+		c.RenderArgs["user_basic"] = u
+	}
+	return nil
+}
+
+func (c App) connected() *user.UserBasic {
+	if c.RenderArgs["user_basic"] != nil {
+		return c.RenderArgs["user_basic"].(*user.UserBasic)
+	}
+	if username, ok := c.Session["user_basic"]; ok {
+		u := user.GetUserBasicByName(c.Txn, username)
+		if u == nil {
+			revel.WARN.Println("user_basic field in Session[] not found in DB")
+			return nil
+		}
+		return u
+	}
+	return nil
+}
+
 func (c App) Index() revel.Result {
+	if c.connected() != nil {
+		return c.Redirect(routes.User.Index())
+	}
 	return c.Render()
 }
 
@@ -32,8 +57,6 @@ func (c App) SignupPost(email, password, confirmPassword string) revel.Result {
 
 	c.Validation.Required(password == confirmPassword).Message("Passwords do not match")
 
-	// Check email is unique
-
 	// user.Validate(c.Validation)
 
 	if c.Validation.HasErrors() {
@@ -41,9 +64,21 @@ func (c App) SignupPost(email, password, confirmPassword string) revel.Result {
 		c.FlashParams()
 		return c.Redirect(routes.App.Signup())
 	}
+	// Check email is unique
+	UB := user.GetUserBasicByName(c.Txn, email)
+	if UB != nil {
+		revel.WARN.Printf("Duplicate Email found %+v\n", UB)
+		c.Flash.Out["message"] = "Email: " + email + " already used"
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.App.Signup())
+	}
 
-	// c.Session["user"] = user.Username
-	// c.Flash.Success("Welcome, " + user.Name)
+	c.Flash.Out["heading"] = "Thanks for Joining!"
+	c.Flash.Out["message"] = "Signup successful for " + email
+
+	c.Session["user"] = UB.UserName
+	c.RenderArgs["user_basic"] = UB
 	return c.Redirect(routes.User.Result())
 
 }
@@ -65,7 +100,7 @@ func (c App) RegisterPost(fname, mi, lname, email, dob, sex, address, city, stat
 	fmt.Println("zipcode", zipcode)
 	fmt.Println("phonenumber", phonenumber)
 	c.Flash.Out["heading"] = "RegisterPost"
-	c.Flash.Out["message"] = "You successfully registered."
+	c.Flash.Out["message"] = "You sorta-successfully fake-registered."
 	return c.Redirect(routes.App.Result())
 }
 
@@ -85,35 +120,47 @@ func (c App) LoginPost(email, password string) revel.Result {
 		return c.Redirect(routes.App.Login())
 	}
 
+	// check for user in basic table
 	UB := user.GetUserBasicByName(c.Txn, email)
 	if UB != nil {
 		revel.WARN.Printf("%+v\n", UB)
 		found = true
+	} else {
+		revel.WARN.Println("User not found: ", email)
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.App.Login())
 	}
 
+	// check for user in auth table
 	P := user.UserPass{UB.UserId, email, password}
 	U, err := auth.Authenticate(c.Txn, &P)
 	if err != nil {
 		revel.WARN.Println(err)
 	} else {
-		found = true
+		valid = true
 		revel.INFO.Println(U)
 	}
 
 	if found && valid {
 		c.Flash.Out["heading"] = "LOGIN PASS"
 		c.Flash.Out["message"] = "Login successful for " + email
+
+		c.Session["user"] = UB.UserName
+		c.RenderArgs["user_basic"] = UB
 		return c.Redirect(routes.User.Result())
 
 	} else {
 		c.Flash.Out["heading"] = "LOGIN FAIL"
 		c.Flash.Out["message"] = "Login failed for " + email
-		// c.Redirect(routes.App.Login())
+		c.Validation.Keep()
+		c.FlashParams()
+		c.Redirect(routes.App.Login())
 	}
 	return c.Redirect(routes.App.Result())
 }
 
-func (c App) Logout(name string) revel.Result {
+func (c App) Logout() revel.Result {
 	fmt.Printf("Deleting session keys...\n")
 	for k := range c.Session {
 		fmt.Printf("Deleting Session[%s]: '%s'\n", k, c.Session[k])

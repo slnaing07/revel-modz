@@ -91,9 +91,7 @@ func Authenticate(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
 
 	err = bcrypt.CompareHashAndPassword(ua.HashedPassword, []byte(user.AuthPass()))
 	if err != nil {
-		revel.ERROR.Println(string(user.AuthPass()))
-		revel.ERROR.Println(string(ua.HashedPassword))
-		return nil, err
+		return nil, errors.New("Password Fail")
 	}
 
 	return &ua, nil

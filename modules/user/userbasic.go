@@ -21,9 +21,9 @@ func AddUserBasic(db *gorm.DB, u *UserBasic) error {
 	return err
 }
 
-func GetUserBasicById(db *gorm.DB, id int) *UserBasic {
+func GetUserBasicById(db *gorm.DB, id int64) *UserBasic {
 	var user UserBasic
-	err := db.Where(&UserBasic{Id: int64(id)}).First(&user).Error
+	err := db.Where(&UserBasic{Id: id}).First(&user).Error
 	// TODO: change this to check error type
 	if err != nil {
 		revel.TRACE.Println(err)
@@ -38,9 +38,9 @@ func GetUserBasicById(db *gorm.DB, id int) *UserBasic {
 	return &user
 }
 
-func GetUserBasicByUserId(db *gorm.DB, userid int) *UserBasic {
+func GetUserBasicByUserId(db *gorm.DB, userid int64) *UserBasic {
 	var user UserBasic
-	err := db.Where(&UserBasic{UserId: int64(userid)}).First(&user).Error
+	err := db.Where(&UserBasic{UserId: userid}).First(&user).Error
 	// TODO: change this to check error type
 	if err != nil {
 		revel.TRACE.Println(err)

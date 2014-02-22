@@ -24,10 +24,15 @@
             <li class="divider"></li></li>
         </ul>
         <!-- END Left Nav Section -->
-
+        {{if .user_basic}}
+        <ul class="right">
+            <li><a href="/logout" class="button">Logout</a></li>
+        </ul>
+        {{else}}
         <ul class="right">
             <li><a href="/login" class="button">Login</a></li>
         </ul>
+        {{end}}
 
     </section>
 
