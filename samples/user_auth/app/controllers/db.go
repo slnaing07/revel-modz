@@ -1,15 +1,9 @@
 package controllers
 
 import (
-	// "database/sql"
-
-	"code.google.com/p/go.crypto/bcrypt"
-	"github.com/robfig/revel"
-
 	gorm "github.com/jinzhu/gorm"
-	// "github.com/coopernurse/gorp"
 	_ "github.com/lib/pq"
-	// _ "github.com/mattn/go-sqlite3"
+	"github.com/robfig/revel"
 
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/user"
@@ -29,10 +23,7 @@ type DbController struct {
 func (c *DbController) Begin() revel.Result {
 	txn := TestDB.Begin()
 	err := txn.Error
-	// txn, err := TestDB.Begin()
-	if err != nil {
-		panic(err)
-	}
+	checkPANIC(err)
 	c.Txn = txn
 	return nil
 }
@@ -41,9 +32,9 @@ func (c *DbController) Commit() revel.Result {
 	if c.Txn == nil {
 		return nil
 	}
-	if err := c.Txn.Commit().Error; err != nil {
-		panic(err)
-	}
+	err := c.Txn.Commit().Error
+	checkPANIC(err)
+
 	c.Txn = nil
 	return nil
 }
@@ -52,14 +43,14 @@ func (c *DbController) Rollback() revel.Result {
 	if c.Txn == nil {
 		return nil
 	}
-	if err := c.Txn.Rollback().Error; err != nil {
-		panic(err)
-	}
+	err := c.Txn.Rollback().Error
+	checkPANIC(err)
+
 	c.Txn = nil
 	return nil
 }
 
-func InitTestDB() {
+func InitDB() {
 
 	var driver, spec string
 	var found bool
@@ -72,100 +63,81 @@ func InitTestDB() {
 
 	// Open a connection.
 	ndb, err := gorm.Open(driver, spec)
-	if err != nil {
-		revel.ERROR.Fatal(err)
-	}
+	checkPANIC(err)
 
 	ndb.SetLogger(gorm.Logger{revel.INFO})
 	TestDB = &ndb
 
 	revel.INFO.Println("Connection made to DB")
+}
 
-	initTestDB_Tables()
-	fillTestDB_AuthTable()
-	testTestDB_AuthTable()
+func SetupTables() {
+	addTables()
+}
+
+func SetupDevDB() {
+
+	dropTables()
+	addTables()
+	fillTables()
+	// testDevTables()
 	return
 
 }
 
-func initTestDB_Tables() {
+func dropTables() {
+
+	TestDB.DropTable(auth.UserAuth{})
+	TestDB.DropTable(user.UserBasic{})
+
+}
+
+func addTables() {
 
 	TestDB.AutoMigrate(auth.UserAuth{})
-	TestDB.AutoMigrate(UserBasic{})
+	TestDB.AutoMigrate(user.UserBasic{})
 
 }
 
-func fillTestDB_AuthTable() {
-	bp, _ := bcrypt.GenerateFromPassword([]byte("demo"), bcrypt.DefaultCost)
-	ua := &auth.UserAuth{UserId: 100001, HashedPassword: bp}
-	ub := &UserBasic{UserId: 100001, Email: "demo@domain.com"}
+func fillTables() {
 
 	// Start a new transaction
 	// trans, err := TestDB.Begin()
 	trans := TestDB.Begin()
 	err := trans.Error
-	if err != nil {
-		revel.ERROR.Println(err)
-	}
+	checkERROR(err)
 
-	// err = trans.Insert(ua)
-	err = trans.Save(ua).Error
-	if err != nil {
-		revel.ERROR.Println(err)
-	}
+	for _, up := range dev_users {
 
-	err = trans.Save(ub).Error
-	if err != nil {
-		revel.ERROR.Println(err)
+		ub := &user.UserBasic{
+			UserId:   up.UserId,
+			UserName: up.UserName,
+		}
+		user.AddUserBasic(trans, ub)
+		checkERROR(err)
+
+		auth.AddUserAuth(trans, up)
+		checkERROR(err)
 	}
 
 	// if the commit is successful, a nil error is returned
 	err = trans.Commit().Error
-	if err != nil {
-		revel.ERROR.Println(err)
-	}
+	checkERROR(err)
 
 	if err != nil {
-		revel.ERROR.Println("Unable to add demo to AuthTable")
+		revel.ERROR.Println("Unable to fill DB")
 	} else {
-		revel.INFO.Println("ADDED demo to AuthTable")
+		revel.INFO.Println("Filled DB tables")
 	}
 }
 
-type UserTest struct {
-	UserId   int64
-	Password string
-}
-
-func (u UserTest) AuthId() int64 {
-	return u.UserId
-}
-
-func (u UserTest) AuthSecret() string {
-	return u.Password
-	// bp, _ := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
-	// return bp
-}
-
-func testTestDB_AuthTable() {
-	user := UserTest{100001, "demo"}
-	revel.WARN.Println(user)
-
-	// Start a new transaction
-	// trans, err := TestDB.Begin()
-	trans := TestDB.Begin()
-	err := trans.Error
-	if err != nil {
-		revel.ERROR.Println(err)
-	}
-
-	user_auth := auth.CheckUserAuth(trans, user)
-	revel.WARN.Println(user_auth)
-
-	// if the commit is successful, a nil error is returned
-	err = trans.Commit().Error
-	if err != nil {
-		revel.ERROR.Println(err)
-	}
-
+var dev_users = []*user.UserPass{
+	&user.UserPass{UserId: 100001, UserName: "demo1@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 100002, UserName: "demo2@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 100003, UserName: "demo3@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 100004, UserName: "demo4@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 100005, UserName: "demo5@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 100006, UserName: "demo6@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 100007, UserName: "demo7@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 100008, UserName: "demo8@domain.com", Password: "demopass"},
 }

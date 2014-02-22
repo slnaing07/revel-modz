@@ -17,9 +17,13 @@ GET		/login									App.Login
 POST    /login 									App.LoginPost
 POST    /logout									App.Logout
 
+
+GET     /u/                                     User.Index
+GET     /u/result                               User.Result
+
+
 # github.com/iassic/revel-modz/module/assets   (/ipa)
 module:ipa
-
 
 
 # Don't ignore favicon requests

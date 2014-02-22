@@ -1,4 +1,4 @@
-package controllers
+package user
 
 import (
 	"time"
@@ -7,12 +7,38 @@ import (
 	// "github.com/robfig/revel"
 )
 
+type UserInterface interface {
+	GetUserId() int64
+	GetUserName() string
+}
+
+// Convenience struct for the User/Auth interfaces
+// Not stored in DB
+type UserPass struct {
+	UserId   int64
+	UserName string
+	Password string
+}
+
+func (u UserPass) AuthId() int64 {
+	return u.UserId
+}
+
+func (u UserPass) AuthPass() string {
+	return u.Password
+}
+
+func (u UserPass) GetUserId() int64 {
+	return u.UserId
+}
+
+func (u UserPass) GetUserName() string {
+	return u.UserName
+}
+
+// Union of all the User* tables
 type User struct {
-	Id        int64
-	UserId    int64
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
+	UserId int64
 
 	Basic   UserBasic
 	Detail  UserDetail

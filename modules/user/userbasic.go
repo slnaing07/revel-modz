@@ -1,4 +1,4 @@
-package controllers
+package user
 
 import (
 	"time"
@@ -8,15 +8,20 @@ import (
 )
 
 type UserBasic struct {
-	Id     int64 // Primary Key form Gorm
-	UserId int64 // Unique identifier per user across all tables
-	Email  string
+	Id       int64 // Primary Key form Gorm
+	UserId   int64 // Unique identifier per user across all tables
+	UserName string
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-func GetUserById(db *gorm.DB, id int) *UserBasic {
+func AddUserBasic(db *gorm.DB, u *UserBasic) error {
+	err := db.Save(*u).Error
+	return err
+}
+
+func GetUserBasicById(db *gorm.DB, id int) *UserBasic {
 	var user UserBasic
 	err := db.Where(&UserBasic{Id: int64(id)}).First(&user).Error
 	// TODO: change this to check error type
@@ -33,7 +38,7 @@ func GetUserById(db *gorm.DB, id int) *UserBasic {
 	return &user
 }
 
-func GetUserByUserId(db *gorm.DB, userid int) *UserBasic {
+func GetUserBasicByUserId(db *gorm.DB, userid int) *UserBasic {
 	var user UserBasic
 	err := db.Where(&UserBasic{UserId: int64(userid)}).First(&user).Error
 	// TODO: change this to check error type
@@ -50,16 +55,16 @@ func GetUserByUserId(db *gorm.DB, userid int) *UserBasic {
 	return &user
 }
 
-func GetUserByEmail(db *gorm.DB, email string) *UserBasic {
+func GetUserBasicByName(db *gorm.DB, name string) *UserBasic {
 	var user UserBasic
-	err := db.Where(&UserBasic{Email: email}).First(&user).Error
+	err := db.Where(&UserBasic{UserName: name}).First(&user).Error
 	// TODO: change this to check error type
 	if err != nil {
 		revel.TRACE.Println(err)
 		return nil
 	}
 
-	if user.Email != email {
+	if user.UserName != name {
 		return nil
 	}
 

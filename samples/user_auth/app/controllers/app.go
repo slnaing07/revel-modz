@@ -5,21 +5,20 @@ import (
 
 	"github.com/robfig/revel"
 
+	"github.com/iassic/revel-modz/modules/auth"
+	"github.com/iassic/revel-modz/modules/user"
 	"github.com/iassic/revel-modz/samples/user_auth/app/routes"
 )
 
 type App struct {
-	*revel.Controller
+	DbController
 }
 
 func (c App) Index() revel.Result {
 	return c.Render()
 }
 
-func (c App) Result(heading, message string) revel.Result {
-	c.Flash.Out["heading"] = heading
-	c.Flash.Out["message"] = message
-
+func (c App) Result() revel.Result {
 	return c.Render()
 }
 
@@ -28,11 +27,14 @@ func (c App) Signup() revel.Result {
 }
 
 func (c App) SignupPost(email, password, confirmPassword string) revel.Result {
-	c.Validation.Required(email)
-	c.Validation.Required(password)
+	c.Validation.Required(email).Message("Email required")
+	c.Validation.Required(password).Message("Password required")
 
-	c.Validation.Required(confirmPassword == user.Password).Message("Password does not match")
-	user.Validate(c.Validation)
+	c.Validation.Required(password == confirmPassword).Message("Passwords do not match")
+
+	// Check email is unique
+
+	// user.Validate(c.Validation)
 
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
@@ -40,12 +42,10 @@ func (c App) SignupPost(email, password, confirmPassword string) revel.Result {
 		return c.Redirect(routes.App.Signup())
 	}
 
-	user.HashedPassword, _ = bcrypt.GenerateFromPassword(
-		[]byte(user.Password), bcrypt.DefaultCost)
-	err := c.Txn.Insert(&user)
-	if err != nil {
-		panic(err)
-	}
+	// c.Session["user"] = user.Username
+	// c.Flash.Success("Welcome, " + user.Name)
+	return c.Redirect(routes.User.Result())
+
 }
 
 func (c App) Register() revel.Result {
@@ -64,6 +64,7 @@ func (c App) RegisterPost(fname, mi, lname, email, dob, sex, address, city, stat
 	fmt.Println("state", state)
 	fmt.Println("zipcode", zipcode)
 	fmt.Println("phonenumber", phonenumber)
+	c.Flash.Out["heading"] = "RegisterPost"
 	c.Flash.Out["message"] = "You successfully registered."
 	return c.Redirect(routes.App.Result())
 }
@@ -72,20 +73,51 @@ func (c App) Login() revel.Result {
 	return c.Render()
 }
 
-func (c App) LoginPost(email, password) revel.Result {
-	c.Validation.Required(email)
-	c.Validation.Required(password)
+func (c App) LoginPost(email, password string) revel.Result {
+	var found, valid bool
+
+	c.Validation.Required(email).Message("Email required")
+	c.Validation.Required(password).Message("Password required")
 
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
-		return c.Redirect(routes.Application.Register())
+		return c.Redirect(routes.App.Login())
 	}
 
-	user.HashedPassword, _ = bcrypt.GenerateFromPassword(
-		[]byte(user.Password), bcrypt.DefaultCost)
-	err := c.Txn.Insert(&user)
-	if err != nil {
-		panic(err)
+	UB := user.GetUserBasicByName(c.Txn, email)
+	if UB != nil {
+		revel.WARN.Printf("%+v\n", UB)
+		found = true
 	}
+
+	P := user.UserPass{UB.UserId, email, password}
+	U, err := auth.Authenticate(c.Txn, &P)
+	if err != nil {
+		revel.WARN.Println(err)
+	} else {
+		found = true
+		revel.INFO.Println(U)
+	}
+
+	if found && valid {
+		c.Flash.Out["heading"] = "LOGIN PASS"
+		c.Flash.Out["message"] = "Login successful for " + email
+		return c.Redirect(routes.User.Result())
+
+	} else {
+		c.Flash.Out["heading"] = "LOGIN FAIL"
+		c.Flash.Out["message"] = "Login failed for " + email
+		// c.Redirect(routes.App.Login())
+	}
+	return c.Redirect(routes.App.Result())
+}
+
+func (c App) Logout(name string) revel.Result {
+	fmt.Printf("Deleting session keys...\n")
+	for k := range c.Session {
+		fmt.Printf("Deleting Session[%s]: '%s'\n", k, c.Session[k])
+		delete(c.Session, k)
+	}
+	return c.Redirect(routes.App.Index())
 }

@@ -44,8 +44,15 @@ func init() {
 	revel.InterceptMethod((*ctrl.DbController).Rollback, revel.FINALLY)
 	// revel.InterceptMethod((*ctrl.DbController).GetUserLogin, revel.BEFORE)
 
-	// add module Init funcs to startup phase
-	revel.OnAppStart(ctrl.InitTestDB)
+	revel.OnAppStart(func() {
+		ctrl.InitDB()
+		if revel.RunMode == "dev" {
+			ctrl.SetupDevDB()
+		}
+		if revel.RunMode == "prod" {
+			ctrl.SetupTables()
+		}
+	})
 
 }
 

@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"errors"
 	"time"
 
 	"code.google.com/p/go.crypto/bcrypt"
@@ -10,7 +11,7 @@ import (
 
 type UserAuthInterface interface {
 	AuthId() int64
-	AuthSecret() string
+	AuthPass() string
 }
 
 type UserAuth struct {
@@ -53,19 +54,67 @@ type UserAuthReset struct {
 	ResetPasswordEmailSentAt    time.Time
 }
 
-func CheckUserAuth(db *gorm.DB, user UserAuthInterface) *UserAuth {
-	var ua UserAuth
-	err := db.Where(&UserAuth{UserId: user.AuthId()}).Find(&ua).Error
-	if err != nil {
-		revel.ERROR.Println("Error looking up user", err)
+func AddUserAuth(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
+
+	hPass, _ := bcrypt.GenerateFromPassword([]byte(user.AuthPass()), bcrypt.DefaultCost)
+
+	ua := UserAuth{
+		UserId:         user.AuthId(),
+		HashedPassword: hPass,
 	}
 
-	err = bcrypt.CompareHashAndPassword(ua.HashedPassword, []byte(user.AuthSecret()))
-	if err == nil {
-		return &ua
-	} else {
-		revel.ERROR.Println(string(user.AuthSecret()))
-		revel.ERROR.Println(string(ua.HashedPassword))
-		return nil
+	if !checkUserExistsById(db, user) {
+		err := db.Save(ua).Error
+		if err != nil {
+			return nil, err
+		}
 	}
+
+	return &ua, nil
+
+}
+
+func Authenticate(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
+	var ua UserAuth
+	err := db.Where(&UserAuth{UserId: user.AuthId()}).Find(&ua).Error
+	// TODO: change this to check error type  No Record Found can be returned
+	if err != nil {
+		revel.ERROR.Println("Error looking up user", err)
+		return nil, err
+	}
+
+	// TODO make this check better
+	// ua.UserId should be 0 when no record found
+	if user.AuthId() != int64(ua.UserId) {
+		return nil, errors.New("Record Not Found")
+	}
+
+	err = bcrypt.CompareHashAndPassword(ua.HashedPassword, []byte(user.AuthPass()))
+	if err != nil {
+		revel.ERROR.Println(string(user.AuthPass()))
+		revel.ERROR.Println(string(ua.HashedPassword))
+		return nil, err
+	}
+
+	return &ua, nil
+}
+
+func checkUserExistsById(db *gorm.DB, user UserAuthInterface) bool {
+	var ua UserAuth
+	err := db.Where(&UserAuth{UserId: user.AuthId()}).Find(&ua).Error
+	if err == gorm.RecordNotFound {
+		return false
+	}
+
+	if err != nil {
+		revel.ERROR.Println("Error looking up user", err)
+		return false
+	}
+
+	// TODO make this check better
+	if user.AuthId() == int64(ua.UserId) {
+		return true
+	}
+
+	return false
 }

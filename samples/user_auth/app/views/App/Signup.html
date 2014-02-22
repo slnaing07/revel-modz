@@ -1,0 +1,54 @@
+{{set . "title" "Index"}}
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+    <div class="large-6 large-centered small-8 small-centered columns">
+        <div class="panel">
+            <h5>Welcome</h5>
+
+            <div class="row">
+                <div class="large-6 small-12 columns">
+                    <form data-abide>
+                        <fieldset>
+                            <legend>Join for Free</legend>
+                            <input type="hidden" name="csrf_token" value="{{ .csrf_token }}" />
+
+                            <div class="large-12 columns">
+                                <label for="email">Email <small>required</small>
+                                    <input type="email" id="email" name="email" placeholder="user@domain.com" required>
+                                </label>
+                                <small class="error">Valid email required.</small>
+                            </div>
+                            <div class="large-12 columns">
+                                <label for="password">Password <small>required</small>
+                                    <input type="password" id="password" placeholder="pa55woRd%" name="password" required>
+                                </label>
+                                <small class="error">Passwords must be at least 8 characters with 1 capital letter, 1 number, and one special character.</small>
+                            </div>
+                            <div class="large-12 columns">
+                                <label for="confirmPassword">Confirm Password <small>required</small>
+                                    <input type="password" id="confirmPassword" placeholder="pa55woRd%" name="confirmPassword" required data-equalto="password">
+                                </label>
+                                <small class="error">Passwords must match.</small>
+                            </div>
+
+                            <button type="submit" class="medium button green">Signup</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-6 small-12 columns">
+                </div>
+                <div class="large-6 small-12 columns">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{template "templates/footer.html" .}}
