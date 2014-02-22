@@ -1,0 +1,15 @@
+{{set . "title" "User Result"}}
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+    <div class="large-6 large-centered columns">
+        <div class="panel">
+            <h5>{{.flash.heading}}</h5>
+            {{.flash.message}}
+        </div>
+    </div>
+</div>
+
+{{template "templates/footer.html" .}}
