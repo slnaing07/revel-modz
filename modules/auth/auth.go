@@ -14,24 +14,28 @@ type UserAuthInterface interface {
 }
 
 type UserAuth struct {
-	Id             int64
-	UserId         int64  `sql:"not null;unique"`
-	HashedPassword []byte `sql:"not null"`
-
-	FailedLoginsCount int32
-	LockExpiresAt     time.Time
-
+	Id        int64
+	UserId    int64 `sql:"not null;unique"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt time.Time
+
+	HashedPassword []byte `sql:"not null"`
 
 	Activated bool
 	ResetPass bool
+
+	LastLoginAt  time.Time
+	LastLogoutAt time.Time
+
+	FailedLoginsCount int32
+	LockExpiresAt     time.Time
 }
 
 type UserAuthActivate struct {
-	Id     int64
-	UserId int64
+	Id        int64
+	UserId    int64
+	CreatedAt time.Time
+	UpdatedAt time.Time
 
 	ActivateAccountToken          string
 	ActivateAccountTokenExpiresAt time.Time
@@ -39,8 +43,10 @@ type UserAuthActivate struct {
 }
 
 type UserAuthReset struct {
-	Id     int64
-	UserId int64
+	Id        int64
+	UserId    int64
+	CreatedAt time.Time
+	UpdatedAt time.Time
 
 	ResetPasswordToken          string
 	ResetPasswordTokenExpiresAt time.Time

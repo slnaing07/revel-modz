@@ -1,0 +1,121 @@
+{{set . "title" "Register"}}
+
+{{set . "foundation_css" true}}
+{{set . "foundation_js" true}}
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+    <div class="large-6 large-centered columns">
+        <div class="panel">
+
+              <form action="/register" method="POST" data-abide>
+
+                <input type="hidden" name="csrf_token" value="{{ .csrf_token }}" />
+                
+                <div class="row">
+                    <div class="large-5 columns">
+                        <div class="firstname-field">
+                            <label>First Name
+                        	<small>required</small>
+                                <input type="text" required pattern="[a-zA-Z]+" name="fname">
+                            </label>
+                            <small class="error">Your first name is required and must be a string.</small>
+                        </div>
+                    </div>
+
+
+                    <div class="large-2 columns">
+                        <div class="mi-field">
+                            <label>MI
+                                <input type="text" name="mi">
+                            </label>
+                            <small class="error">Your middle initial is required.</small>
+                        </div>
+                    </div>
+
+
+                    <div class="large-5 columns">
+                        <div class="lastname-field">
+                            <label>Your Last Name
+                                <input type="text" name="lname">
+                            </label>
+                            <small class="error">Your last name is required and must be a string.</small>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="email-field">
+                    <label>Email
+                        <input type="email" name="email">
+                    </label>
+                    <small class="error">An email address is required.</small>
+                </div>
+
+
+                <div class="dob-field">
+                    <label>Date of Birth
+                        <input type="text" name="dob">
+                    </label>
+                    <small class="error">Your date of birth is required.</small>
+                </div>
+
+
+                <div class="sex-field">
+                    <label>Sex
+                        <input type="text" name="sex">
+                    </label>
+                    <small class="error">Enter male or female.</small>
+                </div>
+
+
+                <div class="address-field">
+                    <label>Address
+                        <input type="text" name="address">
+                    </label>
+                    <small class="error">Your address is required.</small>
+                </div>
+
+
+                <div class="city-field">
+                    <label>City
+                        <input type="text" name="city">
+                    </label>
+                    <small class="error">Enter city name.</small>
+                </div>
+
+
+                <div class="state-field">
+                    <label>State
+                        <input type="text" name="state">
+                    </label>
+                    <small class="error">Enter state name.</small>
+                </div>
+
+
+                <div class="zipcode-field">
+                    <label>Zip Code
+                        <input type="text" name="zipcode">
+                    </label>
+                    <small class="error">Your zip code is required.</small>
+                </div>
+
+
+                <div class="phone-field">
+                    <label>Phone Number
+                        <input type="text" name="phonenumber">
+                    </label>
+                    <small class="error">Your phone number is required.</small>
+                </div>
+
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{template "templates/links.html" .}}
+{{template "templates/footer.html" .}}
