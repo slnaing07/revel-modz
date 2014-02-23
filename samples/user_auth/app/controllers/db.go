@@ -102,11 +102,6 @@ func addTables() {
 
 func fillTables() {
 
-	// Start a new transaction
-	// trans, err := TestDB.Begin()
-	// trans := TestDB.Begin()
-	// err := trans.Error
-	// checkERROR(err)
 	var err error
 
 	for _, up := range dev_users {
@@ -128,21 +123,9 @@ func fillTables() {
 			revel.ERROR.Println("Should have updated_at after create")
 		}
 
-		revel.WARN.Printf("%+v\n", *ub)
-
 		_, err = auth.AddUserAuth(TestDB, up)
 		checkERROR(err)
 	}
-
-	// if the commit is successful, a nil error is returned
-	// err = trans.Commit().Error
-	// checkERROR(err)
-
-	// if err != nil {
-	// 	revel.ERROR.Println("Unable to fill DB")
-	// } else {
-	// 	revel.INFO.Println("Filled DB tables")
-	// }
 }
 
 var dev_users = []*user.UserPass{

@@ -19,6 +19,7 @@ type UserAuth struct {
 	UserId    int64 `sql:"not null;unique"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 
 	HashedPassword []byte `sql:"not null"`
 
@@ -58,7 +59,7 @@ func AddUserAuth(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
 
 	hPass, _ := bcrypt.GenerateFromPassword([]byte(user.AuthPass()), bcrypt.DefaultCost)
 
-	ua := UserAuth{
+	ua := &UserAuth{
 		UserId:         user.AuthId(),
 		HashedPassword: hPass,
 	}
@@ -66,6 +67,7 @@ func AddUserAuth(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
 	if !checkUserExistsById(db, user) {
 		err := db.Save(ua).Error
 		if err != nil {
+			revel.ERROR.Println("saving user: ", err)
 			return nil, err
 		}
 	}
@@ -80,7 +82,7 @@ func AddUserAuth(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
 		revel.ERROR.Println("Should have updated_at after auth create")
 	}
 
-	return &ua, nil
+	return ua, nil
 
 }
 
