@@ -15,7 +15,7 @@ POST	/register								App.RegisterPost
 
 GET		/login									App.Login
 POST    /login 									App.LoginPost
-POST    /logout									App.Logout
+GET     /logout									App.Logout
 
 
 GET     /u/                                     User.Index

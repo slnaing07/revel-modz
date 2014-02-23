@@ -19,6 +19,7 @@ type UserAuth struct {
 	UserId    int64 `sql:"not null;unique"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 
 	HashedPassword []byte `sql:"not null"`
 
@@ -58,7 +59,7 @@ func AddUserAuth(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
 
 	hPass, _ := bcrypt.GenerateFromPassword([]byte(user.AuthPass()), bcrypt.DefaultCost)
 
-	ua := UserAuth{
+	ua := &UserAuth{
 		UserId:         user.AuthId(),
 		HashedPassword: hPass,
 	}
@@ -66,11 +67,12 @@ func AddUserAuth(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
 	if !checkUserExistsById(db, user) {
 		err := db.Save(ua).Error
 		if err != nil {
+			revel.TRACE.Println("saving user: ", err)
 			return nil, err
 		}
 	}
 
-	return &ua, nil
+	return ua, nil
 
 }
 
@@ -79,7 +81,7 @@ func Authenticate(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
 	err := db.Where(&UserAuth{UserId: user.AuthId()}).Find(&ua).Error
 	// TODO: change this to check error type  No Record Found can be returned
 	if err != nil {
-		revel.ERROR.Println("Error looking up user", err)
+		revel.TRACE.Println("Error looking up user", err)
 		return nil, err
 	}
 
@@ -105,7 +107,7 @@ func checkUserExistsById(db *gorm.DB, user UserAuthInterface) bool {
 	}
 
 	if err != nil {
-		revel.ERROR.Println("Error looking up user", err)
+		revel.TRACE.Println("Error looking up user", err)
 		return false
 	}
 

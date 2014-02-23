@@ -6,6 +6,8 @@ import (
 	"github.com/cbonello/revel-csrf"
 	"github.com/iassic/revel-modz/modules/grunt"
 	"github.com/robfig/revel"
+
+	ctrl "{{.BasePath}}{{.AppName}}/app/controllers"
 )
 
 // in your app initialization..
@@ -32,6 +34,25 @@ func init() {
 			path := filepath.Join(appPath, AC.Path)
 			revel.INFO.Printf("Listening: %q\n", path)
 			revel.MainWatcher.Listen(AC, path)
+		}
+	})
+
+	// DB related stuff
+	// add interceptors
+	revel.InterceptMethod((*ctrl.DbController).Begin, revel.BEFORE)
+	revel.InterceptMethod(ctrl.App.RenderArgsFill, revel.BEFORE)
+	revel.InterceptMethod(ctrl.User.CheckLoggedIn, revel.BEFORE)
+	revel.InterceptMethod((*ctrl.DbController).Commit, revel.AFTER)
+	revel.InterceptMethod((*ctrl.DbController).Rollback, revel.FINALLY)
+	// revel.InterceptMethod((*ctrl.DbController).GetUserLogin, revel.BEFORE)
+
+	revel.OnAppStart(func() {
+		ctrl.InitDB()
+		if revel.RunMode == "dev" {
+			ctrl.SetupDevDB()
+		}
+		if revel.RunMode == "prod" {
+			ctrl.SetupTables()
 		}
 	})
 

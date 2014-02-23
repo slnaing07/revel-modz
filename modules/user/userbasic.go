@@ -17,7 +17,7 @@ type UserBasic struct {
 }
 
 func AddUserBasic(db *gorm.DB, u *UserBasic) error {
-	err := db.Save(*u).Error
+	err := db.Save(u).Error
 	return err
 }
 
