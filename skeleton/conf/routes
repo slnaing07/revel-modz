@@ -5,16 +5,25 @@
 module:testrunner
 
 GET     /                                       App.Index
-POST    / 		                                App.IndexPost
 GET     /result                                 App.Result
+
+GET     /signup	                                App.Signup
+POST    /signup	                                App.SignupPost
 
 GET		/register								App.Register
 POST	/register								App.RegisterPost
 
+GET		/login									App.Login
+POST    /login 									App.LoginPost
+GET     /logout									App.Logout
+
+
+GET     /u/                                     User.Index
+GET     /u/result                               User.Result
+
 
 # github.com/iassic/revel-modz/module/assets   (/ipa)
 module:ipa
-
 
 
 # Don't ignore favicon requests

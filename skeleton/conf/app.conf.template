@@ -33,8 +33,8 @@ module.static  = github.com/robfig/revel/modules/static
 # revel-modz modules
 module.ipa     = github.com/iassic/revel-modz/modules/assets
 module.grunt   = github.com/iassic/revel-modz/modules/grunt
-# module.user    = github.com/iassic/revel-modz/modules/user
-# module.auth    = github.com/iassic/revel-modz/modules/auth
+module.user    = github.com/iassic/revel-modz/modules/user
+module.auth    = github.com/iassic/revel-modz/modules/auth
 
 
 [dev]

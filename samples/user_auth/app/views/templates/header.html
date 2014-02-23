@@ -8,7 +8,13 @@
     <meta name="viewport" content="width=device-width" />
 
     <!--  app css includes -->
-    <link rel="stylesheet" type="text/css" charset="utf-8" href="/public/css/user_auth.css" />
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="/ipa/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" charset="utf-8" href="/ipa/css/foundation.min.css" />
+    <!-- <link rel="stylesheet" type="text/css" charset="utf-8" href="/public/css/foundation-custom.min.css" /> -->
+
+    {{range .moreStyles}}
+      <link rel="stylesheet" type="text/css" href="{{.}}">
+    {{end}}
 
     <script src="/ipa/js/head.load.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/ipa/js/modernizr.js" type="text/javascript" charset="utf-8"></script>
@@ -17,15 +23,20 @@
     <script>
     head.ready(function() {
 
-        
+        {{if .foundation_js}}
+        $(document).foundation();
+        {{end}}
     })
     head
-        .js({jquery: "/ipa/js/jquery-2.0.3.min.js"})
-        .js({foundation_css: "/ipa/css/foundation.min.css"})  // default foundation css
+        .js({jquery: "/ipa/js/jquery-2.1.0.min.js"})
         .js({foundation_js: "/ipa/js/foundation.min.js"})     // default foundation js
-        // .js({foundation_css: "/public/css/foundation-custom.min.css"})  // custom foundation css
         // .js({foundation_js: "/public/js/foundation-custom.min.js"})     // custom foundation js
-        .js({ user_auth_css: "/public/css/user_auth.css"})
+
+        {{range $index, $element := .moreScripts}}
+            .js({extrascript_{{$index}}: "{{$element}}")     // default foundation js
+        {{end}}
+
+        .js({ user_auth_js: "/public/css/user_auth.css"})
         .js({ user_auth_js: "/public/js/user_auth.min.js"})
 
     </script>

@@ -6,7 +6,7 @@ import (
 	"github.com/robfig/revel"
 	// "github.com/iassic/revel-modz/modules/user"
 
-	"github.com/iassic/revel-modz/samples/user_auth/app/routes"
+	"{{.BasePath}}{{.AppName}}/app/routes"
 )
 
 type User struct {
