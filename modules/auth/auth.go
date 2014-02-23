@@ -67,19 +67,9 @@ func AddUserAuth(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
 	if !checkUserExistsById(db, user) {
 		err := db.Save(ua).Error
 		if err != nil {
-			revel.ERROR.Println("saving user: ", err)
+			revel.TRACE.Println("saving user: ", err)
 			return nil, err
 		}
-	}
-
-	created_at := ua.CreatedAt
-	updated_at := ua.UpdatedAt
-
-	if created_at.IsZero() {
-		revel.ERROR.Println("Should have created_at after auth create")
-	}
-	if updated_at.IsZero() {
-		revel.ERROR.Println("Should have updated_at after auth create")
 	}
 
 	return ua, nil
@@ -91,7 +81,7 @@ func Authenticate(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {
 	err := db.Where(&UserAuth{UserId: user.AuthId()}).Find(&ua).Error
 	// TODO: change this to check error type  No Record Found can be returned
 	if err != nil {
-		revel.ERROR.Println("Error looking up user", err)
+		revel.TRACE.Println("Error looking up user", err)
 		return nil, err
 	}
 
@@ -117,7 +107,7 @@ func checkUserExistsById(db *gorm.DB, user UserAuthInterface) bool {
 	}
 
 	if err != nil {
-		revel.ERROR.Println("Error looking up user", err)
+		revel.TRACE.Println("Error looking up user", err)
 		return false
 	}
 

@@ -73,11 +73,13 @@ func InitDB() {
 }
 
 func SetupTables() {
+	revel.INFO.Println("Setting up Prod DB")
 	addTables()
 }
 
 func SetupDevDB() {
 
+	revel.INFO.Println("Setting up Dev DB")
 	dropTables()
 	addTables()
 	fillTables()
@@ -88,6 +90,7 @@ func SetupDevDB() {
 
 func dropTables() {
 
+	revel.INFO.Println("Dropping tables")
 	TestDB.DropTable(auth.UserAuth{})
 	TestDB.DropTable(user.UserBasic{})
 
@@ -95,6 +98,7 @@ func dropTables() {
 
 func addTables() {
 
+	revel.INFO.Println("AutoMigrate tables")
 	TestDB.AutoMigrate(auth.UserAuth{})
 	TestDB.AutoMigrate(user.UserBasic{})
 
@@ -126,6 +130,8 @@ func fillTables() {
 		_, err = auth.AddUserAuth(TestDB, up)
 		checkERROR(err)
 	}
+
+	revel.INFO.Println("Filled DBs")
 }
 
 var dev_users = []*user.UserPass{

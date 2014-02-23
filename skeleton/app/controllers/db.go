@@ -66,17 +66,20 @@ func InitDB() {
 	checkPANIC(err)
 
 	ndb.SetLogger(gorm.Logger{revel.INFO})
+
 	TestDB = &ndb
 
 	revel.INFO.Println("Connection made to DB")
 }
 
 func SetupTables() {
+	revel.INFO.Println("Setting up Prod DB")
 	addTables()
 }
 
 func SetupDevDB() {
 
+	revel.INFO.Println("Setting up Dev DB")
 	dropTables()
 	addTables()
 	fillTables()
@@ -87,6 +90,7 @@ func SetupDevDB() {
 
 func dropTables() {
 
+	revel.INFO.Println("Dropping tables")
 	TestDB.DropTable(auth.UserAuth{})
 	TestDB.DropTable(user.UserBasic{})
 
@@ -94,6 +98,7 @@ func dropTables() {
 
 func addTables() {
 
+	revel.INFO.Println("AutoMigrate tables")
 	TestDB.AutoMigrate(auth.UserAuth{})
 	TestDB.AutoMigrate(user.UserBasic{})
 
@@ -101,11 +106,7 @@ func addTables() {
 
 func fillTables() {
 
-	// Start a new transaction
-	// trans, err := TestDB.Begin()
-	trans := TestDB.Begin()
-	err := trans.Error
-	checkERROR(err)
+	var err error
 
 	for _, up := range dev_users {
 
@@ -113,22 +114,24 @@ func fillTables() {
 			UserId:   up.UserId,
 			UserName: up.UserName,
 		}
-		err = user.AddUserBasic(trans, ub)
+		err = user.AddUserBasic(TestDB, ub)
 		checkERROR(err)
 
-		_, err = auth.AddUserAuth(trans, up)
+		created_at := ub.CreatedAt
+		updated_at := ub.UpdatedAt
+
+		if created_at.IsZero() {
+			revel.ERROR.Println("Should have created_at after create")
+		}
+		if updated_at.IsZero() {
+			revel.ERROR.Println("Should have updated_at after create")
+		}
+
+		_, err = auth.AddUserAuth(TestDB, up)
 		checkERROR(err)
 	}
 
-	// if the commit is successful, a nil error is returned
-	err = trans.Commit().Error
-	checkERROR(err)
-
-	if err != nil {
-		revel.ERROR.Println("Unable to fill DB")
-	} else {
-		revel.INFO.Println("Filled DB tables")
-	}
+	revel.INFO.Println("Filled DBs")
 }
 
 var dev_users = []*user.UserPass{

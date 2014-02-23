@@ -15,7 +15,6 @@ type User struct {
 
 func (c User) CheckLoggedIn() revel.Result {
 	if u := c.connected(); u == nil {
-		revel.ERROR.Println("Please log in first")
 		c.Flash.Error("Please log in first")
 		return c.Redirect(routes.App.Login())
 	}
