@@ -6,7 +6,7 @@ npm init
 npm install grunt
 npm install grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
 
-appname="user_auth"
+appname="test"
 
 mv app/assets/js/myapp app/assets/js/$appname
 mv app/assets/js/$appname/myapp_util.js app/assets/js/$appname/${appname}_util.js

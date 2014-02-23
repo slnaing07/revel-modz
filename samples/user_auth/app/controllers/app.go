@@ -1,12 +1,13 @@
 package controllers
 
 import (
+	"errors"
 	"fmt"
-
-	"github.com/robfig/revel"
 
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/user"
+	"github.com/robfig/revel"
+
 	"github.com/iassic/revel-modz/samples/user_auth/app/routes"
 )
 
@@ -25,12 +26,13 @@ func (c App) connected() *user.UserBasic {
 	if c.RenderArgs["user_basic"] != nil {
 		return c.RenderArgs["user_basic"].(*user.UserBasic)
 	}
-	if username, ok := c.Session["user_basic"]; ok {
+	if username, ok := c.Session["user"]; ok {
 		u := user.GetUserBasicByName(c.Txn, username)
 		if u == nil {
-			revel.WARN.Println("user_basic field in Session[] not found in DB")
+			revel.ERROR.Println("user field in Session[] not found in DB")
 			return nil
 		}
+		revel.WARN.Printf("connected :: %+v", *u)
 		return u
 	}
 	return nil
@@ -64,15 +66,9 @@ func (c App) SignupPost(email, password, confirmPassword string) revel.Result {
 		c.FlashParams()
 		return c.Redirect(routes.App.Signup())
 	}
-	// Check email is unique
-	UB := user.GetUserBasicByName(c.Txn, email)
-	if UB != nil {
-		revel.WARN.Printf("Duplicate Email found %+v\n", UB)
-		c.Flash.Out["message"] = "Email: " + email + " already used"
-		c.Validation.Keep()
-		c.FlashParams()
-		return c.Redirect(routes.App.Signup())
-	}
+
+	UB, err := c.addNewUser(email, password)
+	checkERROR(err)
 
 	c.Flash.Out["heading"] = "Thanks for Joining!"
 	c.Flash.Out["message"] = "Signup successful for " + email
@@ -148,11 +144,18 @@ func (c App) LoginPost(email, password string) revel.Result {
 
 		c.Session["user"] = UB.UserName
 		c.RenderArgs["user_basic"] = UB
+
+		revel.WARN.Println(c.RenderArgs)
+		revel.ERROR.Println("Login passed for", email)
+
 		return c.Redirect(routes.User.Result())
 
 	} else {
 		c.Flash.Out["heading"] = "LOGIN FAIL"
 		c.Flash.Out["message"] = "Login failed for " + email
+
+		revel.ERROR.Println("Login failed for", email)
+
 		c.Validation.Keep()
 		c.FlashParams()
 		c.Redirect(routes.App.Login())
@@ -167,4 +170,42 @@ func (c App) Logout() revel.Result {
 		delete(c.Session, k)
 	}
 	return c.Redirect(routes.App.Index())
+}
+
+func (c App) addNewUser(email, password string) (*user.UserBasic, error) {
+	// check for user in basic table
+	UB := user.GetUserBasicByName(c.Txn, email)
+	if UB != nil {
+		c.Flash.Out["message"] = "Email: " + email + " already used"
+		c.Validation.Keep()
+		c.FlashParams()
+		return nil, errors.New("UserBasic already in use")
+	}
+
+	// uuid := get random number (that isn't used already)
+	uuid := int64(1001)
+	UB = &user.UserBasic{
+		UserId:   uuid,
+		UserName: email,
+	}
+
+	// check for user in auth table
+	UP := &user.UserPass{UB.UserId, email, password}
+	UA, err := auth.Authenticate(c.Txn, UP)
+	if UA != nil {
+		c.Flash.Out["message"] = "Authentication Error"
+		c.Validation.Keep()
+		c.FlashParams()
+		return nil, errors.New("UserAuth already in use")
+	}
+
+	// add user to tables
+
+	err = user.AddUserBasic(TestDB, UB)
+	checkERROR(err)
+
+	_, err = auth.AddUserAuth(TestDB, UP)
+	checkERROR(err)
+
+	return UB, nil
 }

@@ -4,9 +4,9 @@ import (
 	// "fmt"
 
 	"github.com/robfig/revel"
+	// "github.com/iassic/revel-modz/modules/user"
 
 	"github.com/iassic/revel-modz/samples/user_auth/app/routes"
-	// "github.com/iassic/revel-modz/modules/user"
 )
 
 type User struct {
@@ -14,7 +14,8 @@ type User struct {
 }
 
 func (c User) CheckLoggedIn() revel.Result {
-	if u := c.connected(); u != nil {
+	if u := c.connected(); u == nil {
+		revel.ERROR.Println("Please log in first")
 		c.Flash.Error("Please log in first")
 		return c.Redirect(routes.App.Login())
 	}

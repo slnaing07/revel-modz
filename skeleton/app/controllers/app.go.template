@@ -78,7 +78,7 @@ func (c App) SignupPost(email, password, confirmPassword string) revel.Result {
 	c.Flash.Out["message"] = "Signup successful for " + email
 
 	c.Session["user"] = UB.UserName
-	c.RenderArgs["user_basic"] = UB
+	c.RenderArgs["user_basic"] = *UB
 	return c.Redirect(routes.User.Result())
 
 }
@@ -147,7 +147,7 @@ func (c App) LoginPost(email, password string) revel.Result {
 		c.Flash.Out["message"] = "Login successful for " + email
 
 		c.Session["user"] = UB.UserName
-		c.RenderArgs["user_basic"] = UB
+		c.RenderArgs["user_basic"] = *UB
 		return c.Redirect(routes.User.Result())
 
 	} else {

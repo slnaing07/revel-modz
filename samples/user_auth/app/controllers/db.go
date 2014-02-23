@@ -66,6 +66,7 @@ func InitDB() {
 	checkPANIC(err)
 
 	ndb.SetLogger(gorm.Logger{revel.INFO})
+
 	TestDB = &ndb
 
 	revel.INFO.Println("Connection made to DB")
@@ -103,9 +104,10 @@ func fillTables() {
 
 	// Start a new transaction
 	// trans, err := TestDB.Begin()
-	trans := TestDB.Begin()
-	err := trans.Error
-	checkERROR(err)
+	// trans := TestDB.Begin()
+	// err := trans.Error
+	// checkERROR(err)
+	var err error
 
 	for _, up := range dev_users {
 
@@ -113,22 +115,34 @@ func fillTables() {
 			UserId:   up.UserId,
 			UserName: up.UserName,
 		}
-		err = user.AddUserBasic(trans, ub)
+		err = user.AddUserBasic(TestDB, ub)
 		checkERROR(err)
 
-		_, err = auth.AddUserAuth(trans, up)
+		created_at := ub.CreatedAt
+		updated_at := ub.UpdatedAt
+
+		if created_at.IsZero() {
+			revel.ERROR.Println("Should have created_at after create")
+		}
+		if updated_at.IsZero() {
+			revel.ERROR.Println("Should have updated_at after create")
+		}
+
+		revel.WARN.Printf("%+v\n", *ub)
+
+		_, err = auth.AddUserAuth(TestDB, up)
 		checkERROR(err)
 	}
 
 	// if the commit is successful, a nil error is returned
-	err = trans.Commit().Error
-	checkERROR(err)
+	// err = trans.Commit().Error
+	// checkERROR(err)
 
-	if err != nil {
-		revel.ERROR.Println("Unable to fill DB")
-	} else {
-		revel.INFO.Println("Filled DB tables")
-	}
+	// if err != nil {
+	// 	revel.ERROR.Println("Unable to fill DB")
+	// } else {
+	// 	revel.INFO.Println("Filled DB tables")
+	// }
 }
 
 var dev_users = []*user.UserPass{

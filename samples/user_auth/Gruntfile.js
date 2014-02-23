@@ -17,8 +17,8 @@ var files = {
   "app/assets/js/foundation/foundation.topbar.js"
   ],
   
-  "user_auth_js": [
-    "app/assets/js/user_auth/user_auth_util.js"
+  "test_js": [
+    "app/assets/js/test/test_util.js"
   ]
 }
 
@@ -51,9 +51,9 @@ module.exports = function(grunt) {
           'public/js/foundation-custom.min.js': files.foundation_js
         }
       },
-      user_auth_js: {
+      test_js: {
         files: {
-          'public/js/user_auth.min.js': files.user_auth_js
+          'public/js/test.min.js': files.test_js
         }
       }
     },
@@ -68,13 +68,13 @@ module.exports = function(grunt) {
         }        
       }
       ,
-      user_auth_css: {
+      test_css: {
         options: {
           style: 'expanded',
           lineNumbers: true
         },
         files: {
-          'public/css/user_auth.css': 'app/assets/sass/user_auth.sass'
+          'public/css/test.css': 'app/assets/sass/test.sass'
         }        
       }
     },
