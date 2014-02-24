@@ -12,6 +12,18 @@ import (
 
 // in your app initialization..
 func init() {
+	revel.TemplateFuncs["appendjs"] = func(renderArgs map[string]interface{}, key string, value interface{}) template.HTML {
+		s := value.(string)
+		js_code := template.JS(s)
+
+		if renderArgs[key] == nil {
+			renderArgs[key] = []interface{}{js_code}
+		} else {
+			renderArgs[key] = append(renderArgs[key].([]interface{}), js_code)
+		}
+		return template.HTML("")
+	}
+
 	// Filters is the default set of global filters.
 	revel.Filters = []revel.Filter{
 		revel.PanicFilter,             // Recover from panics and display an error page instead.

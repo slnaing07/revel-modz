@@ -22,9 +22,9 @@
     <!-- app js/css files loaded asychronously -->
     <script>
     head.ready(function() {
-
-        {{if .foundation_js}}
         $(document).foundation();
+        {{range .moreHead}}
+        {{.}}
         {{end}}
     })
     head
