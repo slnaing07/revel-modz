@@ -22,10 +22,10 @@
     <!-- app js/css files loaded asychronously -->
     <script>
     head.ready(function() {
-
-        {{"{{if .foundation_js}}"}}
         $(document).foundation();
-        {{"{{end}}"}}
+        {{range .moreHead}}
+        {{.}}
+        {{end}}
     })
     head
         .js({jquery: "/ipa/js/jquery-2.1.0.min.js"})
