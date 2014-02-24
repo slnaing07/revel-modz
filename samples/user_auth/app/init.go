@@ -1,6 +1,7 @@
 package app
 
 import (
+	"html/template"
 	"path/filepath"
 
 	"github.com/cbonello/revel-csrf"
@@ -12,6 +13,18 @@ import (
 
 // in your app initialization..
 func init() {
+	revel.TemplateFuncs["appendjs"] = func(renderArgs map[string]interface{}, key string, value interface{}) template.HTML {
+		s := value.(string)
+		js_code := template.JS(s)
+
+		if renderArgs[key] == nil {
+			renderArgs[key] = []interface{}{js_code}
+		} else {
+			renderArgs[key] = append(renderArgs[key].([]interface{}), js_code)
+		}
+		return template.HTML("")
+	}
+
 	// Filters is the default set of global filters.
 	revel.Filters = []revel.Filter{
 		revel.PanicFilter,             // Recover from panics and display an error page instead.
@@ -72,7 +85,9 @@ var compilers = []grunt.GruntCompiler{
 
 	grunt.GruntCompiler{Name: "Foundation JS", Path: "app/assets/js/foundation", Grunt: "uglify:foundation_js"},
 	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation", Grunt: "sass:foundation_css"},
+	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation.scss", Grunt: "sass:foundation_css"},
 
 	grunt.GruntCompiler{Name: "user_auth JS", Path: "app/assets/js/user_auth", Grunt: "uglify:user_auth_js"},
 	grunt.GruntCompiler{Name: "user_auth SASS", Path: "app/assets/sass/user_auth", Grunt: "sass:user_auth_css"},
+	grunt.GruntCompiler{Name: "user_auth SASS", Path: "app/assets/sass/user_auth.scss", Grunt: "sass:user_auth_css"},
 }

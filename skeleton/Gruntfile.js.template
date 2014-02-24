@@ -16,7 +16,7 @@ var files = {
   "app/assets/js/foundation/foundation.tooltip.js",
   "app/assets/js/foundation/foundation.topbar.js"
   ],
-  
+
   "{{ .AppName }}_js": [
     "app/assets/js/{{ .AppName }}/{{ .AppName }}_util.js"
   ]
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    
+
     jshint: {
       options: {
         jshintrc: 'app/assets/js/.jshintrc'
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
         },
         files: {
           'public/css/foundation-custom.min.css': 'app/assets/sass/foundation_custom.scss'
-        }        
+        }
       }
       ,
       {{ .AppName }}_css: {
@@ -74,8 +74,8 @@ module.exports = function(grunt) {
           lineNumbers: true
         },
         files: {
-          'public/css/{{ .AppName }}.css': 'app/assets/sass/{{ .AppName }}.sass'
-        }        
+          'public/css/{{ .AppName }}.css': 'app/assets/sass/{{ .AppName }}.scss'
+        }
       }
     },
 

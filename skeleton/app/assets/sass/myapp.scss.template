@@ -1,0 +1,4 @@
+
+@import "{{ .AppName }}/{{ .AppName }}_common";
+@import "{{ .AppName }}/{{ .AppName }}_user";
+
