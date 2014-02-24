@@ -85,7 +85,7 @@ var compilers = []grunt.GruntCompiler{
 
 	grunt.GruntCompiler{Name: "Foundation JS", Path: "app/assets/js/foundation", Grunt: "uglify:foundation_js"},
 	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation", Grunt: "sass:foundation_css"},
-	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation.scss", Grunt: "sass:foundation_css"},
+	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation_custom.scss", Grunt: "sass:foundation_css"},
 
 	grunt.GruntCompiler{Name: "user_auth JS", Path: "app/assets/js/user_auth", Grunt: "uglify:user_auth_js"},
 	grunt.GruntCompiler{Name: "user_auth SASS", Path: "app/assets/sass/user_auth", Grunt: "sass:user_auth_css"},
