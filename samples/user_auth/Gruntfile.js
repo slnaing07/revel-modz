@@ -16,7 +16,7 @@ var files = {
   "app/assets/js/foundation/foundation.tooltip.js",
   "app/assets/js/foundation/foundation.topbar.js"
   ],
-  
+
   "user_auth_js": [
     "app/assets/js/user_auth/user_auth_util.js"
   ]
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    
+
     jshint: {
       options: {
         jshintrc: 'app/assets/js/.jshintrc'
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
         },
         files: {
           'public/css/foundation-custom.min.css': 'app/assets/sass/foundation_custom.scss'
-        }        
+        }
       }
       ,
       user_auth_css: {
@@ -74,8 +74,8 @@ module.exports = function(grunt) {
           lineNumbers: true
         },
         files: {
-          'public/css/user_auth.css': 'app/assets/sass/user_auth.sass'
-        }        
+          'public/css/user_auth.css': 'app/assets/sass/user_auth.scss'
+        }
       }
     },
 

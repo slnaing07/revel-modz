@@ -8,9 +8,9 @@ import (
 )
 
 type UserBasic struct {
-	Id       int64 // Primary Key form Gorm
-	UserId   int64 // Unique identifier per user across all tables
-	UserName string
+	Id       int64  // Primary Key form Gorm
+	UserId   int64  `sql:"not null;unique"`
+	UserName string `sql:"not null;unique"`
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
