@@ -23,9 +23,8 @@
     <script>
     head.ready(function() {
         $(document).foundation();
-        {{range .moreHead}}
-        {{.}}
-        {{end}}
+        {{"{{range .moreHead}}{{.}}"}}
+        {{"{{end}}"}}
     })
     head
         .js({jquery: "/ipa/js/jquery-2.1.0.min.js"})
@@ -33,7 +32,7 @@
         // .js({foundation_js: "/public/js/foundation-custom.min.js"})     // custom foundation js
 
         {{"{{range $index, $element := .moreScripts}}"}}
-            .js({extrascript_{{"{{$index}}"}}: {{`"{{$element}}"`}})     // default foundation js
+            .js({ {{"{{printf \"extrastript_%d\" $index}}"}}: {{"{{$element}}"}} })     // default foundation js
         {{"{{end}}"}}
 
         .js({ {{.AppName}}_js: "/public/css/{{.AppName}}.css"})
