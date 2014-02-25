@@ -1,22 +1,7 @@
 revel-modz
 ==========
 
-skeletons & modules for the Revel Framework
-
-this is a work in progress and requires my patch to the `revel new` command
-which allows third party skeletons
-
-see: [revel pull #472](https://github.com/robfig/revel/pull/472)
-
-``` Bash
-go get github.com/robfig/revel
-cd $GOPATH/src/github.com/robfig/revel
-git remote add iassic https://github.com/iassic/revel
-git pull iassic
-git checkout feature/new-cmd-skeleton-arg
-cd revel
-go install
-```
+Modules, samples, and a skeleton for the Revel Framework
 
 
 Get the dependencies
@@ -31,23 +16,10 @@ sudo npm install -g grunt-cli highlight.js
 sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
 ```
 
-databases: [postgres, mysql, sqlite] CouchDB
+databases:
 
-Postgres:
+one of [postgres, mysql, sqlite]
 
-...
-
-Mysql:
-
-...
-
-Sqlite:
-
-...
-
-CouchDB:
-
-...
 
 Installation
 --------------
@@ -66,9 +38,41 @@ The following instructions will setup a new app from the revel-modz skeleton
 ``` Bash
 revel new <APP_NAME> github.com/iassic/revel-modz/skeleton
 cd <APP_NAME>
-sh npminit.sh  (hit ctrl-c when prompted) [you will see a bunch of errors initially]
+sh init.sh  (hit ctrl-c when prompted) [you will see a bunch of errors initially]
 cd ..
 revel run <APP_NAME>
 ```
 
 now point your browser at `localhost:9000`
+
+
+Features
+----------------
+
+Front-end:
+
+- Foundation 5.1.1
+- Headjs for asynchronous loading of assets
+- Many JS/CSS goodies in revel-modz/modules/assets
+- Templated includes for per page assets
+- A `appendjs` template function for inserting JS code
+
+Back-end:
+
+- JS/SASS app resources initialized in app/assets
+- Hot Code watch and recompile of app/assets with Grunt
+- ORM with github.com/jinzhu/gorm
+
+Security:
+
+- User Authentication
+- CSRF protection
+- `X-Frame-Options` `X-XXS-Protection` and `X-Content-Type-Options` headers
+
+
+Samples
+----------------
+
+The skeleton includes everything
+
+more samples coming soon
