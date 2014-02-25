@@ -12,8 +12,7 @@
     <link rel="stylesheet" type="text/css" charset="utf-8" href="/ipa/css/foundation.min.css" />
     <!-- <link rel="stylesheet" type="text/css" charset="utf-8" href="/public/css/foundation-custom.min.css" /> -->
 
-    {{"{{range .moreStyles}}"}}
-      <link rel="stylesheet" type="text/css" href="{{"{{.}}"}}">
+    {{"{{range .moreStyles}}"}}<link rel="stylesheet" type="text/css" href="{{"{{.}}"}}">
     {{"{{end}}"}}
 
     <script src="/ipa/js/head.load.min.js" type="text/javascript" charset="utf-8"></script>
@@ -32,8 +31,7 @@
         // .js({foundation_js: "/public/js/foundation-custom.min.js"})     // custom foundation js
 
         {{"{{range $index, $element := .moreScripts}}"}}
-            .js({ {{"{{printf \"extrastript_%d\" $index}}"}}: {{"{{$element}}"}} })     // default foundation js
-        {{"{{end}}"}}
+        .js({ {{"{{printf \"extrastript_%d\" $index}}"}}: {{"{{$element}}"}} }){{"{{end}}"}}
 
         .js({ {{.AppName}}_js: "/public/css/{{.AppName}}.css"})
         .js({ {{.AppName}}_js: "/public/js/{{.AppName}}.min.js"})

@@ -23,8 +23,7 @@
     <script>
     head.ready(function() {
         $(document).foundation();
-        {{range .moreHead}}
-        {{.}}
+        {{range .moreHead}}{{.}}
         {{end}}
     })
     head
