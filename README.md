@@ -40,6 +40,11 @@ revel new <APP_NAME> github.com/iassic/revel-modz/skeleton
 cd <APP_NAME>
 sh init.sh  (hit ctrl-c when prompted) [you will see a bunch of errors initially]
 cd ..
+```
+
+create a new database and update the db.spec in app.conf 
+
+```
 revel run <APP_NAME>
 ```
 
