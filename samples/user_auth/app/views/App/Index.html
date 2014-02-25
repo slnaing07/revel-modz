@@ -1,5 +1,9 @@
 {{set . "title" "Index"}}
 
+{{append . "moreStyles" "/ipa/css/mathquill.css"}}
+{{append . "moreScripts" "/ipa/js/mathquill.min.js"}}
+{{appendjs . "moreHead" "console.log('this is a test');"}}
+
 {{template "templates/header.html" .}}
 {{template "templates/menu.html" .}}
 
