@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 )
 
 func GenerateNewUserId(db *gorm.DB) int64 {
