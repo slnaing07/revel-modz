@@ -6,7 +6,7 @@ import (
 
 	"code.google.com/p/go.crypto/bcrypt"
 	"github.com/jinzhu/gorm"
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 )
 
 type UserAuthInterface interface {
