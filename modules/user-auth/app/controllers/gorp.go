@@ -9,8 +9,8 @@ import (
 	"github.com/coopernurse/gorp"
 	"github.com/golang/glog"
 	_ "github.com/lib/pq"
-	r "github.com/robfig/revel"
-	db "github.com/robfig/revel/modules/db/app"
+	r "github.com/revel/revel"
+	db "github.com/revel/revel/modules/db/app"
 
 	"github.com/iassic/revel-modz/modules/user-auth/app/models"
 )

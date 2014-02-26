@@ -6,7 +6,7 @@ import (
 
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/user"
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 
 	"{{.BasePath}}{{.AppName}}/app/routes"
 )

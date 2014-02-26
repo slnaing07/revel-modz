@@ -3,7 +3,7 @@ package controllers
 import (
 	gorm "github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/user"

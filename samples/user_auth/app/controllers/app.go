@@ -6,11 +6,10 @@ import (
 
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/user"
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 
 	"github.com/iassic/revel-modz/samples/user_auth/app/routes"
 )
-
 
 type App struct {
 	DbController

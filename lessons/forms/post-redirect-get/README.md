@@ -89,13 +89,13 @@ Now we need to add some imports for our new handlers:
 `"fmt"` for the `Println` function and `"PRG/app/routes"` for the `routes.App.Result()`
 inside of `c.Redirect(...)`
 
-Change the line `import "github.com/robfig/revel"`
+Change the line `import "github.com/revel/revel"`
 
 ``` Go
 import (
 "fmt"
 
-"github.com/robfig/revel"
+"github.com/revel/revel"
 
 "PRG/app/routes"
 )
@@ -175,7 +175,7 @@ PRG/app/controllers/app.go:
 package controllers
 
 import (
-"github.com/robfig/revel"
+"github.com/revel/revel"
 "PRG/app/routes"
 )
 

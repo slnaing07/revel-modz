@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 )
 
 type GruntCompiler struct {

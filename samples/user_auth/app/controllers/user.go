@@ -3,7 +3,7 @@ package controllers
 import (
 	// "fmt"
 
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 	// "github.com/iassic/revel-modz/modules/user"
 
 	"github.com/iassic/revel-modz/samples/user_auth/app/routes"

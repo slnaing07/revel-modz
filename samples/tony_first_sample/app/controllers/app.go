@@ -3,7 +3,7 @@ package controllers
 import (
 	"fmt"
 
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 
 	"github.com/iassic/revel-modz/samples/tony_first_sample/app/routes"
 )

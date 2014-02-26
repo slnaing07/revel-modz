@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 )
 
 type UserBasic struct {

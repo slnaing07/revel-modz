@@ -6,7 +6,7 @@ import (
 
 	"github.com/cbonello/revel-csrf"
 	"github.com/iassic/revel-modz/modules/grunt"
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 
 	ctrl "github.com/iassic/revel-modz/samples/user_auth/app/controllers"
 )

@@ -1,6 +1,6 @@
 package controllers
 
-import "github.com/robfig/revel"
+import "github.com/revel/revel"
 
 func checkINFO(err error) {
 	if err != nil {

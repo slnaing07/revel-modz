@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"code.google.com/p/go.crypto/bcrypt"
-	"github.com/robfig/revel"
+	"github.com/revel/revel"
 
 	"github.com/iassic/revel-modz/modules/user-auth/app/models"
 	"github.com/iassic/revel-modz/modules/user-auth/routes"
