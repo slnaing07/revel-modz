@@ -14,6 +14,7 @@ type UserBasic struct {
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 }
 
 func AddUserBasic(db *gorm.DB, u *UserBasic) error {
