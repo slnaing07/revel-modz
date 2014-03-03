@@ -17,7 +17,7 @@ function initEpicEditor() {
         },
         theme: {
             base: '/themes/base/epiceditor.css',
-            preview: '/themes/preview/preview-dark.css',
+            preview: '/themes/preview/github.css',
             editor: '/themes/editor/epic-dark.css'
         },
         button: {
@@ -32,7 +32,7 @@ function initEpicEditor() {
             preview: 80
         },
         autogrow: {
-            minHeight: 80,
+            minHeight: 200,
             scroll: true
         },
         string: {
