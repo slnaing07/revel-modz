@@ -1,4 +1,4 @@
-package maillist
+package analytics
 
 import (
 	"errors"
