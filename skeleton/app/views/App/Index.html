@@ -1,14 +1,10 @@
 {{set . "title" "Index"}}
 
-{{append .   "moreStyles"  "/ipa/css/mathquill.css"}}
-{{append .   "moreScripts" "/ipa/js/mathquill.min.js"}}
-{{appendjs . "moreHead"    "... console.log('if there's one thing that doesn't need to be improved in the world, it's ?)"}}
-
 {{template "templates/header.html" .}}
 {{template "templates/menu.html" .}}
 
 <div class="row">
-    <div class="large-6 large-centered small-8 small-centered columns">
+    <div class="large-12 large-centered small-12 small-centered columns">
         <div class="panel">
             <h3>Welcome</h3>
 
@@ -23,9 +19,10 @@
 
             <div class="row">
                 <div class="large-6 small-6 columns">
-                    <a href="/login" class="button">Login</a>
+                    <a href="/maillist" class="button">Maillist</a>
                 </div>
                 <div class="large-6 small-6 columns">
+                    <a href="/login" class="button">Login</a>
                 </div>
             </div>
 

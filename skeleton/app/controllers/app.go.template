@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/iassic/revel-modz/modules/auth"
+	"github.com/iassic/revel-modz/modules/maillist"
 	"github.com/iassic/revel-modz/modules/user"
 	"github.com/revel/revel"
 
@@ -40,9 +41,6 @@ func (c App) connected() *user.UserBasic {
 }
 
 func (c App) Index() revel.Result {
-	if c.connected() != nil {
-		return c.Redirect(routes.User.Index())
-	}
 	return c.Render()
 }
 
@@ -77,6 +75,29 @@ func (c App) SignupPost(email, password, confirmPassword string) revel.Result {
 	c.Session["user"] = UB.UserName
 	c.RenderArgs["user_basic"] = UB
 	return c.Redirect(routes.User.Result())
+
+}
+
+func (c App) Maillist() revel.Result {
+	return c.Render()
+}
+
+func (c App) MaillistPost(email string) revel.Result {
+	c.Validation.Required(email).Message("Email required")
+
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.App.Signup())
+	}
+
+	_, err := c.addNewMaillistUser(email)
+	checkERROR(err)
+
+	c.Flash.Out["heading"] = "Thanks for Joining!"
+	c.Flash.Out["message"] = email + " is now subscribed to the mailing list."
+
+	return c.Redirect(routes.App.Result())
 
 }
 
@@ -139,16 +160,13 @@ func (c App) LoginPost(email, password string) revel.Result {
 	if found && valid {
 		c.Flash.Out["heading"] = "LOGIN PASS"
 		c.Flash.Out["message"] = "Login successful for " + email
-
 		c.Session["user"] = UB.UserName
 		c.RenderArgs["user_basic"] = UB
-
 		return c.Redirect(routes.User.Result())
 
 	} else {
 		c.Flash.Out["heading"] = "LOGIN FAIL"
 		c.Flash.Out["message"] = "Login failed for " + email
-
 		c.Validation.Keep()
 		c.FlashParams()
 		c.Redirect(routes.App.Login())
@@ -174,7 +192,7 @@ func (c App) addNewUser(email, password string) (*user.UserBasic, error) {
 	}
 
 	// uuid := get random number (that isn't used already)
-	uuid := int64(1001)
+	uuid := user.GenerateNewUserId(c.Txn)
 	UB = &user.UserBasic{
 		UserId:   uuid,
 		UserName: email,
@@ -199,4 +217,30 @@ func (c App) addNewUser(email, password string) (*user.UserBasic, error) {
 	checkERROR(err)
 
 	return UB, nil
+}
+
+func (c App) addNewMaillistUser(email string) (*maillist.MaillistUser, error) {
+	// check for user in basic table
+	UB := user.GetUserBasicByName(c.Txn, email)
+	if UB != nil {
+		c.Flash.Out["message"] = "Email: " + email + " already used"
+		c.Validation.Keep()
+		c.FlashParams()
+		return nil, errors.New("UserBasic already in use")
+	}
+
+	// uuid := get random number (that isn't used already)
+	uuid := user.GenerateNewUserId(c.Txn)
+	UB = &user.UserBasic{
+		UserId:   uuid,
+		UserName: email,
+	}
+
+	err := user.AddUserBasic(TestDB, UB)
+	checkERROR(err)
+
+	MA, err := maillist.AddMaillistUser(TestDB, uuid, email)
+	checkERROR(err)
+
+	return MA, nil
 }

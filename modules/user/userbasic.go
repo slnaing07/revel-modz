@@ -8,13 +8,13 @@ import (
 )
 
 type UserBasic struct {
-	Id       int64  // Primary Key form Gorm
-	UserId   int64  `sql:"not null;unique"`
-	UserName string `sql:"not null;unique"`
-
+	// gorm fields
+	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt time.Time
+
+	UserId   int64  `sql:"not null;unique"`
+	UserName string `sql:"not null;unique"`
 }
 
 func AddUserBasic(db *gorm.DB, u *UserBasic) error {

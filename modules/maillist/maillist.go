@@ -1,6 +1,7 @@
 package maillist
 
 import (
+	"errors"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -8,14 +9,29 @@ import (
 )
 
 type MaillistUser struct {
+	// gorm fields
 	Id        int64
-	UserId    int64 `sql:"not null;unique"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt time.Time
 
+	UserId    int64 `sql:"not null;unique"`
 	Email     string
 	Activated bool
+}
+
+func AddTables(db *gorm.DB) error {
+	return db.AutoMigrate(MaillistUser{}).Error
+}
+
+func DropTables(db *gorm.DB) error {
+	return db.DropTable(MaillistUser{}).Error
+}
+
+func FillTables(db *gorm.DB) error {
+	return errors.New("TODO")
+}
+func TestTables(db *gorm.DB) error {
+	return errors.New("TODO")
 }
 
 func AddMaillistUser(db *gorm.DB, uId int64, email string) (*MaillistUser, error) {

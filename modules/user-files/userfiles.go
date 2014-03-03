@@ -9,10 +9,10 @@ import (
 
 // a table to store agglomeration of Id's of users and data sets, meta info, etc
 type UserFileInfo struct {
+	// gorm fields
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	// DeletedAt time.Time
 
 	// keys to the data table
 	UserId int64 `sql:"not null"`
@@ -26,10 +26,10 @@ type UserFileInfo struct {
 }
 
 type UserFile struct {
+	// gorm fields
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	// DeletedAt time.Time
 
 	// keys to the data table
 	UserId int64 `sql:"not null"`
@@ -39,10 +39,10 @@ type UserFile struct {
 }
 
 type UserDataPermissions struct {
+	// gorm fields
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	// DeletedAt time.Time
 
 	// keys to the data table
 	UserId int64 `sql:"not null"`
@@ -50,7 +50,7 @@ type UserDataPermissions struct {
 
 	// need to use RBAC
 	// or
-	// maybe PSQL has RBAC at the table level
+	// maybe Postgres has RBAC at the table level
 	// if so, each user could have own table(s) DB(s)
 	Permissions int64
 }
@@ -62,6 +62,29 @@ type UserDataWire struct {
 	Folder  bool
 	Size    int
 	Content string
+}
+
+func AddTables(db *gorm.DB) error {
+	err := db.AutoMigrate(UserFileInfo{}).Error
+	if err != nil {
+		return err
+	}
+	return db.AutoMigrate(UserFile{}).Error
+}
+
+func DropTables(db *gorm.DB) error {
+	err := db.DropTable(UserFileInfo{}).Error
+	if err != nil {
+		return err
+	}
+	return db.DropTable(UserFile{}).Error
+}
+
+func FillTables(db *gorm.DB) error {
+	return errors.New("TODO")
+}
+func TestTables(db *gorm.DB) error {
+	return errors.New("TODO")
 }
 
 func AddUserFile(db *gorm.DB, udt *UserFileInfo, content []byte) error {
@@ -96,7 +119,7 @@ func AddUserFile(db *gorm.DB, udt *UserFileInfo, content []byte) error {
 	return err
 }
 
-func getLastFileByUserId(db *gorm.DB, uId int64) (int64, error) {
+func getLastFileIdByUserId(db *gorm.DB, uId int64) (int64, error) {
 	var udt UserFileInfo
 	err := db.Where(&UserFileInfo{UserId: uId}).Order("file_id desc").First(&udt).Error
 	if err == gorm.RecordNotFound {

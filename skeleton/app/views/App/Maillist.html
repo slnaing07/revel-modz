@@ -1,0 +1,41 @@
+{{set . "title" "Maillist"}}
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+    <div class="large-6 large-centered small-8 small-centered columns">
+        <div class="panel">
+            <h3>Welcome</h3>
+
+            <div class="row">
+                <div class="large-6 small-12 columns">
+                    <form action="/maillist" method="POST" data-abide>
+                        <fieldset>
+                            <legend>Join the mailing list</legend>
+                            <input type="hidden" name="csrf_token" id="csrf_token" value="{{ .csrf_token }}" />
+
+                            <div class="large-12 columns">
+                                <label for="email">Email <small>required</small>
+                                    <input type="email" id="email" name="email" placeholder="user@domain.com" required autofocus>
+                                </label>
+                                <small class="error">Valid email required.</small>
+                            </div>
+                             <button type="submit" class="button">Signup</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-6 small-12 columns">
+                </div>
+                <div class="large-6 small-12 columns">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{template "templates/footer.html" .}}
