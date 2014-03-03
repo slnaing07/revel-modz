@@ -2,7 +2,7 @@ package app
 
 import (
 	"html/template"
-	// "path/filepath"
+	"path/filepath"
 
 	"github.com/cbonello/revel-csrf"
 	"github.com/iassic/revel-modz/modules/grunt"
@@ -41,14 +41,14 @@ func init() {
 		revel.ActionInvoker,           // Invoke the action.
 	}
 
-	// revel.OnAppStart(func() {
-	// 	appPath := revel.BasePath
-	// 	for _, AC := range compilers {
-	// 		path := filepath.Join(appPath, AC.Path)
-	// 		revel.INFO.Printf("Listening: %q\n", path)
-	// 		revel.MainWatcher.Listen(AC, path)
-	// 	}
-	// })
+	revel.OnAppStart(func() {
+		appPath := revel.BasePath
+		for _, AC := range compilers {
+			path := filepath.Join(appPath, AC.Path)
+			revel.INFO.Printf("Listening: %q\n", path)
+			revel.MainWatcher.Listen(AC, path)
+		}
+	})
 
 	// DB related stuff
 	// add interceptors
@@ -82,13 +82,13 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 }
 
 var compilers = []grunt.GruntCompiler{
-	grunt.GruntCompiler{Name: "Gruntfile.js", Path: "Gruntfile.js", Grunt: "default"},
+	// grunt.GruntCompiler{Name: "Gruntfile.js", Path: "Gruntfile.js", Grunt: "default"},
 
-	grunt.GruntCompiler{Name: "Foundation JS", Path: "app/assets/js/foundation", Grunt: "uglify:foundation_js"},
-	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation", Grunt: "sass:foundation_css"},
-	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation_custom.scss", Grunt: "sass:foundation_css"},
+	// grunt.GruntCompiler{Name: "Foundation JS", Path: "app/assets/js/foundation", Grunt: "uglify:foundation_js"},
+	// grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation", Grunt: "sass:foundation_css"},
+	// grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation_custom.scss", Grunt: "sass:foundation_css"},
 
 	grunt.GruntCompiler{Name: "sample JS", Path: "app/assets/js/sample", Grunt: "uglify:sample_js"},
-	grunt.GruntCompiler{Name: "sample SASS", Path: "app/assets/sass/sample", Grunt: "sass:sample_css"},
-	grunt.GruntCompiler{Name: "sample SASS", Path: "app/assets/sass/sample.scss", Grunt: "sass:sample_css"},
+	// grunt.GruntCompiler{Name: "sample SASS", Path: "app/assets/sass/sample", Grunt: "sass:sample_css"},
+	// grunt.GruntCompiler{Name: "sample SASS", Path: "app/assets/sass/sample.scss", Grunt: "sass:sample_css"},
 }

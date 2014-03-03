@@ -19,7 +19,8 @@ var files = {
 
   "sample_js": [
     "app/assets/js/sample/sample_util.js",
-    "app/assets/js/sample/sample_comm.js"
+    "app/assets/js/sample/sample_comm.js",
+    "app/assets/js/sample/sample_markdown_editor.js"
   ]
 }
 

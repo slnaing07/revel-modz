@@ -1,13 +1,17 @@
 {{set . "title" "Admin Compose"}}
 
+{{append . "moreStyles" "/ipa/js/epiceditor.min.js"}}
+{{append . "moreScripts" "/ipa/js/epiceditor.min.js"}}
+{{appendjs . "moreHead" "initEpicEditor();"}}
+
 {{template "templates/header.html" .}}
 {{template "templates/menu.html" .}}
 
 <div class="row">
-    <div class="large-8 large-centered small-12 columns">
+    <div class="large-9 large-centered small-12 columns">
         <div class="panel">
-            <h3>Welcome</h3>
-            <p>Your email composer will be coming soon.</p>
+            <h3><b>Compose a nice message to your users!</b></h3>
+			<div id="epiceditor"></div>
         </div>
     </div>
 </div>
