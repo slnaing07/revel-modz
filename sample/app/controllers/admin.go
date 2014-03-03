@@ -22,8 +22,7 @@ func (c Admin) CheckLoggedIn() revel.Result {
 	isAdmin := u.UserName == "admin@domain.com"
 
 	if !isAdmin {
-		c.Flash.Error("Please log in first")
-		return c.Redirect(routes.App.Login())
+		return c.Redirect(routes.App.Index())
 	}
 
 	// set up things for an admin role

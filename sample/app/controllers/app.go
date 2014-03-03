@@ -17,9 +17,18 @@ type App struct {
 }
 
 func (c App) RenderArgsFill() revel.Result {
-	if u := c.connected(); u != nil {
+	u := c.connected()
+	if u != nil {
 		c.RenderArgs["user_basic"] = u
+
+		// look up role in RBAC module
+		isAdmin := u.UserName == "admin@domain.com"
+		if isAdmin {
+			// set up things for an admin role
+			c.Session["admin"] = "true"
+		}
 	}
+
 	return nil
 }
 
@@ -138,52 +147,48 @@ func (c App) Login() revel.Result {
 	return c.Render()
 }
 
-func (c App) LoginPost(email, password string) revel.Result {
-	var found, valid bool
-
-	c.Validation.Required(email).Message("Email required")
-	c.Validation.Required(password).Message("Password required")
-
+func (c App) LoginPost(userlogin *models.UserLogin) revel.Result {
+	userlogin.Validate(c.Validation)
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
 		return c.Redirect(routes.App.Login())
 	}
 
+	var found, valid bool
+
 	// check for user in basic table
-	UB := user.GetUserBasicByName(c.Txn, email)
+	UB := user.GetUserBasicByName(c.Txn, userlogin.Email)
 	if UB != nil {
 		found = true
 	} else {
+		println("FLASH ERROR USER")
+		c.Flash.Error("unknown user")
 		c.Validation.Keep()
 		c.FlashParams()
 		return c.Redirect(routes.App.Login())
 	}
 
 	// check for user in auth table
-	P := user.UserPass{UB.UserId, email, password}
+	P := user.UserPass{UB.UserId, userlogin.Email, userlogin.Password}
 	U, err := auth.Authenticate(c.Txn, &P)
 	if err != nil || U == nil {
-		revel.WARN.Println(err)
+		println("FLASH ERROR PASSWORD")
+		c.Flash.Error("bad password")
 	} else {
 		valid = true
 	}
 
 	if found && valid {
-		c.Flash.Out["heading"] = "LOGIN PASS"
-		c.Flash.Out["message"] = "Login successful for " + email
 		c.Session["user"] = UB.UserName
 		c.RenderArgs["user_basic"] = UB
 		return c.Redirect(routes.User.Result())
 
 	} else {
-		c.Flash.Out["heading"] = "LOGIN FAIL"
-		c.Flash.Out["message"] = "Login failed for " + email
 		c.Validation.Keep()
 		c.FlashParams()
-		c.Redirect(routes.App.Login())
+		return c.Redirect(routes.App.Login())
 	}
-	return c.Redirect(routes.App.Result())
 }
 
 func (c App) Logout() revel.Result {

@@ -28,6 +28,23 @@ func (u *UserSignup) Validate(v *revel.Validation) {
 		Key("usersignup.PasswordConfirm")
 }
 
+type UserLogin struct {
+	Email    string
+	Password string
+}
+
+func (u *UserLogin) Validate(v *revel.Validation) {
+	v.Required(u.Email).
+		Message("Email required").
+		Key("userlogin.Email")
+	v.Email(u.Email).
+		Message("Valid email address required").
+		Key("userlogin.Email")
+	v.Required(u.Password).
+		Message("Password required").
+		Key("userlogin.Password")
+}
+
 type UserMaillist struct {
 	Email string
 }
@@ -35,8 +52,8 @@ type UserMaillist struct {
 func (u *UserMaillist) Validate(v *revel.Validation) {
 	v.Required(u.Email).
 		Message("Email required").
-		Key("usersignup.Email")
+		Key("usermaillist.Email")
 	v.Email(u.Email).
 		Message("Valid email required").
-		Key("usersignup.Email")
+		Key("usermaillist.Email")
 }
