@@ -138,10 +138,7 @@ var dev_users = []*user.UserPass{
 	&user.UserPass{UserId: 100002, UserName: "demo2@domain.com", Password: "demopass"},
 	&user.UserPass{UserId: 100003, UserName: "demo3@domain.com", Password: "demopass"},
 	&user.UserPass{UserId: 100004, UserName: "demo4@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 100005, UserName: "demo5@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 100006, UserName: "demo6@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 100007, UserName: "demo7@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 100008, UserName: "demo8@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 200001, UserName: "admin@domain.com", Password: "adminpass"},
 }
 
 func testDevDB() {

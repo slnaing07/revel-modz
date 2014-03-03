@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/iassic/revel-modz/modules/auth"
@@ -219,7 +218,7 @@ func (c App) addNewMaillistUser(email string) (*maillist.MaillistUser, error) {
 
 	// uuid := get random number (that isn't used already)
 	uuid := user.GenerateNewUserId(c.Txn)
-	UB = &user.UserBasic{
+	UB := &user.UserBasic{
 		UserId:   uuid,
 		UserName: email,
 	}
