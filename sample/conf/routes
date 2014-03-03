@@ -26,7 +26,7 @@ GET     /u/files 								User.FilesView
 
 GET     /a/                                     Admin.Index
 GET     /a/maillistview                         Admin.MaillistView
-GET     /a/composemaillistmessage               Admin.ComposeMaillistMessage
+GET     /a/maillistcompose               		Admin.MaillistCompose
 
 # Api-ish routes
 WS 		/comm									User.Comm

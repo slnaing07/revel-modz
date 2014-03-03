@@ -226,7 +226,7 @@ func (c App) addNewMaillistUser(email string) (*maillist.MaillistUser, error) {
 	err := user.AddUserBasic(TestDB, UB)
 	checkERROR(err)
 
-	MA, err := maillist.AddMaillistUser(TestDB, uuid, email)
+	MA, err := maillist.AddUser(TestDB, uuid, email)
 	checkERROR(err)
 
 	return MA, nil
