@@ -16,6 +16,7 @@ type MaillistUser struct {
 
 	UserId    int64 `sql:"not null;unique"`
 	Email     string
+	List      string
 	Activated bool
 }
 
