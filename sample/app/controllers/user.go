@@ -6,7 +6,7 @@ import (
 	"github.com/iassic/revel-modz/modules/ws_comm"
 	"github.com/revel/revel"
 
-	"{{.BasePath}}{{.AppName}}/app/routes"
+	"github.com/iassic/revel-modz/sample/app/routes"
 )
 
 type User struct {

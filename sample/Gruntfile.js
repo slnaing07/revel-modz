@@ -17,9 +17,9 @@ var files = {
   "app/assets/js/foundation/foundation.topbar.js"
   ],
 
-  "{{ .AppName }}_js": [
-    "app/assets/js/{{ .AppName }}/{{ .AppName }}_util.js",
-    "app/assets/js/{{ .AppName }}/{{ .AppName }}_comm.js"
+  "sample_js": [
+    "app/assets/js/sample/sample_util.js",
+    "app/assets/js/sample/sample_comm.js"
   ]
 }
 
@@ -52,9 +52,9 @@ module.exports = function(grunt) {
           'public/js/foundation-custom.min.js': files.foundation_js
         }
       },
-      {{ .AppName }}_js: {
+      sample_js: {
         files: {
-          'public/js/{{ .AppName }}.min.js': files.{{ .AppName }}_js
+          'public/js/sample.min.js': files.sample_js
         }
       }
     },
@@ -69,13 +69,13 @@ module.exports = function(grunt) {
         }
       }
       ,
-      {{ .AppName }}_css: {
+      sample_css: {
         options: {
           style: 'expanded',
           lineNumbers: true
         },
         files: {
-          'public/css/{{ .AppName }}.css': 'app/assets/sass/{{ .AppName }}.scss'
+          'public/css/sample.css': 'app/assets/sass/sample.scss'
         }
       }
     },

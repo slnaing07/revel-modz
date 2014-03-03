@@ -38,31 +38,27 @@ var websock_comm = (function($) {
         };
 
         _socket.onmessage = function(e) {
-            console.log("Client <-- Server")
+            // console.log("Client <-- Server")
             handleMessage(e.data);
         }
     }
 
 
     WS_COMM.Send = function(msg) {
-        console.log("Client --> Server")
+        // console.log("Client --> Server")
         _socket.send(msg); // Send a nice message to the server
     }
 
     // private functions
 
     function handleMessage(msg) {
-        // need to fix up returned message to remove '"' from start/end
         var len = msg.length;
-        // msg = msg.substring(1, len - 1);
         msg = msg.trim();
-        console.log("msg: " + msg.length);
 
         var si = msg.indexOf(" ")
         var tag = msg.substr(0, si)
 
         if (tag in _handlers) {
-            console.log('message type: ' + tag);
             handle = _handlers[tag]
             var body = msg.substring(tag.length).trim();
             handle(body)

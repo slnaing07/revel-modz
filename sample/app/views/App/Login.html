@@ -1,0 +1,36 @@
+{{set . "title" "Login"}}
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+    <div class="large-6 large-centered small-8 small-centered columns">
+        <div class="panel">
+            <div class="row">
+                <div class="large-12 columns">
+                    <form action="/login" method="POST">
+                        <fieldset>
+                            <legend>Login</legend>
+                            <input type="hidden" name="csrf_token" value="{{ .csrf_token }}" />
+
+                            <div class="large-12 columns">
+                                <label for="email">Email
+                                    <input type="email" id="email" name="email" placeholder="user@domain.com" autofocus>
+                                </label>
+                            </div>
+                            <div class="large-12 columns">
+                                <label for="password">Password
+                                    <input type="password" id="password" name="password" placeholder="pa55woRd%">
+                                </label>
+                            </div>
+
+                            <button type="submit" class="button">Login</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{template "templates/footer.html" .}}
