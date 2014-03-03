@@ -15,12 +15,12 @@ type UserAuthInterface interface {
 }
 
 type UserAuth struct {
+	// gorm fields
 	Id        int64
-	UserId    int64 `sql:"not null;unique"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt time.Time
 
+	UserId         int64  `sql:"not null;unique"`
 	HashedPassword []byte `sql:"not null"`
 
 	Activated bool
@@ -34,25 +34,42 @@ type UserAuth struct {
 }
 
 type UserAuthActivate struct {
+	// gorm fields
 	Id        int64
-	UserId    int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
 
+	UserId                        int64
 	ActivateAccountToken          string
 	ActivateAccountTokenExpiresAt time.Time
 	ActivateAccountEmailSentAt    time.Time
 }
 
 type UserAuthReset struct {
+	// gorm fields
 	Id        int64
-	UserId    int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
 
+	UserId                      int64
 	ResetPasswordToken          string
 	ResetPasswordTokenExpiresAt time.Time
 	ResetPasswordEmailSentAt    time.Time
+}
+
+func AddTables(db *gorm.DB) error {
+	return db.AutoMigrate(UserAuth{}).Error
+}
+
+func DropTables(db *gorm.DB) error {
+	return db.DropTable(UserAuth{}).Error
+}
+
+func FillTables(db *gorm.DB) error {
+	return errors.New("TODO")
+}
+func TestTables(db *gorm.DB) error {
+	return errors.New("TODO")
 }
 
 func AddUserAuth(db *gorm.DB, user UserAuthInterface) (*UserAuth, error) {

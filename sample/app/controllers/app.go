@@ -9,7 +9,7 @@ import (
 	"github.com/iassic/revel-modz/modules/user"
 	"github.com/revel/revel"
 
-	"{{.BasePath}}{{.AppName}}/app/routes"
+	"github.com/iassic/revel-modz/sample/app/routes"
 )
 
 
