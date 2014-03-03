@@ -37,7 +37,7 @@ func (c User) Dashboard() revel.Result {
 	return c.Render()
 }
 
-func (c User) DataView() revel.Result {
+func (c User) FilesView() revel.Result {
 	return c.Render()
 }
 

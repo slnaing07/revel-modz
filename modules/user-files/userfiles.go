@@ -1,6 +1,7 @@
 package userfiles
 
 import (
+	"errors"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -55,7 +56,7 @@ type UserDataPermissions struct {
 	Permissions int64
 }
 
-type UserDataWire struct {
+type UserFileWire struct {
 	Name    string
 	Path    string
 	Type    string

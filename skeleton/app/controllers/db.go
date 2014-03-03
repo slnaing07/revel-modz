@@ -8,7 +8,7 @@ import (
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/maillist"
 	"github.com/iassic/revel-modz/modules/user"
-	"github.com/iassic/revel-modz/modules/user-data"
+	"github.com/iassic/revel-modz/modules/user-files"
 )
 
 var (
@@ -89,18 +89,18 @@ func SetupDevDB() {
 
 func dropTables() {
 	revel.INFO.Println("Dropping tables")
-	auth.DropTables(TestDb)
-	user.DropTables(TestDb)
-	maillist.DropTables(TestDb)
-	data.DropTables(TestDb)
+	auth.DropTables(TestDB)
+	user.DropTables(TestDB)
+	maillist.DropTables(TestDB)
+	userfiles.DropTables(TestDB)
 }
 
 func addTables() {
 	revel.INFO.Println("AutoMigrate tables")
-	auth.AddTables(TestDb)
-	user.AddTables(TestDb)
-	maillist.AddTables(TestDb)
-	data.AddTables(TestDb)
+	auth.AddTables(TestDB)
+	user.AddTables(TestDB)
+	maillist.AddTables(TestDB)
+	userfiles.AddTables(TestDB)
 }
 
 func fillTables() {

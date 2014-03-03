@@ -1,6 +1,8 @@
 package user
 
 import (
+	"errors"
+
 	"github.com/jinzhu/gorm"
 	"github.com/revel/revel"
 )

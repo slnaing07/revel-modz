@@ -33,7 +33,7 @@ func (c Files) FileUpload(filedata []byte) revel.Result {
 	err = json.Unmarshal(body, &user_file)
 	checkERROR(err)
 
-	var udt userfiles.UserFileSetInfo
+	var udt userfiles.UserFileInfo
 	udt.UserId = user.UserId
 	udt.Name = user_file.Name
 	udt.Path = user_file.Path
