@@ -2,7 +2,7 @@ package app
 
 import (
 	"html/template"
-	"path/filepath"
+	// "path/filepath"
 
 	"github.com/cbonello/revel-csrf"
 	"github.com/iassic/revel-modz/modules/grunt"
@@ -41,14 +41,14 @@ func init() {
 		revel.ActionInvoker,           // Invoke the action.
 	}
 
-	revel.OnAppStart(func() {
-		appPath := revel.BasePath
-		for _, AC := range compilers {
-			path := filepath.Join(appPath, AC.Path)
-			revel.INFO.Printf("Listening: %q\n", path)
-			revel.MainWatcher.Listen(AC, path)
-		}
-	})
+	// revel.OnAppStart(func() {
+	// 	appPath := revel.BasePath
+	// 	for _, AC := range compilers {
+	// 		path := filepath.Join(appPath, AC.Path)
+	// 		revel.INFO.Printf("Listening: %q\n", path)
+	// 		revel.MainWatcher.Listen(AC, path)
+	// 	}
+	// })
 
 	// DB related stuff
 	// add interceptors
