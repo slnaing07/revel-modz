@@ -126,21 +126,40 @@ func (c App) Register() revel.Result {
 	return c.Render()
 }
 
-func (c App) RegisterPost(fname, mi, lname, email, dob, sex, address, city, state, zipcode, phonenumber string) revel.Result {
-	fmt.Println("fname", fname)
-	fmt.Println("mi", mi)
-	fmt.Println("lname", lname)
-	fmt.Println("email", email)
-	fmt.Println("dob", dob)
-	fmt.Println("sex", sex)
-	fmt.Println("address", address)
-	fmt.Println("city", city)
-	fmt.Println("state", state)
-	fmt.Println("zipcode", zipcode)
-	fmt.Println("phonenumber", phonenumber)
-	c.Flash.Out["heading"] = "RegisterPost"
-	c.Flash.Out["message"] = "You sorta-successfully fake-registered."
+func (c App) RegisterPost(userregister *models.UserRegisterPost) revel.Result {
+	userregister.Validate(c.Validation)
+
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.App.Maillist())
+	}
+
+	// check that this email is not in the DB already
+	UB := user.GetUserBasicByName(c.Txn, userregister.Email)
+	if UB != nil {
+		c.Validation.Error("Email already taken").Key("userregister.Email")
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.App.Signup())
+	}
+
+	var err error
+	UB, err = c.addNewUser(usersignup.Email, usersignup.Password)
+	checkERROR(err)
+
+	// TODO  which mailing lists did they check off?
+	// ALSO  user Basic will be added twice if this current call is made
+	// _, err = c.addNewMaillistUser(userregister.Email)
+	// checkERROR(err)
+
+	// TODO add profile DB insert
+
+	c.Flash.Out["heading"] = "Thanks for Joining!"
+	c.Flash.Out["message"] = userregister.Email + " is now subscribed to the mailing list."
+
 	return c.Redirect(routes.App.Result())
+
 }
 
 func (c App) Login() revel.Result {
