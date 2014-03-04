@@ -83,7 +83,8 @@ func SetupDevDB() {
 	revel.INFO.Println("Setting up Dev DB")
 	dropTables()
 	addTables()
-	fillTables()
+	fillUserTables()
+	fillMailTables()
 	testDevDB()
 }
 
@@ -103,7 +104,22 @@ func addTables() {
 	userfiles.AddTables(TestDB)
 }
 
-func fillTables() {
+var dev_users = []*user.UserPass{
+	&user.UserPass{UserId: 100001, UserName: "demo1@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 100002, UserName: "demo2@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 100003, UserName: "demo3@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 100004, UserName: "demo4@domain.com", Password: "demopass"},
+	&user.UserPass{UserId: 200001, UserName: "admin@domain.com", Password: "adminpass"},
+}
+
+var mail_users = []*maillist.MaillistUser{
+	&maillist.MaillistUser{UserId: 100001, Email: "demo1@domain.com", List: "updates"},
+	&maillist.MaillistUser{UserId: 100002, Email: "demo2@domain.com", List: "updates"},
+	&maillist.MaillistUser{UserId: 100003, Email: "demo3@domain.com", List: "promo"},
+	&maillist.MaillistUser{UserId: 100004, Email: "demo4@domain.com", List: "promo"},
+}
+
+func fillUserTables() {
 
 	var err error
 
@@ -116,32 +132,14 @@ func fillTables() {
 		err = user.AddUserBasic(TestDB, ub)
 		checkERROR(err)
 
-		created_at := ub.CreatedAt
-		updated_at := ub.UpdatedAt
-
-		if created_at.IsZero() {
-			revel.ERROR.Println("Should have created_at after create")
-		}
-		if updated_at.IsZero() {
-			revel.ERROR.Println("Should have updated_at after create")
-		}
-
 		_, err = auth.AddUserAuth(TestDB, up)
 		checkERROR(err)
 	}
 
-	revel.INFO.Println("Filled DBs")
+	revel.INFO.Println("Filled User DBs")
 }
 
-var dev_users = []*user.UserPass{
-	&user.UserPass{UserId: 100001, UserName: "demo1@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 100002, UserName: "demo2@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 100003, UserName: "demo3@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 100004, UserName: "demo4@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 200001, UserName: "admin@domain.com", Password: "adminpass"},
-}
-
-func testDevDB() {
+func testUserDB() {
 	for _, up := range dev_users {
 		u := user.GetUserBasicByUserId(TestDB, up.UserId)
 		if u == nil {
@@ -158,4 +156,18 @@ func testDevDB() {
 			revel.ERROR.Printf("Failed to authenticate user: %+v\n", *up)
 		}
 	}
+}
+
+func fillMailTables() {
+
+	var err error
+
+	for _, up := range mail_users {
+
+		_, err = maillist.AddUser(TestDB, up.UserId, up.Email)
+		checkERROR(err)
+
+	}
+
+	revel.INFO.Println("Filled maillist DBs")
 }
