@@ -1,6 +1,8 @@
 package models
 
 import (
+	"regexp"
+
 	"github.com/revel/revel"
 )
 
@@ -59,16 +61,16 @@ func (u *UserSignup) Validate(v *revel.Validation) {
 }
 
 type UserRegister struct {
-	Username		string
-	Fname			string
-	MidInit			string
-	Lname			string
-	Dob				string
-	Sex				string
+	Username        string
+	Fname           string
+	MidInit         string
+	Lname           string
+	Dob             string
+	Sex             string
 	Address         string
-	City			string
-	Zipcode			string
-	Phnumber		string
+	City            string
+	Zipcode         string
+	Phnumber        string
 	Email           string
 	Password        string
 	PasswordConfirm string
@@ -102,7 +104,7 @@ func (u *UserRegister) Validate(v *revel.Validation) {
 	v.Required(u.City).
 		Message("City required").
 		Key("userregister.City")
-	v.Match(u.City, regexp.MustCompile(alpha)).
+	v.Match(u.City, regexp.MustCompile(`[A-Za-z]+`)).
 		Message("Valid City required").
 		Key("userregister.City")
 	v.Required(u.Zipcode).
@@ -114,7 +116,7 @@ func (u *UserRegister) Validate(v *revel.Validation) {
 	v.Required(u.Phnumber).
 		Message("Phnumber required").
 		Key("userregister.Phnumber")
-	v.Match(u.Zipcode, regexp.MustCompile("[0-9]{3}\-[0-9]{3}\-[0-9]{4}")).
+	v.Match(u.Zipcode, regexp.MustCompile(`[0-9]{3}\-[0-9]{3}\-[0-9]{4}`)).
 		Message("Phone Number must be in format DDD-DDD-DDDD").
 		Key("userregister.Phnumber")
 	v.Required(u.Email).

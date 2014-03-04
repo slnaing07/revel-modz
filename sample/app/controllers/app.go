@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"fmt"
-
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/maillist"
 	"github.com/iassic/revel-modz/modules/user"
@@ -112,7 +110,7 @@ func (c App) MaillistPost(usermaillist *models.UserMaillist) revel.Result {
 		return c.Redirect(routes.App.Signup())
 	}
 
-	_, err := c.addNewMaillistUser(usermaillist.Email)
+	_, err := c.addNewMaillistUser(usermaillist.Email, "MaillistPost()")
 	checkERROR(err)
 
 	c.Flash.Out["heading"] = "Thanks for Joining!"
@@ -126,7 +124,7 @@ func (c App) Register() revel.Result {
 	return c.Render()
 }
 
-func (c App) RegisterPost(userregister *models.UserRegisterPost) revel.Result {
+func (c App) RegisterPost(userregister *models.UserRegister) revel.Result {
 	userregister.Validate(c.Validation)
 
 	if c.Validation.HasErrors() {
@@ -145,7 +143,7 @@ func (c App) RegisterPost(userregister *models.UserRegisterPost) revel.Result {
 	}
 
 	var err error
-	UB, err = c.addNewUser(usersignup.Email, usersignup.Password)
+	UB, err = c.addNewUser(userregister.Email, userregister.Password)
 	checkERROR(err)
 
 	// TODO  which mailing lists did they check off?
@@ -238,7 +236,7 @@ func (c App) addNewUser(email, password string) (*user.UserBasic, error) {
 	return UB, nil
 }
 
-func (c App) addNewMaillistUser(email string) (*maillist.MaillistUser, error) {
+func (c App) addNewMaillistUser(email, list string) (*maillist.MaillistUser, error) {
 
 	// uuid := get random number (that isn't used already)
 	uuid := user.GenerateNewUserId(c.Txn)
@@ -250,7 +248,7 @@ func (c App) addNewMaillistUser(email string) (*maillist.MaillistUser, error) {
 	err := user.AddUserBasic(TestDB, UB)
 	checkERROR(err)
 
-	MA, err := maillist.AddUser(TestDB, uuid, email)
+	MA, err := maillist.AddUser(TestDB, uuid, email, list)
 	checkERROR(err)
 
 	return MA, nil

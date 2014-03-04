@@ -68,6 +68,7 @@ func InitDB() {
 	checkPANIC(err)
 
 	ndb.SetLogger(gorm.Logger{revel.INFO})
+	ndb.LogMode(true)
 
 	TestDB = &ndb
 
@@ -85,7 +86,7 @@ func SetupDevDB() {
 	addTables()
 	fillUserTables()
 	fillMailTables()
-	testDevDB()
+	testUserDB()
 }
 
 func dropTables() {
@@ -162,9 +163,9 @@ func fillMailTables() {
 
 	var err error
 
-	for _, up := range mail_users {
+	for _, um := range mail_users {
 
-		_, err = maillist.AddUser(TestDB, up.UserId, up.Email)
+		_, err = maillist.AddUser(TestDB, um.UserId, um.Email, um.List)
 		checkERROR(err)
 
 	}
