@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/revel/revel"
 
-	"github.com/iassic/revel-modz/sample/app/routes"
+	"{{.BasePath}}{{.AppName}}/app/routes"
 )
 
 type Admin struct {

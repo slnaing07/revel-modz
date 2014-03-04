@@ -81,11 +81,11 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 }
 
 var compilers = []grunt.GruntCompiler{
-	grunt.GruntCompiler{Name: "Gruntfile.js", Path: "Gruntfile.js", Grunt: "default"},
+	// grunt.GruntCompiler{Name: "Gruntfile.js", Path: "Gruntfile.js", Grunt: "default"},
 
-	grunt.GruntCompiler{Name: "Foundation JS", Path: "app/assets/js/foundation", Grunt: "uglify:foundation_js"},
-	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation", Grunt: "sass:foundation_css"},
-	grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation_custom.scss", Grunt: "sass:foundation_css"},
+	// grunt.GruntCompiler{Name: "Foundation JS", Path: "app/assets/js/foundation", Grunt: "uglify:foundation_js"},
+	// grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation", Grunt: "sass:foundation_css"},
+	// grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation_custom.scss", Grunt: "sass:foundation_css"},
 
 	grunt.GruntCompiler{Name: "{{.AppName}} JS", Path: "app/assets/js/{{.AppName}}", Grunt: "uglify:{{.AppName}}_js"},
 	grunt.GruntCompiler{Name: "{{.AppName}} SASS", Path: "app/assets/sass/{{.AppName}}", Grunt: "sass:{{.AppName}}_css"},

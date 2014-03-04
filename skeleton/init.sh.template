@@ -1,18 +1,41 @@
 #!/bin/bash
 
-# npminit.sh
+appname="{{ .AppName }}"
 
+jsfiles=(
+	util
+	comm 
+	markdown_editor
+)
+
+sassfiles=(
+	common
+	user
+)
+
+# install grunt module dependencies
 npm init
 npm install grunt
 npm install grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
 
-appname="{{ .AppName }}"
+# move app assets for renaming effect
+if [ -d "app/assets/js/myapp" ]; then
+	echo "Moving assets to $appname/app/assets"
 
-mv app/assets/js/myapp app/assets/js/$appname
-mv app/assets/js/$appname/myapp_util.js app/assets/js/$appname/${appname}_util.js
-mv app/assets/js/$appname/myapp_comm.js app/assets/js/$appname/${appname}_comm.js
+	# move js assets
+	mv app/assets/js/myapp app/assets/js/${appname}
+	for file in ${jsfiles[@]}
+	do
+		echo "  Making js/${appname}/${appname}_${file}.js"
+		mv app/assets/js/${appname}/myapp_${file}.js app/assets/js/${appname}/${appname}_${file}.js
+	done
 
-mv app/assets/sass/myapp app/assets/sass/$appname
-mv app/assets/sass/myapp.scss app/assets/sass/$appname.scss
-mv app/assets/sass/$appname/_myapp_user.scss app/assets/sass/$appname/_${appname}_user.scss
-mv app/assets/sass/$appname/_myapp_common.scss app/assets/sass/$appname/_${appname}_common.scss
+	# move sass assets
+	mv app/assets/sass/myapp app/assets/sass/${appname}
+	mv app/assets/sass/myapp.scss app/assets/sass/${appname}.scss
+	for file in ${sassfiles[@]}
+	do
+		echo "  Making sass/${appname}/_${appname}_${file}.scss"
+		mv app/assets/sass/${appname}/_myapp_${file}.scss app/assets/sass/${appname}/_${appname}_${file}.scss
+	done
+fi

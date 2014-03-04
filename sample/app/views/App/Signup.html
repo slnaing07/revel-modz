@@ -28,7 +28,7 @@
                             <div class="large-12 columns">
                                 <label for="{{$field.Id}}">Email <small>required</small>
                                     <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
-                                    type="email" placeholder="user@domain.com" autofocus>
+                                    type="text" placeholder="user@domain.com" autofocus>
                                 </label>
                                 {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                             </div>
