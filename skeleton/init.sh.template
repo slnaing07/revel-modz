@@ -4,7 +4,8 @@ appname="{{ .AppName }}"
 
 jsfiles=(
 	util
-	comm 
+	comm
+	files 
 	markdown_editor
 )
 
