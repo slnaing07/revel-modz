@@ -24,6 +24,10 @@ GET     /u/dashboard                            User.Dashboard
 GET     /u/account                              User.Account
 GET     /u/files 								User.FilesView
 
+GET     /a/                                     Admin.Index
+GET     /a/maillistview                         Admin.MaillistView
+GET     /a/maillistcompose               		Admin.MaillistCompose
+
 # Api-ish routes
 WS 		/comm									User.Comm
 GET     /files/query							Files.FilesQuery

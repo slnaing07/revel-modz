@@ -14,14 +14,17 @@
                         <fieldset>
                             <legend>Join the mailing list</legend>
                             <input type="hidden" name="csrf_token" id="csrf_token" value="{{ .csrf_token }}" />
-
+                            {{with $field := field "usermaillist.Email" .}}
                             <div class="large-12 columns">
-                                <label for="email">Email <small>required</small>
-                                    <input type="email" id="email" name="email" placeholder="user@domain.com" required autofocus>
+                                <label for="{{$field.Id}}">Email <small>required</small>
+                                    <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="email" placeholder="user@domain.com" autofocus>
                                 </label>
-                                <small class="error">Valid email required.</small>
+                                {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                             </div>
-                             <button type="submit" class="button">Signup</button>
+                            {{end}}
+
+                            <button type="submit" class="button">Signup</button>
                         </fieldset>
                     </form>
                 </div>

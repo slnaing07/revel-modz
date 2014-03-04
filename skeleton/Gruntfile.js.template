@@ -19,7 +19,8 @@ var files = {
 
   "{{ .AppName }}_js": [
     "app/assets/js/{{ .AppName }}/{{ .AppName }}_util.js",
-    "app/assets/js/{{ .AppName }}/{{ .AppName }}_comm.js"
+    "app/assets/js/{{ .AppName }}/{{ .AppName }}_comm.js",
+    "app/assets/js/{{ .AppName }}/{{ .AppName }}_markdown_editor.js"
   ]
 }
 
