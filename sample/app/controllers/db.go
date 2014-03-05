@@ -140,6 +140,15 @@ func fillUserTables() {
 	revel.INFO.Println("Filled User DBs")
 }
 
+func fillMailTables() {
+	var err error
+	for _, um := range mail_users {
+		_, err = maillist.AddUser(TestDB, um.UserId, um.Email, um.List)
+		checkERROR(err)
+	}
+	revel.INFO.Println("Filled maillist DBs")
+}
+
 func testUserDB() {
 	for _, up := range dev_users {
 		u := user.GetUserBasicByUserId(TestDB, up.UserId)
@@ -157,18 +166,4 @@ func testUserDB() {
 			revel.ERROR.Printf("Failed to authenticate user: %+v\n", *up)
 		}
 	}
-}
-
-func fillMailTables() {
-
-	var err error
-
-	for _, um := range mail_users {
-
-		_, err = maillist.AddUser(TestDB, um.UserId, um.Email, um.List)
-		checkERROR(err)
-
-	}
-
-	revel.INFO.Println("Filled maillist DBs")
 }
