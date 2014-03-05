@@ -4,12 +4,32 @@
 {{template "templates/menu.html" .}}
 
 <div class="row">
-    <div class="large-6 large-centered columns">
-        <div class="panel">
-            <h3>Welcome</h3>
-            Your account details.
-        </div>
-    </div>
+	<div class="large-8 large-centered columns">
+		<div class="panel">
+			<h3>{{.user_basic.UserName}}</h3>
+			<div id="account-container">
+				<dl class="tabs" data-tab>
+					<dd class="active"><a href="#panel-acct-overview">Overview</a>
+					</dd>
+					<dd><a href="#panel-data">Profile</a>
+					</dd>
+					<dd><a href="#panel-preview">Billing</a>
+					</dd>
+				</dl>
+				<div class="tabs-content">
+					<div class="content active" id="panel-acct-overview">
+						{{template "User/templates/account_overview.html" .}}
+					</div>
+					<div class="content" id="panel-acct-profile">
+						{{template "User/templates/account_profile.html" .}}
+					</div>
+					<div class="content" id="panel-acct-billing">
+						{{template "User/templates/account_billing.html" .}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 {{template "templates/footer.html" .}}

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-
 	"code.google.com/p/go.net/websocket"
 	"github.com/iassic/revel-modz/modules/ws_comm"
 	"github.com/revel/revel"

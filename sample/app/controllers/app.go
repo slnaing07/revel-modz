@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"fmt"
-
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/maillist"
 	"github.com/iassic/revel-modz/modules/user"
@@ -112,7 +110,7 @@ func (c App) MaillistPost(usermaillist *models.UserMaillist) revel.Result {
 		return c.Redirect(routes.App.Signup())
 	}
 
-	_, err := c.addNewMaillistUser(usermaillist.Email)
+	_, err := c.addNewMaillistUser(usermaillist.Email, "MaillistPost()")
 	checkERROR(err)
 
 	c.Flash.Out["heading"] = "Thanks for Joining!"
@@ -126,21 +124,40 @@ func (c App) Register() revel.Result {
 	return c.Render()
 }
 
-func (c App) RegisterPost(fname, mi, lname, email, dob, sex, address, city, state, zipcode, phonenumber string) revel.Result {
-	fmt.Println("fname", fname)
-	fmt.Println("mi", mi)
-	fmt.Println("lname", lname)
-	fmt.Println("email", email)
-	fmt.Println("dob", dob)
-	fmt.Println("sex", sex)
-	fmt.Println("address", address)
-	fmt.Println("city", city)
-	fmt.Println("state", state)
-	fmt.Println("zipcode", zipcode)
-	fmt.Println("phonenumber", phonenumber)
-	c.Flash.Out["heading"] = "RegisterPost"
-	c.Flash.Out["message"] = "You sorta-successfully fake-registered."
+func (c App) RegisterPost(userregister *models.UserRegister) revel.Result {
+	userregister.Validate(c.Validation)
+
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.App.Maillist())
+	}
+
+	// check that this email is not in the DB already
+	UB := user.GetUserBasicByName(c.Txn, userregister.Email)
+	if UB != nil {
+		c.Validation.Error("Email already taken").Key("userregister.Email")
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.App.Signup())
+	}
+
+	var err error
+	UB, err = c.addNewUser(userregister.Email, userregister.Password)
+	checkERROR(err)
+
+	// TODO  which mailing lists did they check off?
+	// ALSO  user Basic will be added twice if this current call is made
+	// _, err = c.addNewMaillistUser(userregister.Email)
+	// checkERROR(err)
+
+	// TODO add profile DB insert
+
+	c.Flash.Out["heading"] = "Thanks for Joining!"
+	c.Flash.Out["message"] = userregister.Email + " is now subscribed to the mailing list."
+
 	return c.Redirect(routes.App.Result())
+
 }
 
 func (c App) Login() revel.Result {
@@ -219,7 +236,7 @@ func (c App) addNewUser(email, password string) (*user.UserBasic, error) {
 	return UB, nil
 }
 
-func (c App) addNewMaillistUser(email string) (*maillist.MaillistUser, error) {
+func (c App) addNewMaillistUser(email, list string) (*maillist.MaillistUser, error) {
 
 	// uuid := get random number (that isn't used already)
 	uuid := user.GenerateNewUserId(c.Txn)
@@ -231,7 +248,7 @@ func (c App) addNewMaillistUser(email string) (*maillist.MaillistUser, error) {
 	err := user.AddUserBasic(TestDB, UB)
 	checkERROR(err)
 
-	MA, err := maillist.AddUser(TestDB, uuid, email)
+	MA, err := maillist.AddUser(TestDB, uuid, email, list)
 	checkERROR(err)
 
 	return MA, nil
