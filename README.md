@@ -43,6 +43,11 @@ cd ..
 ```
 
 create a new database and update the db.spec in app.conf 
+
+```
+createdb test_db  # or something similar
+```
+
 add the following environment variables to your `.profile` or `.bashrc`
 ```
 export DB_DEV_USER='username'
@@ -53,13 +58,14 @@ export DB_PROD_PASS='userpass'
 export DB_PROD_NAME='databasename'
 ```
 
+Now run your new Revel application!
 
 
 ```
 revel run <APP_NAME>
 ```
 
-now point your browser at `localhost:9000`
+and  point your browser at `localhost:9000`
 
 
 Features
