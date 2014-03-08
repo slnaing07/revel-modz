@@ -10,102 +10,127 @@
               <form action="/register" method="POST" data-abide>
 
                 <input type="hidden" name="csrf_token" value="{{ .csrf_token }}" />
-                
+
                 <div class="row">
+
+                    {{with $field := field "userregister.Fname" .}}
                     <div class="large-5 columns">
                         <div class="firstname-field">
-                            <label>First Name
-                        	<small>required</small>
-                                <input type="text" required pattern="[a-zA-Z]+" name="fname">
+                            <label for="{{$field.Id}}">First Name <small>required</small>
+                                 <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="John" autofocus>
                             </label>
-                            <small class="error">Your first name is required and must be a string.</small>
+                            {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                         </div>
                     </div>
+                    {{end}}
 
-
+                    {{with $field := field "userregister.MidInit" .}}
                     <div class="large-2 columns">
                         <div class="mi-field">
-                            <label>MI
-                                <input type="text" name="mi">
+                            <label for="{{$field.Id}}">MI
+                                <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="MI" autofocus>
                             </label>
-                            <small class="error">Your middle initial is required.</small>
+                             {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                         </div>
                     </div>
+                    {{end}}
 
 
+                    {{with $field := field "userregister.Lname" .}}
                     <div class="large-5 columns">
                         <div class="lastname-field">
-                            <label>Your Last Name
-                                <input type="text" name="lname">
+                            <label for="{{$field.Id}}">Last Name <small>required</small>
+                                 <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="Doe" autofocus>
                             </label>
-                            <small class="error">Your last name is required and must be a string.</small>
+                            {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                         </div>
                     </div>
+                    {{end}}
+
                 </div>
 
-
+                {{with $field := field "userregister.Email" .}}
                 <div class="email-field">
-                    <label>Email
-                        <input type="email" name="email">
+                    <label for="{{$field.Id}}">Email<small>required</small>
+                        <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="Dan@something.com" autofocus>
                     </label>
-                    <small class="error">An email address is required.</small>
+                    {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
+                {{end}}
 
-
+                {{with $field := field "userregister.Dob" .}}
                 <div class="dob-field">
-                    <label>Date of Birth
-                        <input type="text" name="dob">
+                    <label for="{{$field.Id}}">Date of Birth<small>required</small>
+                        <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="12-28-2014" autofocus>
                     </label>
-                    <small class="error">Your date of birth is required.</small>
+                    {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
+                {{end}}
 
-
+                {{with $field := field "Sex.Dob" .}}
                 <div class="sex-field">
-                    <label>Sex
-                        <input type="text" name="sex">
+                    <label for="{{$field.Id}}">Sex<small>required</small>
+                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="M/F" autofocus>
                     </label>
-                    <small class="error">Enter male or female.</small>
+                    {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
+                {{end}}
 
-
+                {{with $field := field "Address.Dob" .}}
                 <div class="address-field">
-                    <label>Address
-                        <input type="text" name="address">
+                    <label for="{{$field.Id}}">Address
+                        <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="177 rainbow rd" autofocus>
                     </label>
-                    <small class="error">Your address is required.</small>
+                    {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
+                {{end}}
 
-
+                {{with $field := field "City.Dob" .}}
                 <div class="city-field">
-                    <label>City
-                        <input type="text" name="city">
+                    <label for="{{$field.Id}}">City
+                        <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="New york city" autofocus>
                     </label>
-                    <small class="error">Enter city name.</small>
+                    {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
+                {{end}}
 
-
+                {{with $field := field "State.Dob" .}}
                 <div class="state-field">
-                    <label>State
-                        <input type="text" name="state">
+                    <label for="{{$field.Id}}">State
+                        <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="NY" autofocus>
                     </label>
-                    <small class="error">Enter state name.</small>
+                    {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
+                {{end}}
 
-
+                {{with $field := field "Zipcode.Dob" .}}
                 <div class="zipcode-field">
-                    <label>Zip Code
-                        <input type="text" name="zipcode">
+                    <label for="{{$field.Id}}">Zip Code
+                        <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="10001" autofocus>
                     </label>
                     <small class="error">Your zip code is required.</small>
                 </div>
+                {{end}}
 
-
+                {{with $field := field "Phnumber.Dob" .}}
                 <div class="phone-field">
-                    <label>Phone Number
-                        <input type="text" name="phonenumber">
+                    <label for="{{$field.Id}}">Phone Number
+                        <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="123-456-7891" autofocus>
                     </label>
-                    <small class="error">Your phone number is required.</small>
+                    {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
+                {{end}}
 
 
                 <button type="submit">Register</button>

@@ -3,6 +3,8 @@ package controllers
 import (
 	"github.com/revel/revel"
 
+	"github.com/iassic/revel-modz/modules/maillist"
+
 	"github.com/iassic/revel-modz/sample/app/routes"
 )
 
@@ -36,7 +38,12 @@ func (c Admin) Index() revel.Result {
 }
 
 func (c Admin) MaillistView() revel.Result {
-	return c.Render()
+	maillist_users, err := maillist.GetAllUsers(c.Txn)
+	if err != nil {
+		revel.ERROR.Println(err)
+		return c.Render()
+	}
+	return c.Render(maillist_users)
 }
 
 func (c Admin) MaillistCompose() revel.Result {

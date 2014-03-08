@@ -4,10 +4,58 @@
 {{template "templates/menu.html" .}}
 
 <div class="row">
-    <div class="large-8 large-centered small-12 columns">
-        <div class="panel">
-            <h3>Welcome</h3>
-            <p>Your list view will be coming soon.</p>
+    <div class="large-12 large-centered small-12 small-centered columns">
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 large-centered small-12 small-centered columns">
+        <div id="maillist_userlist" class="panel">
+
+            <div class="row">
+                <div class="large-2 small-2 columns">
+                    UserId
+                </div>
+    			<div class="large-2 small-2 columns">
+					Email
+    			</div>
+    			<div class="large-2 small-2 columns">
+					List
+    			</div>
+    			<div class="large-2 small-2 columns">
+					Activated
+    			</div>
+
+    			<div class="large-4 small-4 columns">
+    			</div>
+			</div>
+
+        	{{range $muser := .maillist_users}}
+			<div class="row">
+   				<div class="large-2 small-2 columns">
+					{{$muser.UserId}}
+    			</div>
+    			<div class="large-2 small-2 columns">
+					{{$muser.Email}}
+    			</div>
+    			<div class="large-2 small-2 columns">
+					{{$muser.List}}
+    			</div>
+    			<div class="large-2 small-2 columns">
+					{{$muser.Activated}}
+    			</div>
+
+    			<div class="large-4 small-4 columns">
+                    <ul class="button-group">
+                        <li><a href="#" class="small button success">View</a></li>
+                        <li><a href="#" class="small button warning">Edit</a></li>
+                        <li><a href="#" class="small button alert">Delete</a></li>
+                    </ul>
+    			</div>
+			</div>
+			{{end}}
+
         </div>
     </div>
 </div>

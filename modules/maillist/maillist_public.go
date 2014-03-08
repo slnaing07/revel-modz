@@ -4,10 +4,11 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-func AddUser(db *gorm.DB, uId int64, email string) (*MaillistUser, error) {
+func AddUser(db *gorm.DB, uId int64, email, list string) (*MaillistUser, error) {
 	mu := &MaillistUser{
 		UserId: uId,
 		Email:  email,
+		List:   list,
 	}
 	err := addUser(db, mu)
 	return mu, err
@@ -25,7 +26,7 @@ func GetUserByEmail(db *gorm.DB, email string) (*MaillistUser, error) {
 	return getUserByEmail(db, email)
 }
 
-func GetAllUsers(db *gorm.DB) ([]*MaillistUser, error) {
+func GetAllUsers(db *gorm.DB) ([]MaillistUser, error) {
 	return getAllUsers(db)
 }
 

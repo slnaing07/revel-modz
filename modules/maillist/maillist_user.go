@@ -12,6 +12,7 @@ type MaillistUser struct {
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 
 	UserId    int64 `sql:"not null;unique"`
 	Email     string
@@ -88,9 +89,10 @@ func getUserByEmail(db *gorm.DB, email string) (*MaillistUser, error) {
 	return &mu, nil
 }
 
-func getAllUsers(db *gorm.DB) ([]*MaillistUser, error) {
-	var mus []*MaillistUser
-	err := db.Find(&mus).Error
+func getAllUsers(db *gorm.DB) ([]MaillistUser, error) {
+	var mus []MaillistUser
+	println("GOT HERE")
+	err := db.Debug().Find(&mus).Error
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +101,7 @@ func getAllUsers(db *gorm.DB) ([]*MaillistUser, error) {
 
 func getUsersByList(db *gorm.DB, list string) ([]*MaillistUser, error) {
 	var mus []*MaillistUser
-	err := db.Where(&MaillistUser{List: list}).Find(&mus).Error
+	err := db.Where(&MaillistUser{List: list}).Find(mus).Error
 	if err != nil {
 		return nil, err
 	}
