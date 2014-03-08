@@ -38,7 +38,6 @@ func (c Admin) Index() revel.Result {
 }
 
 func (c Admin) MaillistView() revel.Result {
-	println("TOG HERE")
 	maillist_users, err := maillist.GetAllUsers(c.Txn)
 	if err != nil {
 		revel.ERROR.Println(err)

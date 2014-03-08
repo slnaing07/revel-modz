@@ -24,7 +24,7 @@ one of [postgres, mysql, sqlite]
 Installation
 --------------
 
-`go get` revel-modz
+`go get -u` revel-modz
 
 ``` Bash
 go get -u github.com/iassic/revel-modz
@@ -38,11 +38,22 @@ The following instructions will setup a new app from the revel-modz skeleton
 ``` Bash
 revel new <APP_NAME> github.com/iassic/revel-modz/skeleton
 cd <APP_NAME>
-sh init.sh  (hit ctrl-c when prompted) [you will see a bunch of errors initially]
+bash init.sh  (hit ctrl-c when prompted) [you will see a bunch of errors initially]
 cd ..
 ```
 
 create a new database and update the db.spec in app.conf 
+add the following environment variables to your `.profile` or `.bashrc`
+```
+export DB_DEV_USER='username'
+export DB_DEV_PASS='userpass'
+export DB_DEV_NAME='databasename'
+export DB_PROD_USER='username'
+export DB_PROD_PASS='userpass'
+export DB_PROD_NAME='databasename'
+```
+
+
 
 ```
 revel run <APP_NAME>

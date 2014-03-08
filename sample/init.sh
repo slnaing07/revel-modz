@@ -6,13 +6,4 @@ npm init
 npm install grunt
 npm install grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
 
-appname="sample"
-
-mv app/assets/js/myapp app/assets/js/$appname
-mv app/assets/js/$appname/myapp_util.js app/assets/js/$appname/${appname}_util.js
-mv app/assets/js/$appname/myapp_comm.js app/assets/js/$appname/${appname}_comm.js
-
-mv app/assets/sass/myapp app/assets/sass/$appname
-mv app/assets/sass/myapp.scss app/assets/sass/$appname.scss
-mv app/assets/sass/$appname/_myapp_user.scss app/assets/sass/$appname/_${appname}_user.scss
-mv app/assets/sass/$appname/_myapp_common.scss app/assets/sass/$appname/_${appname}_common.scss
+# the init.sh.template file move has been excluded here as it has been theoretically done already
