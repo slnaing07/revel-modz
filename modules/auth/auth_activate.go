@@ -11,6 +11,7 @@ type UserAuthActivate struct {
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 
 	UserId                        int64
 	ActivateAccountToken          string

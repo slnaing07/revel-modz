@@ -57,6 +57,10 @@ func (c Admin) MaillistCompose() revel.Result {
 	return c.Render()
 }
 
+func (c Admin) MaillistComposePost() revel.Result {
+	return nil
+}
+
 // helper functions
 
 func (c App) addNewMaillistUser(email, list string) error {

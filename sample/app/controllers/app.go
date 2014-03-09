@@ -1,6 +1,10 @@
 package controllers
 
 import (
+	"fmt"
+	"strconv"
+
+	"github.com/iassic/revel-modz/modules/analytics"
 	"github.com/iassic/revel-modz/modules/user"
 	"github.com/revel/revel"
 )
@@ -10,7 +14,7 @@ type App struct {
 }
 
 func (c App) RenderArgsFill() revel.Result {
-	u := c.connected()
+	u := c.userConnected()
 	if u != nil {
 		c.RenderArgs["user_basic"] = u
 
@@ -21,10 +25,24 @@ func (c App) RenderArgsFill() revel.Result {
 			c.Session["admin"] = "true"
 		}
 	}
+	v := c.visitorConnected()
+	if v != nil {
+		c.RenderArgs["visitor"] = v
+		c.Session["v"] = fmt.Sprint(v.VisitorId)
+	}
+
 	return nil
 }
 
-func (c App) connected() *user.UserBasic {
+func (c App) RecordPageRequest() revel.Result {
+
+	_, err := analytics.ParsePageRequest(c.Request.Request)
+	checkERROR(err)
+
+	return nil
+}
+
+func (c App) userConnected() *user.UserBasic {
 	if c.RenderArgs["user_basic"] != nil {
 		return c.RenderArgs["user_basic"].(*user.UserBasic)
 	}
@@ -35,9 +53,42 @@ func (c App) connected() *user.UserBasic {
 			revel.ERROR.Println("user field in Session[] not found in DB")
 			return nil
 		}
-		// revel.WARN.Printf("connected :: %+v", *u)
+
+		// check ip addresses or something maybe
+
+		// remove visitor fields in RenderArgs and Session?
+
 		return u
 	}
+	return nil
+}
+
+func (c App) visitorConnected() *user.Visitor {
+	if c.RenderArgs["visitor"] != nil {
+		return c.RenderArgs["visitor"].(*user.Visitor)
+	}
+	if visitor_id, ok := c.Session["v"]; ok {
+		v_id, err := strconv.ParseInt(visitor_id, 64, 10)
+		checkERROR(err)
+		v, err := user.GetVisitorByVisitorId(c.Txn, v_id)
+		checkERROR(err)
+		if v == nil {
+			revel.ERROR.Println("visitor field in Session[] not found in DB")
+			return nil
+		}
+
+		// check ip addresses and do something
+		pr, err := analytics.ParsePageRequest(c.Request.Request)
+		checkERROR(err)
+		if pr.XRealIp != v.VisitorIp {
+			revel.INFO.Println("visitor connecting from new ip")
+		}
+
+		return v
+	}
+
+	// if we get here, we have a new visitor or they have deleted their cookies
+
 	return nil
 }
 

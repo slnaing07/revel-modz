@@ -35,6 +35,41 @@ function init_dynatree() {
             }
         },
 
+        /****************/
+        // Kevin:  notice that you redeclared the onSelect function handler (3 above)
+        onSelect: function(flag, node) {
+            if (!flag) {
+                console.log("You deselected node with data title " + node.data.title);
+
+            }
+            var selectedNodes = node.tree.getSelectedNodes();
+            console.log(selectedNodes);
+            var selectedKeys = $.map(selectedNodes, function(node) {
+                return node.data.key;
+            });
+            console.log("Selected keys: " + selectedKeys.join(", "));
+
+
+
+
+        },
+        onExpand: function(flag, node) {
+            if (flag) {
+                console.log("You expanded node with data title " + node.data.title);
+
+            }
+            var childNodes = node.childList;
+            console.log(childNodes);
+            /*var selectedKeys = $.map(childNodes, function(node){
+                return node.data.key;
+            });*/
+            //console.log("Expanded keys: " + selectedKeys.join(", "));
+            //console.log(childNodes.length);
+            renderFileRightPanel(childNodes);
+
+        },
+        /****************/
+
         // onCreate: function(dtnode, nodeSpan) {
         //     // console.log(nodeSpan);
         //     nodeSpan.oncontextmenu = showContextMenu;

@@ -11,6 +11,7 @@ type MaillistMessage struct {
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 
 	Draft bool
 	Sent  bool

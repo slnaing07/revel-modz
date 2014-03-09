@@ -7,7 +7,7 @@ import (
 )
 
 func (c User) Comm(ws *websocket.Conn) revel.Result {
-	user := c.connected()
+	user := c.userConnected()
 	revel.WARN.Println(user)
 
 	comm := ws_comm.New()

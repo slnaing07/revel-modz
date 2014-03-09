@@ -31,13 +31,43 @@ func GetUserById(db *gorm.DB, uId int64) (*User, error) {
 	return nil, errors.New("GetUserById not implemented")
 }
 
+var MAX_ID_RETRY int = 10
+
+func GenerateNewVisitorId(db *gorm.DB) (int64, error) {
+	var unique bool
+	var tries int
+	for !unique {
+
+		// TODO  some better conflict resolution, we just want them random and not sequential
+		if tries > MAX_ID_RETRY {
+			return -1, errors.New("too many attempts at generating a unqiue id")
+		}
+
+		// generate id
+		id := generateRandId()
+
+		// check for existance
+		u, err := getVisitorByUserId(db, id)
+		if u == nil {
+			return id, nil
+		} else if err != nil {
+			// probably can't get here
+			return -1, err
+		} else {
+			tries++
+		}
+	}
+	panic("shouldn't get here")
+	return -1, nil
+}
+
 func GenerateNewUserId(db *gorm.DB) (int64, error) {
 	var unique bool
 	var tries int
 	for !unique {
 
 		// TODO  some better conflict resolution, we just want them random and not sequential
-		if tries > 10 {
+		if tries > MAX_ID_RETRY {
 			return -1, errors.New("too many attempts at generating a unqiue id")
 		}
 
@@ -57,6 +87,26 @@ func GenerateNewUserId(db *gorm.DB) (int64, error) {
 	}
 	panic("shouldn't get here")
 	return -1, nil
+}
+
+func AddVisitor(db *gorm.DB, uId int64, ip string) error {
+	u := &Visitor{
+		VisitorId: uId,
+		VisitorIp: ip,
+	}
+	return addVisitor(db, u)
+}
+
+func DeleteVisitor(db *gorm.DB, uId int64) error {
+	return deleteVisitor(db, uId)
+}
+
+func GetVisitorByVisitorId(db *gorm.DB, uId int64) (*Visitor, error) {
+	return getVisitorByVisitorId(db, uId)
+}
+
+func GetVisitorByIp(db *gorm.DB, ip string) (*Visitor, error) {
+	return getVisitorByVisitorIp(db, ip)
 }
 
 func AddUserBasic(db *gorm.DB, uId int64, username string) error {

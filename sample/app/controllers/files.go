@@ -14,7 +14,7 @@ type Files struct {
 }
 
 func (c Files) FilesQuery() revel.Result {
-	user := c.connected()
+	user := c.userConnected()
 
 	dsInfos, err := userfiles.GetUserFileInfos(c.Txn, user.UserId)
 	checkERROR(err)
@@ -23,7 +23,7 @@ func (c Files) FilesQuery() revel.Result {
 }
 
 func (c Files) FileUpload(filedata []byte) revel.Result {
-	user := c.connected()
+	user := c.userConnected()
 
 	reader := c.Request.Request.Body
 	body, err := ioutil.ReadAll(reader)
@@ -49,7 +49,7 @@ func (c Files) FileUpload(filedata []byte) revel.Result {
 }
 
 func (c Files) FileContent(data_id string) revel.Result {
-	user := c.connected()
+	user := c.userConnected()
 
 	dsId, err := strconv.ParseInt(data_id, 10, 64)
 	checkERROR(err)

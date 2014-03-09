@@ -14,6 +14,7 @@ type UserFileInfo struct {
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 
 	// keys to the data table
 	UserId int64 `sql:"not null"`
@@ -31,6 +32,7 @@ type UserFile struct {
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 
 	// keys to the data table
 	UserId int64 `sql:"not null"`
@@ -44,6 +46,7 @@ type UserDataPermissions struct {
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 
 	// keys to the data table
 	UserId int64 `sql:"not null"`
