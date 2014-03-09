@@ -1,5 +1,7 @@
 package controllers
 
+// TEMPLATE FILE
+
 import (
 	"github.com/revel/revel"
 

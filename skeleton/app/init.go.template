@@ -1,5 +1,7 @@
 package app
 
+// TEMPLATE FILE
+
 import (
 	"html/template"
 	"path/filepath"
@@ -50,15 +52,14 @@ func init() {
 		}
 	})
 
-	// DB related stuff
 	// add interceptors
 	revel.InterceptMethod((*ctrl.DbController).Begin, revel.BEFORE)
 	revel.InterceptMethod(ctrl.App.RenderArgsFill, revel.BEFORE)
+	revel.InterceptMethod(ctrl.App.RecordPageRequest, revel.BEFORE)
 	revel.InterceptMethod(ctrl.User.CheckLoggedIn, revel.BEFORE)
 	revel.InterceptMethod(ctrl.Admin.CheckLoggedIn, revel.BEFORE)
 	revel.InterceptMethod((*ctrl.DbController).Commit, revel.AFTER)
 	revel.InterceptMethod((*ctrl.DbController).Rollback, revel.FINALLY)
-	// revel.InterceptMethod((*ctrl.DbController).GetUserLogin, revel.BEFORE)
 
 	revel.OnAppStart(func() {
 		ctrl.InitDB()

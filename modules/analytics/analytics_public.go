@@ -1,8 +1,11 @@
 package analytics
 
 import (
-	// "fmt"
+	// "errors"
 	"net/http"
+	"time"
+
+	"github.com/jinzhu/gorm"
 )
 
 type PageRequest struct {
@@ -40,4 +43,40 @@ func ParsePageRequest(req *http.Request) (*PageRequest, error) {
 	// fmt.Printf("PageReq:\n%+v\n\n", PR)
 
 	return &PR, nil
+}
+
+func SaveVisitorPageRequest(db *gorm.DB, vid int64, now time.Time, req *http.Request) error {
+	pr, err := ParsePageRequest(req)
+	if err != nil {
+		return err
+	}
+	v := &VisitorPageRequest{
+		VisitorId:  vid,
+		Time:       now,
+		Method:     pr.Method,
+		RequestURI: pr.RequestURI,
+		Host:       pr.Host,
+		XRealIp:    pr.XRealIp,
+		Referer:    pr.Referer,
+	}
+
+	return db.Save(v).Error
+}
+
+func SaveUserPageRequest(db *gorm.DB, uId int64, now time.Time, req *http.Request) error {
+	pr, err := ParsePageRequest(req)
+	if err != nil {
+		return err
+	}
+	v := &UserPageRequest{
+		UserId:     uId,
+		Time:       now,
+		Method:     pr.Method,
+		RequestURI: pr.RequestURI,
+		Host:       pr.Host,
+		XRealIp:    pr.XRealIp,
+		Referer:    pr.Referer,
+	}
+
+	return db.Save(v).Error
 }

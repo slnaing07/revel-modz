@@ -10,10 +10,11 @@ type UserPageRequest struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 
-	UserId     int
+	UserId     int64
 	Time       time.Time
 	Method     string
 	RequestURI string
+	Host       string
 	XRealIp    string
 	Referer    string
 }
@@ -24,7 +25,7 @@ type UserMouseEvents struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 
-	UserId  int
+	UserId  int64
 	Time    time.Time
 	Event   string
 	Details string
@@ -36,7 +37,7 @@ type UserKeyboardEvents struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 
-	UserId  int
+	UserId  int64
 	Time    time.Time
 	Event   string
 	Details string

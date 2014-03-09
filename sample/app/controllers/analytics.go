@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/iassic/revel-modz/modules/analytics"
 	"github.com/iassic/revel-modz/modules/user"
@@ -10,8 +11,11 @@ import (
 
 func (c App) RecordPageRequest() revel.Result {
 
-	pr, err := analytics.ParsePageRequest(c.Request.Request)
-	checkERROR(err)
+	now := time.Now()
+
+	// pr, err := analytics.ParsePageRequest(c.Request.Request)
+	// checkERROR(err)
+	// revel.INFO.Printf("PageReq:\n%+v\n", pr)
 
 	var U *user.UserBasic
 	var V *user.Visitor
@@ -19,16 +23,21 @@ func (c App) RecordPageRequest() revel.Result {
 	u := c.RenderArgs["user_basic"]
 	if u != nil {
 		U = u.(*user.UserBasic)
+		revel.INFO.Printf("user:\n%+v\n", U)
+		err := analytics.SaveUserPageRequest(c.Txn, U.UserId, now, c.Request.Request)
+		checkERROR(err)
+		return nil
 	}
 	v := c.RenderArgs["visitor"]
 	if v != nil {
 		V = v.(*user.Visitor)
+		revel.INFO.Printf("visitor:\n%+v\n", V)
+		err := analytics.SaveVisitorPageRequest(c.Txn, V.VisitorId, now, c.Request.Request)
+		checkERROR(err)
+		return nil
 	}
 
-	revel.INFO.Printf("PageReq:\n%+v\n", pr)
-	revel.INFO.Printf("user:\n%+v\n", U)
-	revel.INFO.Printf("visitor:\n%+v\n", V)
-
+	revel.ERROR.Println("Shouldn't get here, means there was no user or visitor")
 	return nil
 }
 
