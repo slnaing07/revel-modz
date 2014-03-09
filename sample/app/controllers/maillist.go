@@ -14,10 +14,10 @@ func (c App) Maillist() revel.Result {
 	return c.Render()
 }
 
-func (c App) MaillistPost(usermaillist *models.UserMaillist) revel.Result {
+func (c App) MaillistPost(usermaillist *models.UserMaillist, list string) revel.Result {
 	usermaillist.Validate(c.Validation)
 
-	if c.Validation.HasErrors() {
+	if c.Validation.HasErrors() || (list != "weekly" && list != "longer") {
 		c.Validation.Keep()
 		c.FlashParams()
 		return c.Redirect(routes.App.Maillist())
@@ -32,11 +32,11 @@ func (c App) MaillistPost(usermaillist *models.UserMaillist) revel.Result {
 		return c.Redirect(routes.App.Signup())
 	}
 
-	_, err := c.addNewMaillistUser(usermaillist.Email, "MaillistPost()")
+	_, err := c.addNewMaillistUser(usermaillist.Email, list)
 	checkERROR(err)
 
 	c.Flash.Out["heading"] = "Thanks for Joining!"
-	c.Flash.Out["message"] = usermaillist.Email + " is now subscribed to the mailing list."
+	c.Flash.Out["message"] = usermaillist.Email + " is now subscribed to the " + list + " mailing list."
 
 	return c.Redirect(routes.App.Result())
 
