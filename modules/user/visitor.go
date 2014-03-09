@@ -15,7 +15,7 @@ type Visitor struct {
 
 	UserId    int64  // if we know it later
 	VisitorId int64  `sql:"not null;unique"`
-	VisitorIp string `sql:"not null;unique"`
+	VisitorIp string `sql:"not null"`
 }
 
 func addVisitor(db *gorm.DB, u *Visitor) error {

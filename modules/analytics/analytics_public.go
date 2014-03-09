@@ -1,7 +1,7 @@
 package analytics
 
 import (
-	"fmt"
+	// "fmt"
 	"net/http"
 )
 
@@ -35,9 +35,9 @@ func ParsePageRequest(req *http.Request) (*PageRequest, error) {
 		PR.Referer = ref[0]
 	}
 
-	fmt.Printf("Req:\n%+v\n\n", req)
-	fmt.Printf("Header:\n%+v\n\n", header)
-	fmt.Printf("PageReq:\n%+v\n\n", PR)
+	// fmt.Printf("Req:\n%+v\n\n", req)
+	// fmt.Printf("Header:\n%+v\n\n", header)
+	// fmt.Printf("PageReq:\n%+v\n\n", PR)
 
 	return &PR, nil
 }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/iassic/revel-modz/modules/analytics"
 	"github.com/iassic/revel-modz/modules/user"
 	"github.com/revel/revel"
 )
@@ -24,20 +23,14 @@ func (c App) RenderArgsFill() revel.Result {
 			// set up things for an admin role
 			c.Session["admin"] = "true"
 		}
+		return nil
 	}
 	v := c.visitorConnected()
 	if v != nil {
 		c.RenderArgs["visitor"] = v
 		c.Session["v"] = fmt.Sprint(v.VisitorId)
+		return nil
 	}
-
-	return nil
-}
-
-func (c App) RecordPageRequest() revel.Result {
-
-	_, err := analytics.ParsePageRequest(c.Request.Request)
-	checkERROR(err)
 
 	return nil
 }
@@ -68,28 +61,28 @@ func (c App) visitorConnected() *user.Visitor {
 		return c.RenderArgs["visitor"].(*user.Visitor)
 	}
 	if visitor_id, ok := c.Session["v"]; ok {
-		v_id, err := strconv.ParseInt(visitor_id, 64, 10)
+		v_id, err := strconv.ParseInt(visitor_id, 10, 64)
 		checkERROR(err)
 		v, err := user.GetVisitorByVisitorId(c.Txn, v_id)
 		checkERROR(err)
 		if v == nil {
 			revel.ERROR.Println("visitor field in Session[] not found in DB")
-			return nil
+			delete(c.Session, "v")
+			goto new_visitor_label
 		}
 
-		// check ip addresses and do something
-		pr, err := analytics.ParsePageRequest(c.Request.Request)
-		checkERROR(err)
-		if pr.XRealIp != v.VisitorIp {
-			revel.INFO.Println("visitor connecting from new ip")
-		}
-
+		c.updateVisitor(v)
 		return v
 	}
 
 	// if we get here, we have a new visitor or they have deleted their cookies
+new_visitor_label:
 
-	return nil
+	revel.WARN.Println("New visitor")
+	v, err := c.addNewVisitor()
+	checkERROR(err)
+
+	return v
 }
 
 func (c App) Index() revel.Result {

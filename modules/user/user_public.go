@@ -96,6 +96,9 @@ func AddVisitor(db *gorm.DB, uId int64, ip string) error {
 	}
 	return addVisitor(db, u)
 }
+func UpdateVisitor(db *gorm.DB, v *Visitor) error {
+	return addVisitor(db, v)
+}
 
 func DeleteVisitor(db *gorm.DB, uId int64) error {
 	return deleteVisitor(db, uId)
