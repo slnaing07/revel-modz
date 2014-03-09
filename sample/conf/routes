@@ -25,10 +25,13 @@ GET     /u/account                              User.Account
 GET     /u/files 								User.FilesView
 
 GET     /a/                                     Admin.Index
-GET     /a/maillistview                         Admin.MaillistView
+GET     /a/maillist                             Admin.MaillistView
 GET     /a/maillistcompose               		Admin.MaillistCompose
+POST    /a/maillistcompose               		Admin.MaillistComposePost
+GET     /a/analytics 	                        Admin.AnalyticsView
 
-# Api-ish routes
+# Api-ish routes, user must be connected and csrf token valid
+
 WS 		/comm									User.Comm
 GET     /files/query							Files.FilesQuery
 POST    /files/upload                           Files.FileUpload

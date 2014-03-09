@@ -49,6 +49,8 @@ func (c App) LoginPost(userlogin *models.UserLogin) revel.Result {
 	if found && valid {
 		c.Session["user"] = UB.UserName
 		c.RenderArgs["user_basic"] = UB
+		delete(c.Session, "v")
+		delete(c.RenderArgs, "visitor")
 		return c.Redirect(routes.User.Result())
 
 	} else {

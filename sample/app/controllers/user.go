@@ -1,5 +1,7 @@
 package controllers
 
+// TEMPLATE FILE
+
 import (
 	"github.com/revel/revel"
 
@@ -11,7 +13,7 @@ type User struct {
 }
 
 func (c User) CheckLoggedIn() revel.Result {
-	if u := c.connected(); u == nil {
+	if u := c.userConnected(); u == nil {
 		c.Flash.Error("Please log in first")
 		return c.Redirect(routes.App.Login())
 	}

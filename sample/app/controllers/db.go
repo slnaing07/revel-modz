@@ -5,6 +5,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/revel/revel"
 
+	"github.com/iassic/revel-modz/modules/analytics"
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/maillist"
 	"github.com/iassic/revel-modz/modules/user"
@@ -93,6 +94,7 @@ func SetupDevDB() {
 
 func dropTables() {
 	revel.INFO.Println("Dropping tables")
+	analytics.DropTables(TestDB)
 	auth.DropTables(TestDB)
 	user.DropTables(TestDB)
 	maillist.DropTables(TestDB)
@@ -101,6 +103,7 @@ func dropTables() {
 
 func addTables() {
 	revel.INFO.Println("AutoMigrate tables")
+	analytics.AddTables(TestDB)
 	auth.AddTables(TestDB)
 	user.AddTables(TestDB)
 	maillist.AddTables(TestDB)

@@ -8,6 +8,10 @@ import (
 
 func AddTables(db *gorm.DB) error {
 	var err error
+	err = db.AutoMigrate(Visitor{}).Error
+	if err != nil {
+		return err
+	}
 	err = db.AutoMigrate(UserBasic{}).Error
 	if err != nil {
 		return err
@@ -28,10 +32,28 @@ func AddTables(db *gorm.DB) error {
 }
 
 func DropTables(db *gorm.DB) error {
-	return db.DropTable(UserBasic{}).Error
-	return db.DropTable(UserAddress{}).Error
-	return db.DropTable(UserPhone{}).Error
-	return db.DropTable(UserProfileElement{}).Error
+	var err error
+	err = db.DropTable(Visitor{}).Error
+	if err != nil {
+		return err
+	}
+	err = db.DropTable(UserBasic{}).Error
+	if err != nil {
+		return err
+	}
+	err = db.DropTable(UserAddress{}).Error
+	if err != nil {
+		return err
+	}
+	err = db.DropTable(UserPhone{}).Error
+	if err != nil {
+		return err
+	}
+	err = db.DropTable(UserProfileElement{}).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func FillTables(db *gorm.DB) error {

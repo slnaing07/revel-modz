@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"fmt"
+	"strconv"
+
 	"github.com/iassic/revel-modz/modules/user"
 	"github.com/revel/revel"
 )
@@ -10,7 +13,7 @@ type App struct {
 }
 
 func (c App) RenderArgsFill() revel.Result {
-	u := c.connected()
+	u := c.userConnected()
 	if u != nil {
 		c.RenderArgs["user_basic"] = u
 
@@ -20,11 +23,19 @@ func (c App) RenderArgsFill() revel.Result {
 			// set up things for an admin role
 			c.Session["admin"] = "true"
 		}
+		return nil
 	}
+	v := c.visitorConnected()
+	if v != nil {
+		c.RenderArgs["visitor"] = v
+		c.Session["v"] = fmt.Sprint(v.VisitorId)
+		return nil
+	}
+
 	return nil
 }
 
-func (c App) connected() *user.UserBasic {
+func (c App) userConnected() *user.UserBasic {
 	if c.RenderArgs["user_basic"] != nil {
 		return c.RenderArgs["user_basic"].(*user.UserBasic)
 	}
@@ -35,10 +46,43 @@ func (c App) connected() *user.UserBasic {
 			revel.ERROR.Println("user field in Session[] not found in DB")
 			return nil
 		}
-		// revel.WARN.Printf("connected :: %+v", *u)
+
+		// check ip addresses or something maybe
+
+		// remove visitor fields in RenderArgs and Session?
+
 		return u
 	}
 	return nil
+}
+
+func (c App) visitorConnected() *user.Visitor {
+	if c.RenderArgs["visitor"] != nil {
+		return c.RenderArgs["visitor"].(*user.Visitor)
+	}
+	if visitor_id, ok := c.Session["v"]; ok {
+		v_id, err := strconv.ParseInt(visitor_id, 10, 64)
+		checkERROR(err)
+		v, err := user.GetVisitorByVisitorId(c.Txn, v_id)
+		checkERROR(err)
+		if v == nil {
+			revel.ERROR.Println("visitor field in Session[] not found in DB")
+			delete(c.Session, "v")
+			goto new_visitor_label
+		}
+
+		c.updateVisitor(v)
+		return v
+	}
+
+	// if we get here, we have a new visitor or they have deleted their cookies
+new_visitor_label:
+
+	revel.WARN.Println("New visitor")
+	v, err := c.addNewVisitor()
+	checkERROR(err)
+
+	return v
 }
 
 func (c App) Index() revel.Result {

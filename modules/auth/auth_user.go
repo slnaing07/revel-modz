@@ -13,6 +13,7 @@ type UserAuth struct {
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 
 	UserId         int64  `sql:"not null;unique"`
 	HashedPassword []byte `sql:"not null"`
