@@ -3,6 +3,7 @@ package controllers
 // TEMPLATE FILE
 
 import (
+	"github.com/iassic/revel-modz/modules/analytics"
 	"github.com/revel/revel"
 
 	"github.com/iassic/revel-modz/sample/app/routes"
@@ -43,7 +44,14 @@ func (c Admin) Index() revel.Result {
 
 // Admin functions
 func (c Admin) AnalyticsView() revel.Result {
-	analytic_data := "dummy"
+	return c.Render()
+}
 
-	return c.Render(analytic_data)
+func (c Admin) AnalyticsFilter(group, id string) revel.Result {
+	results, err := analytics.GetAllUserPageRequests(c.Txn)
+	checkERROR(err)
+
+	revel.WARN.Println("len(page_requests) =", len(results))
+
+	return c.RenderJson(results)
 }

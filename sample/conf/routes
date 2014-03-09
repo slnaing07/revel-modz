@@ -33,6 +33,7 @@ POST    /a/maillistcompose               		Admin.MaillistComposePost
 # analytics stuff
 POST    /a/analytics 	                        App.RecordPageEvent
 GET     /a/analytics 	                        Admin.AnalyticsView
+POST    /a/analytics/filter                     Admin.AnalyticsFilter
 
 # Api-ish routes, user must be connected and csrf token valid
 WS 		/comm									User.Comm

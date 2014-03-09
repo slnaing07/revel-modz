@@ -22,73 +22,90 @@ function initAnalyticsView() {
     $("#analytics-pagereqs-filter-button").on("click", handle_filter_button_click);
 }
 
+function dosend_filter_update(group, id, csrf) {
+
+    var post_query = "/a/analytics/filter";
+    post_query += "?group=" + encodeURIComponent(group);
+    post_query += "&id=" + encodeURIComponent(id);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", post_query, true);
+    xhr.setRequestHeader('X-CSRF-Token', csrf);
+
+
+    xhr.onload = function(e) {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var results = JSON.parse(xhr.responseText);
+                console.log(results);
+                update_results_table(results);
+            } else {
+                console.error(xhr.statusText);
+            }
+        }
+    };
+
+
+
+    xhr.onerror = function(e) {
+        console.error(xhr.statusText);
+    };
+    xhr.send(null);
+}
+
 function handle_filter_button_click(e) {
-	// dev debug printing
+    // dev debug printing
     console.log("filter button was clicked");
     console.log(e);
-
 
     // post filter values to server
     var group = $("#analytics-pagereqs-field-group").val();
     var id = $("#analytics-pagereqs-field-id").val();
-    console.log("group", group)
-    console.log("id", id)
+    var csrf = $("#csrf_token").val();
 
+    console.log("group", group);
+    console.log("id", id);
 
-    // receive results from server
-    var data = {
-        message: "hello world",
-    };
-
-
-    // clear the current table results
-
-
-
-    // render results in panel
-
-	    // for each element of the results {
-    var text = "my <%message%> template."
-    var template = Hogan.compile(text, {
-        delimiters: '<% %>'
-    });
-    var output = template.render(data);
-
-    console.log(output);
-
-    // instead of logging, append to 'table'
-    // $("#analytics-pagereqs-results").append(output)
-
-    // }
+    // actually send data
+    dosend_filter_update(group, id, csrf);
 }
 
-// {{range $index, $result := .results}}
-// <div class="row">
-//     <div class="large-12 columns">
-//         result row
-//         <div class="row">
-//             <div class="small-1 columns">
-//                 {{$index}}
-//             </div>
-//             <div class="small-1 columns">
-//                 {{$result.Method}}
-//             </div>
-//             <div class="small-2 columns">
-//                 {{$result.Time}}
-//             </div>
-//             <div class="small-2 columns">
-//                 Time
-//             </div>
-//             <div class="small-2 columns">
-//                 Time
-//             </div>
-//             <div class="small-2 columns">
-//                 Time
-//             </div>
-//             <div class="small-2 columns">
-//                 Time
-//             </div>
-//         </div>
-//     </div>
-// </div>
-// {{end}}
+function update_results_table(results) {
+    // clear the current table results
+
+    // render results in panel
+    var template = Hogan.compile(row_template_text, {
+        delimiters: '<% %>'
+    });
+    for (var i = 0; i < results.length; i++) {
+        var output = template.render(results[i]);
+        $("#analytics-pagereqs-results").append(output)
+    }
+}
+
+var row_template_text = [
+    '<div class="row">',
+    '     <div class="large-12 columns">',
+    '         <div class="row">',
+    '             <div class="small-2 columns">',
+    '                 <%Time%>',
+    '             </div>',
+    '             <div class="small-2 columns">',
+    '                 <%UserId%>',
+    '             </div>',
+    '             <div class="small-2 columns">',
+    '                 <%RequestURI%>',
+    '             </div>',
+    '             <div class="small-2 columns">',
+    '                 <%Host%>',
+    '             </div>',
+    '             <div class="small-2 columns">',
+    '                 <%XRealIp%>',
+    '             </div>',
+    '             <div class="small-2 columns">',
+    '                 <%Referer%>',
+    '             </div>',
+    '         </div>',
+    '     </div>',
+    ' </div>',
+].join("\n");

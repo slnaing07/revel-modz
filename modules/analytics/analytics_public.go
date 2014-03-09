@@ -80,3 +80,39 @@ func SaveUserPageRequest(db *gorm.DB, uId int64, now time.Time, req *http.Reques
 
 	return db.Save(v).Error
 }
+
+func GetAllVisitorPageRequests(db *gorm.DB) ([]VisitorPageRequest, error) {
+	var prs []VisitorPageRequest
+	err := db.Find(&prs).Error
+	if err != nil {
+		return nil, err
+	}
+	return prs, nil
+}
+
+func GetVisitorPageRequestsByVisitorId(db *gorm.DB) ([]VisitorPageRequest, error) {
+	var prs []VisitorPageRequest
+	err := db.Where(&VisitorPageRequest{}).Find(&prs).Error
+	if err != nil {
+		return nil, err
+	}
+	return prs, nil
+}
+
+func GetAllUserPageRequests(db *gorm.DB) ([]UserPageRequest, error) {
+	var prs []UserPageRequest
+	err := db.Find(&prs).Error
+	if err != nil {
+		return nil, err
+	}
+	return prs, nil
+}
+
+func GetUserPageRequestsByUserId(db *gorm.DB) ([]UserPageRequest, error) {
+	var prs []UserPageRequest
+	err := db.Where(&UserPageRequest{}).Find(&prs).Error
+	if err != nil {
+		return nil, err
+	}
+	return prs, nil
+}
