@@ -21,7 +21,6 @@ func (c App) RenderArgsFill() revel.Result {
 			c.Session["admin"] = "true"
 		}
 	}
-
 	return nil
 }
 
@@ -30,7 +29,8 @@ func (c App) connected() *user.UserBasic {
 		return c.RenderArgs["user_basic"].(*user.UserBasic)
 	}
 	if username, ok := c.Session["user"]; ok {
-		u := user.GetUserBasicByName(c.Txn, username)
+		u, err := user.GetUserBasicByName(c.Txn, username)
+		checkERROR(err)
 		if u == nil {
 			revel.ERROR.Println("user field in Session[] not found in DB")
 			return nil

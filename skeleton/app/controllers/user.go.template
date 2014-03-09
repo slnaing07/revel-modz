@@ -3,9 +3,6 @@ package controllers
 // TEMPLATE FILE
 
 import (
-
-	"code.google.com/p/go.net/websocket"
-	"github.com/iassic/revel-modz/modules/ws_comm"
 	"github.com/revel/revel"
 
 	"{{.BasePath}}{{.AppName}}/app/routes"

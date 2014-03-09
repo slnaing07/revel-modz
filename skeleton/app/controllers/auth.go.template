@@ -1,14 +1,12 @@
 package controllers
 
-// TEMPLATE FILE
-
 import (
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/user"
 	"github.com/revel/revel"
 
-	"github.com/iassic/revel-modz/sample/app/models"
-	"github.com/iassic/revel-modz/sample/app/routes"
+	"{{.BasePath}}{{.AppName}}/app/models"
+	"{{.BasePath}}{{.AppName}}/app/routes"
 )
 
 func (c App) Login() revel.Result {
