@@ -1,29 +1,31 @@
 {{set . "title" "Analytics"}}
 
-{{append . "moreScripts" "/public/js/ws_comm/ws_comm.js"}} 
-{{appendjs . "moreHead" "initComm();"}} 
+{{append . "moreScripts" "/ipa/js/hogan-2.0.0.js"}}
+
+{{appendjs . "moreHead" "initAnalyticsView();"}} 
 
 {{template "templates/header.html" .}}
 {{template "templates/menu.html" .}}
 
 <div class="row">
 	<div class="large-12 large-centered columns">
+		
 		<div class="panel">
 			<h3>Analytics</h3>
 			<div id="account-container">
 				<dl class="tabs" data-tab>
-					<dd class="active"><a href="#panel-analytics-overview">Overview</a>
+					<dd><a href="#panel-analytics-overview">Overview</a>
 					</dd>
-					<dd><a href="#panel-analytics-pagereqs">Page Reqs</a>
+					<dd class="active"><a href="#panel-analytics-pagereqs">Page Reqs</a>
 					</dd>
 					<dd><a href="#panel-analytics-pageusage">Page Usage</a>
 					</dd>
 				</dl>
 				<div class="tabs-content">
-					<div class="content active" id="panel-analytics-overview">
+					<div class="content" id="panel-analytics-overview">
 						{{template "Admin/templates/analytics_overview.html" .}}
 					</div>
-					<div class="content" id="panel-analytics-pagereqs">
+					<div class="content active" id="panel-analytics-pagereqs">
 						{{template "Admin/templates/analytics_pagereqs.html" .}}
 					</div>
 					<div class="content" id="panel-analytics-pageusage">
@@ -32,6 +34,7 @@
 				</div>
 			</div>
 		</div>
+		
 	</div>
 </div>
 

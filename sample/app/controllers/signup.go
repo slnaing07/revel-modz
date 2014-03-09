@@ -38,6 +38,9 @@ func (c App) SignupPost(usersignup *models.UserSignup) revel.Result {
 	uuid, err := user.GenerateNewUserId(c.Txn)
 	checkERROR(err)
 
+	// update visitor info in DB with UserId
+	c.updateVisitorWithUserIdPanic()
+
 	// add user to tables
 	// TODO do something more with the errors
 	err = user.AddUserBasic(TestDB, uuid, usersignup.Email)
@@ -81,6 +84,9 @@ func (c App) RegisterPost(userregister *models.UserRegister) revel.Result {
 	// uuid := get random number (that isn't used already)
 	uuid, err := user.GenerateNewUserId(c.Txn)
 	checkERROR(err)
+
+	// update visitor info in DB with UserId
+	c.updateVisitorWithUserIdPanic()
 
 	// add user to tables
 	// TODO do something more with the errors

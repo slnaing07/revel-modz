@@ -38,6 +38,12 @@ func (c Admin) Index() revel.Result {
 }
 
 // defined in maillist.go
-
 // func (c Admin) MaillistView() revel.Result
 // func (c Admin) MaillistCompose() revel.Result {
+
+// Admin functions
+func (c Admin) AnalyticsView() revel.Result {
+	analytic_data := "dummy"
+
+	return c.Render(analytic_data)
+}

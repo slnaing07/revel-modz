@@ -13,10 +13,6 @@ func (c App) RecordPageRequest() revel.Result {
 
 	now := time.Now()
 
-	// pr, err := analytics.ParsePageRequest(c.Request.Request)
-	// checkERROR(err)
-	// revel.INFO.Printf("PageReq:\n%+v\n", pr)
-
 	var U *user.UserBasic
 	var V *user.Visitor
 
@@ -41,15 +37,8 @@ func (c App) RecordPageRequest() revel.Result {
 	return nil
 }
 
-func (c App) AnalyticsPost() revel.Result {
+func (c App) RecordPageEvent() revel.Result {
 	return nil
-}
-
-// Admin functions
-func (c Admin) AnalyticsView() revel.Result {
-	analytic_data := "dummy"
-
-	return c.Render(analytic_data)
 }
 
 // helper functions
@@ -105,4 +94,9 @@ func (c App) updateVisitor(v *user.Visitor) error {
 	c.RenderArgs["visitor"] = v
 
 	return nil
+}
+
+func (c App) updateVisitorWithUserIdPanic() {
+	revel.ERROR.Println("PANIC!!! visitorId <-> userId not implemented")
+	// panic()
 }

@@ -1,6 +1,3 @@
-var keep_file1 = true;
-
-
 function mousePlay() {
 
 	mightymouse.AddHandler("#btn_home","...", handle_click);

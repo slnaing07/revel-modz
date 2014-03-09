@@ -47,9 +47,13 @@ func (c App) userConnected() *user.UserBasic {
 			return nil
 		}
 
-		// check ip addresses or something maybe
+		// update user info in DB, what info?
 
-		// remove visitor fields in RenderArgs and Session?
+		if c.RenderArgs["visitor"] != nil {
+			// update visitor info in DB with UserId
+			c.updateVisitorWithUserIdPanic()
+			// remove visitor fields in RenderArgs and Session?
+		}
 
 		return u
 	}

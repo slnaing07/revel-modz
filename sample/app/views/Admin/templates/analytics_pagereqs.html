@@ -1,1 +1,54 @@
-Page Requests
+<h3>Page Requests</h3>
+<div class="row">
+    <div class="large-12 columns">
+        <div class="small-4 columns">
+            <!-- this should be a drop down with visitor and user options-->
+            <input type="text" id="analytics-pagereqs-field-group" value="visitor" />
+
+        </div>
+        <div class="small-4 columns">
+            <input type="text" id="analytics-pagereqs-field-id" value="id_field" />
+        </div>
+        <div class="small-4 columns">
+            <input type="hidden" name="csrf_token" id="csrf_token" value="{{ .csrf_token }}" />
+            <a class="button" id="analytics-pagereqs-filter-button">Update</a>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <div class="panel" id="analytics-pagereqs-results">
+            <h3>Results</h3>
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="row">
+                        <div class="small-1 columns">
+                            Index
+                        </div>
+                        <div class="small-1 columns">
+                            Method
+                        </div>
+                        <div class="small-2 columns">
+                            Time
+                        </div>
+                        <div class="small-2 columns">
+                            Host
+                        </div>
+                        <div class="small-2 columns">
+                            Url
+                        </div>
+                        <div class="small-2 columns">
+                            IpAddr
+                        </div>
+                        <div class="small-2 columns">
+                            Referer
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
