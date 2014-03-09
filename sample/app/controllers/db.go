@@ -114,10 +114,10 @@ var dev_users = []*user.UserPass{
 }
 
 var mail_users = []*maillist.MaillistUser{
-	&maillist.MaillistUser{UserId: 100001, Email: "demo1@domain.com", List: "updates"},
-	&maillist.MaillistUser{UserId: 100002, Email: "demo2@domain.com", List: "updates"},
-	&maillist.MaillistUser{UserId: 100003, Email: "demo3@domain.com", List: "promo"},
-	&maillist.MaillistUser{UserId: 100004, Email: "demo4@domain.com", List: "promo"},
+	&maillist.MaillistUser{UserId: 100001, Email: "demo1@domain.com", List: "weekly"},
+	&maillist.MaillistUser{UserId: 100002, Email: "demo2@domain.com", List: "weekly"},
+	&maillist.MaillistUser{UserId: 100003, Email: "demo3@domain.com", List: "longer"},
+	&maillist.MaillistUser{UserId: 100004, Email: "demo4@domain.com", List: "longer"},
 }
 
 func fillUserTables() {

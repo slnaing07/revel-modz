@@ -77,7 +77,7 @@ Front-end:
 - Headjs for asynchronous loading of assets
 - Many JS/CSS goodies in revel-modz/modules/assets
 - Templated includes for per page assets
-- A `appendjs` template function for inserting JS code
+- An `appendjs` template function for inserting JS code
 
 Back-end:
 
@@ -91,10 +91,29 @@ Security:
 - CSRF protection
 - `X-Frame-Options` `X-XXS-Protection` and `X-Content-Type-Options` headers
 
+Modules:
 
-Samples
+- assets
+- grunt
+
+- user
+- auth
+- user-files
+- 
+
+- analytics
+ -- page requests
+ -- ui interaction testing
+- maillist
+- ws_comm
+ -- client side
+ -- server side
+
+The individual modules have (will have) their own README's with more detail about each
+
+Sample
 ----------------
 
-The skeleton includes everything
+The sample is a runnable Revel application, though you may have to do some setup
 
-more samples coming soon
+The skeleton mirrors the sample and both include all modules
