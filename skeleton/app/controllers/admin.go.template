@@ -14,7 +14,7 @@ type Admin struct {
 
 // moving towards RBAC here...
 func (c Admin) CheckLoggedIn() revel.Result {
-	u := c.connected()
+	u := c.userConnected()
 	if u == nil {
 		c.Flash.Error("Please log in first")
 		return c.Redirect(routes.App.Login())
