@@ -55,6 +55,7 @@ func init() {
 	revel.InterceptMethod((*ctrl.DbController).Begin, revel.BEFORE)
 	revel.InterceptMethod(ctrl.App.RenderArgsFill, revel.BEFORE)
 	revel.InterceptMethod(ctrl.User.CheckLoggedIn, revel.BEFORE)
+	revel.InterceptMethod(ctrl.Admin.CheckLoggedIn, revel.BEFORE)
 	revel.InterceptMethod((*ctrl.DbController).Commit, revel.AFTER)
 	revel.InterceptMethod((*ctrl.DbController).Rollback, revel.FINALLY)
 	// revel.InterceptMethod((*ctrl.DbController).GetUserLogin, revel.BEFORE)

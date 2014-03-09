@@ -1,0 +1,1 @@
+../../../sample/app/controllers/analytics.go

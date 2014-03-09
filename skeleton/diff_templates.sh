@@ -5,9 +5,12 @@ files=(
 	# Gruntfile.js
 
 	conf/app.conf
+	app/init.go
 
 	app/controllers/admin.go
-	app/controllers/app.go
+	app/controllers/auth.go
+	app/controllers/maillist.go
+	app/controllers/signup.go
 	app/controllers/user.go
 
 	app/views/templates/header.html
