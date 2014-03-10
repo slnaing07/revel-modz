@@ -12,10 +12,11 @@ type MaillistUser struct {
 	Id        int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt time.Time
 
-	UserId    int64 `sql:"not null;unique"`
+	UserId    int64 `sql:"not null"`
 	Email     string
-	List      string
+	List      string `sql:"not null"`
 	Activated bool
 }
 
@@ -66,7 +67,7 @@ func addUser(db *gorm.DB, mu *MaillistUser) error {
 	return errors.New("User already exists")
 }
 
-func removeUserById(db *gorm.DB, uId int64) error {
+func deleteUserById(db *gorm.DB, uId int64) error {
 	return db.Where(&MaillistUser{UserId: uId}).Delete(MaillistUser{}).Error
 }
 
@@ -90,7 +91,6 @@ func getUserByEmail(db *gorm.DB, email string) (*MaillistUser, error) {
 
 func getAllUsers(db *gorm.DB) ([]MaillistUser, error) {
 	var mus []MaillistUser
-	println("GOT HERE")
 	err := db.Debug().Find(&mus).Error
 	if err != nil {
 		return nil, err

@@ -1,0 +1,46 @@
+{{set . "title" "Analytics"}}
+
+{{append . "moreScripts" "/ipa/js/hogan-2.0.0.js"}}
+
+{{appendjs . "moreHead" "initAnalyticsView();"}} 
+
+{{template "templates/header.html" .}}
+{{template "templates/menu.html" .}}
+
+<div class="row">
+	<div class="large-12 large-centered columns">
+		
+		<div class="panel">
+			<h3>Analytics</h3>
+			<div id="account-container">
+				<dl class="tabs" data-tab>
+					<dd><a href="#panel-analytics-overview">Overview</a>
+					</dd>
+					<dd><a href="#panel-analytics-metrics">Metrics</a>
+					</dd>
+					<dd class="active"><a href="#panel-analytics-pagereqs">Page Reqs</a>
+					</dd>
+					<dd><a href="#panel-analytics-pageusage">Page Usage</a>
+					</dd>
+				</dl>
+				<div class="tabs-content">
+					<div class="content" id="panel-analytics-overview">
+						{{template "Admin/templates/analytics_overview.html" .}}
+					</div>
+					<div class="content" id="panel-analytics-metrics">
+						{{template "Admin/templates/analytics_metrics.html" .}}
+					</div>
+					<div class="content active" id="panel-analytics-pagereqs">
+						{{template "Admin/templates/analytics_pagereqs.html" .}}
+					</div>
+					<div class="content" id="panel-analytics-pageusage">
+						{{template "Admin/templates/analytics_pageusage.html" .}}
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+{{template "templates/footer.html" .}}

@@ -5,6 +5,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/revel/revel"
 
+	"github.com/iassic/revel-modz/modules/analytics"
 	"github.com/iassic/revel-modz/modules/auth"
 	"github.com/iassic/revel-modz/modules/maillist"
 	"github.com/iassic/revel-modz/modules/user"
@@ -84,13 +85,16 @@ func SetupDevDB() {
 	revel.INFO.Println("Setting up Dev DB")
 	dropTables()
 	addTables()
+
 	fillUserTables()
 	fillMailTables()
+
 	testUserDB()
 }
 
 func dropTables() {
 	revel.INFO.Println("Dropping tables")
+	// analytics.DropTables(TestDB)
 	auth.DropTables(TestDB)
 	user.DropTables(TestDB)
 	maillist.DropTables(TestDB)
@@ -99,51 +103,47 @@ func dropTables() {
 
 func addTables() {
 	revel.INFO.Println("AutoMigrate tables")
+	analytics.AddTables(TestDB)
 	auth.AddTables(TestDB)
 	user.AddTables(TestDB)
 	maillist.AddTables(TestDB)
 	userfiles.AddTables(TestDB)
 }
 
-var dev_users = []*user.UserPass{
-	&user.UserPass{UserId: 100001, UserName: "demo1@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 100002, UserName: "demo2@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 100003, UserName: "demo3@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 100004, UserName: "demo4@domain.com", Password: "demopass"},
-	&user.UserPass{UserId: 200001, UserName: "admin@domain.com", Password: "adminpass"},
+type DbFillUser struct {
+	UserId   int64
+	UserName string
+	Password string
+	Maillist string
 }
 
-var mail_users = []*maillist.MaillistUser{
-	&maillist.MaillistUser{UserId: 100001, Email: "demo1@domain.com", List: "updates"},
-	&maillist.MaillistUser{UserId: 100002, Email: "demo2@domain.com", List: "updates"},
-	&maillist.MaillistUser{UserId: 100003, Email: "demo3@domain.com", List: "promo"},
-	&maillist.MaillistUser{UserId: 100004, Email: "demo4@domain.com", List: "promo"},
+var dev_users = []*DbFillUser{
+	&DbFillUser{UserId: 100001, UserName: "demo1@domain.com", Password: "demopass", Maillist: "weekly"},
+	&DbFillUser{UserId: 100002, UserName: "demo2@domain.com", Password: "demopass", Maillist: "weekly"},
+	&DbFillUser{UserId: 100003, UserName: "demo3@domain.com", Password: "demopass", Maillist: "longer"},
+	&DbFillUser{UserId: 100004, UserName: "demo4@domain.com", Password: "demopass", Maillist: "longer"},
+	&DbFillUser{UserId: 200001, UserName: "admin@domain.com", Password: "adminpass", Maillist: ""},
 }
 
 func fillUserTables() {
-
 	var err error
-
-	for _, up := range dev_users {
-
-		ub := &user.UserBasic{
-			UserId:   up.UserId,
-			UserName: up.UserName,
-		}
-		err = user.AddUserBasic(TestDB, ub)
+	for _, devuser := range dev_users {
+		err = user.AddUserBasic(TestDB, devuser.UserId, devuser.UserName)
 		checkERROR(err)
 
-		_, err = auth.AddUserAuth(TestDB, up)
+		err = auth.AddUser(TestDB, devuser.UserId, devuser.Password)
 		checkERROR(err)
 	}
-
 	revel.INFO.Println("Filled User DBs")
 }
 
 func fillMailTables() {
 	var err error
-	for _, um := range mail_users {
-		_, err = maillist.AddUser(TestDB, um.UserId, um.Email, um.List)
+	for _, um := range dev_users {
+		if um.Maillist == "" {
+			continue
+		}
+		err = maillist.AddUser(TestDB, um.UserId, um.UserName, um.Maillist)
 		checkERROR(err)
 	}
 	revel.INFO.Println("Filled maillist DBs")
@@ -151,18 +151,22 @@ func fillMailTables() {
 
 func testUserDB() {
 	for _, up := range dev_users {
-		u := user.GetUserBasicByUserId(TestDB, up.UserId)
+
+		u, err := user.GetUserBasicById(TestDB, up.UserId)
+		checkERROR(err)
 		if u == nil {
 			revel.ERROR.Println("Failed to look up user by id:", up.UserId)
 		}
-		u = user.GetUserBasicByName(TestDB, up.UserName)
+
+		u, err = user.GetUserBasicByName(TestDB, up.UserName)
+		checkERROR(err)
 		if u == nil {
 			revel.ERROR.Println("Failed to look up user by name:", up.UserName)
 		}
 
-		a, err := auth.Authenticate(TestDB, up)
+		passed, err := auth.Authenticate(TestDB, up.UserId, up.Password)
 		checkERROR(err)
-		if a == nil {
+		if !passed {
 			revel.ERROR.Printf("Failed to authenticate user: %+v\n", *up)
 		}
 	}

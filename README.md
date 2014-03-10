@@ -24,7 +24,7 @@ one of [postgres, mysql, sqlite]
 Installation
 --------------
 
-`go get` revel-modz
+`go get -u` revel-modz
 
 ``` Bash
 go get -u github.com/iassic/revel-modz
@@ -38,17 +38,34 @@ The following instructions will setup a new app from the revel-modz skeleton
 ``` Bash
 revel new <APP_NAME> github.com/iassic/revel-modz/skeleton
 cd <APP_NAME>
-sh init.sh  (hit ctrl-c when prompted) [you will see a bunch of errors initially]
+bash init.sh  (hit ctrl-c when prompted) [you will see a bunch of errors initially]
 cd ..
 ```
 
 create a new database and update the db.spec in app.conf 
 
 ```
+createdb test_db  # or something similar
+```
+
+add the following environment variables to your `.profile` or `.bashrc`
+```
+export DB_DEV_USER='username'
+export DB_DEV_PASS='userpass'
+export DB_DEV_NAME='databasename'
+export DB_PROD_USER='username'
+export DB_PROD_PASS='userpass'
+export DB_PROD_NAME='databasename'
+```
+
+Now run your new Revel application!
+
+
+```
 revel run <APP_NAME>
 ```
 
-now point your browser at `localhost:9000`
+and  point your browser at `localhost:9000`
 
 
 Features
@@ -60,7 +77,7 @@ Front-end:
 - Headjs for asynchronous loading of assets
 - Many JS/CSS goodies in revel-modz/modules/assets
 - Templated includes for per page assets
-- A `appendjs` template function for inserting JS code
+- An `appendjs` template function for inserting JS code
 
 Back-end:
 
@@ -74,10 +91,29 @@ Security:
 - CSRF protection
 - `X-Frame-Options` `X-XXS-Protection` and `X-Content-Type-Options` headers
 
+Modules:
 
-Samples
+- assets
+- grunt
+
+- user
+- auth
+- user-files
+- 
+
+- analytics
+ -- page requests
+ -- ui interaction testing
+- maillist
+- ws_comm
+ -- client side
+ -- server side
+
+The individual modules have (will have) their own README's with more detail about each
+
+Sample
 ----------------
 
-The skeleton includes everything
+The sample is a runnable Revel application, though you may have to do some setup
 
-more samples coming soon
+The skeleton mirrors the sample and both include all modules

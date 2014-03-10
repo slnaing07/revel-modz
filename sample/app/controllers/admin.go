@@ -1,9 +1,10 @@
 package controllers
 
-import (
-	"github.com/revel/revel"
+// TEMPLATE FILE
 
-	"github.com/iassic/revel-modz/modules/maillist"
+import (
+	"github.com/iassic/revel-modz/modules/analytics"
+	"github.com/revel/revel"
 
 	"github.com/iassic/revel-modz/sample/app/routes"
 )
@@ -14,7 +15,7 @@ type Admin struct {
 
 // moving towards RBAC here...
 func (c Admin) CheckLoggedIn() revel.Result {
-	u := c.connected()
+	u := c.userConnected()
 	if u == nil {
 		c.Flash.Error("Please log in first")
 		return c.Redirect(routes.App.Login())
@@ -37,16 +38,20 @@ func (c Admin) Index() revel.Result {
 	return c.Render()
 }
 
-func (c Admin) MaillistView() revel.Result {
-	println("TOG HERE")
-	maillist_users, err := maillist.GetAllUsers(c.Txn)
-	if err != nil {
-		revel.ERROR.Println(err)
-		return c.Render()
-	}
-	return c.Render(maillist_users)
+// defined in maillist.go
+// func (c Admin) MaillistView() revel.Result
+// func (c Admin) MaillistCompose() revel.Result {
+
+// Admin functions
+func (c Admin) AnalyticsView() revel.Result {
+	return c.Render()
 }
 
-func (c Admin) MaillistCompose() revel.Result {
-	return c.Render()
+func (c Admin) AnalyticsFilter(group, id string) revel.Result {
+	results, err := analytics.GetAllUserPageRequests(c.Txn)
+	checkERROR(err)
+
+	revel.WARN.Println("len(page_requests) =", len(results))
+
+	return c.RenderJson(results)
 }

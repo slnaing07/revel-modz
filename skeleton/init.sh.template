@@ -20,23 +20,26 @@ npm install grunt
 npm install grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
 
 # move app assets for renaming effect
-if [ -d "app/assets/js/myapp" ]; then
+if [ -d "app/assets/js/sample" ]; then
 	echo "Moving assets to $appname/app/assets"
 
 	# move js assets
-	mv app/assets/js/myapp app/assets/js/${appname}
+	mv app/assets/js/sample app/assets/js/${appname}
 	for file in ${jsfiles[@]}
 	do
 		echo "  Making js/${appname}/${appname}_${file}.js"
-		mv app/assets/js/${appname}/myapp_${file}.js app/assets/js/${appname}/${appname}_${file}.js
+		mv app/assets/js/${appname}/sample_${file}.js app/assets/js/${appname}/${appname}_${file}.js
 	done
 
-	# move sass assets
-	mv app/assets/sass/myapp app/assets/sass/${appname}
-	mv app/assets/sass/myapp.scss app/assets/sass/${appname}.scss
+	# make assets directory for this app
+	mkdir app/assets/sass/${appname}
+	touch app/assets/sass/${appname}.scss
 	for file in ${sassfiles[@]}
 	do
+		echo "@import 'app/assets/sass/${appname}/_${appname}_${file}.scss';" >> app/assets/sass/${appname}.scss
 		echo "  Making sass/${appname}/_${appname}_${file}.scss"
-		mv app/assets/sass/${appname}/_myapp_${file}.scss app/assets/sass/${appname}/_${appname}_${file}.scss
+		cp app/assets/sass/sample/_sample_${file}.scss app/assets/sass/${appname}/_${appname}_${file}.scss
 	done
 fi
+
+# TODO  setting up the environment variables for the updated app.conf
