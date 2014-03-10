@@ -94,7 +94,7 @@ func SetupDevDB() {
 
 func dropTables() {
 	revel.INFO.Println("Dropping tables")
-	analytics.DropTables(TestDB)
+	// analytics.DropTables(TestDB)
 	auth.DropTables(TestDB)
 	user.DropTables(TestDB)
 	maillist.DropTables(TestDB)
