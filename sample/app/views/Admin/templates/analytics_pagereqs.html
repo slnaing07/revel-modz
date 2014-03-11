@@ -1,13 +1,15 @@
 <h3>Page Requests</h3>
+
 <div class="row">
     <div class="large-12 columns">
         <div class="small-4 columns">
-            <!-- this should be a drop down with visitor and user options-->
-            <input type="text" id="analytics-pagereqs-field-group" value="visitor" />
-
+            <select id="analytics-pagereqs-field-group">
+                <option value="visitor">Visitor</option>
+                <option value="user">User</option>
+            </select>
         </div>
         <div class="small-4 columns">
-            <input type="text" id="analytics-pagereqs-field-id" value="id_field" />
+            <input type="number" id="analytics-pagereqs-field-id" value=0 />
         </div>
         <div class="small-4 columns">
             <input type="hidden" name="csrf_token" id="csrf_token" value="{{ .csrf_token }}" />

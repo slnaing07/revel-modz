@@ -90,9 +90,9 @@ func GetAllVisitorPageRequests(db *gorm.DB) ([]VisitorPageRequest, error) {
 	return prs, nil
 }
 
-func GetVisitorPageRequestsByVisitorId(db *gorm.DB) ([]VisitorPageRequest, error) {
+func GetAllVisitorPageRequestsByVisitorId(db *gorm.DB, id int64) ([]VisitorPageRequest, error) {
 	var prs []VisitorPageRequest
-	err := db.Where(&VisitorPageRequest{}).Find(&prs).Error
+	err := db.Where(&VisitorPageRequest{VisitorId: id}).Find(&prs).Error
 	if err != nil {
 		return nil, err
 	}
@@ -108,9 +108,9 @@ func GetAllUserPageRequests(db *gorm.DB) ([]UserPageRequest, error) {
 	return prs, nil
 }
 
-func GetUserPageRequestsByUserId(db *gorm.DB) ([]UserPageRequest, error) {
+func GetAllUserPageRequestsByUserId(db *gorm.DB, id int64) ([]UserPageRequest, error) {
 	var prs []UserPageRequest
-	err := db.Where(&UserPageRequest{}).Find(&prs).Error
+	err := db.Where(&UserPageRequest{UserId: id}).Find(&prs).Error
 	if err != nil {
 		return nil, err
 	}
