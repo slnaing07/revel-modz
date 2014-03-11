@@ -3,6 +3,8 @@ package controllers
 // TEMPLATE FILE
 
 import (
+	"strconv"
+
 	"github.com/iassic/revel-modz/modules/analytics"
 	"github.com/revel/revel"
 
@@ -47,11 +49,58 @@ func (c Admin) AnalyticsView() revel.Result {
 	return c.Render()
 }
 
-func (c Admin) AnalyticsFilter(group, id string) revel.Result {
-	results, err := analytics.GetAllUserPageRequests(c.Txn)
-	checkERROR(err)
+func (c Admin) AnalyticsFilter(group, id_str string) revel.Result {
+	id, err := strconv.ParseInt(id_str, 10, 64)
+	if group == "user" {
+		var results []analytics.UserPageRequest
+		var err error
 
-	revel.WARN.Println("len(page_requests) =", len(results))
+		if id != 0 {
+			results, err = analytics.GetAllUserPageRequests(c.Txn)
+		} else {
+			results, err = analytics.GetAllUserPageRequestsByUserId(c.Txn, id)
+		}
 
-	return c.RenderJson(results)
+		checkERROR(err)
+		revel.WARN.Println("len(page_requests) =", len(results))
+
+		return c.RenderJson(results)
+
+	} else if group == "visitor" {
+		var results []analytics.VisitorPageRequest
+
+		if id != 0 {
+			results, err = analytics.GetAllVisitorPageRequests(c.Txn)
+		} else {
+			results, err = analytics.GetAllVisitorPageRequestsByVisitorId(c.Txn, id)
+		}
+
+		checkERROR(err)
+		revel.WARN.Println("len(page_requests) =", len(results))
+
+		return c.RenderJson(results)
+
+	} else {
+		revel.ERROR.Println("Uknown analytics group")
+	}
+	return nil
 }
+
+// Changed versions of functions analytics module (analytics_public.go)
+// func GetVisitorPageRequestsByVisitorId(db *gorm.DB, id int) ([]VisitorPageRequest, error) {
+// 	var prs []VisitorPageRequest
+// 	err := db.Where(&VisitorPageRequest{VisitorId: id}).Find(&prs).Error
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return prs, nil
+// }
+
+// func GetUserPageRequestsByUserId(db *gorm.DB, id int) ([]UserPageRequest, error) {
+// 	var prs []UserPageRequest
+// 	err := db.Where(&UserPageRequest{UserId: id}).Find(&prs).Error
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return prs, nil
+// }

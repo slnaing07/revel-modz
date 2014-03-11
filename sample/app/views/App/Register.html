@@ -72,7 +72,7 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "Sex.Dob" .}}
+                {{with $field := field "userregister.Sex" .}}
                 <div class="sex-field">
                     <label for="{{$field.Id}}">Sex<small>required</small>
                          <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
@@ -82,9 +82,9 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "Address.Dob" .}}
-                <div class="address-field">
-                    <label for="{{$field.Id}}">Address
+                {{with $field := field "userregister.Address1" .}}
+                <div class="address1-field">
+                    <label for="{{$field.Id}}">Address<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
                                     type="text" placeholder="177 rainbow rd" autofocus>
                     </label>
@@ -92,9 +92,19 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "City.Dob" .}}
+                {{with $field := field "userregister.Address2" .}}
+                <div class="address2-field">
+                    <label for="{{$field.Id}}">Address
+                        <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="apartment 4" autofocus>
+                    </label>
+                    {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
+                </div>
+                {{end}}
+
+                {{with $field := field "userregister.City" .}}
                 <div class="city-field">
-                    <label for="{{$field.Id}}">City
+                    <label for="{{$field.Id}}">City<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
                                     type="text" placeholder="New york city" autofocus>
                     </label>
@@ -102,9 +112,9 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "State.Dob" .}}
+                {{with $field := field "userregister.State" .}}
                 <div class="state-field">
-                    <label for="{{$field.Id}}">State
+                    <label for="{{$field.Id}}">State<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
                                     type="text" placeholder="NY" autofocus>
                     </label>
@@ -112,9 +122,9 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "Zipcode.Dob" .}}
+                {{with $field := field "userregister.Zipcode" .}}
                 <div class="zipcode-field">
-                    <label for="{{$field.Id}}">Zip Code
+                    <label for="{{$field.Id}}">Zip Code<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
                                     type="text" placeholder="10001" autofocus>
                     </label>
@@ -122,9 +132,19 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "Phnumber.Dob" .}}
+                {{with $field := field "userregister.Country" .}}
+                <div class="country-field">
+                    <label for="{{$field.Id}}">Country<small>required</small>
+                        <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
+                                    type="text" placeholder="United States of America" autofocus>
+                    </label>
+                    {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
+                </div>
+                {{end}}
+
+                {{with $field := field "userregister.PhoneNumber" .}}
                 <div class="phone-field">
-                    <label for="{{$field.Id}}">Phone Number
+                    <label for="{{$field.Id}}">Phone Number<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
                                     type="text" placeholder="123-456-7891" autofocus>
                     </label>

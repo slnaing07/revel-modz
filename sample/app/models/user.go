@@ -67,10 +67,13 @@ type UserRegister struct {
 	Lname           string
 	Dob             string
 	Sex             string
-	Address         string
+	Address1        string
+	Address2        string
 	City            string
+	State           string
 	Zipcode         string
-	Phnumber        string
+	Country         string
+	PhoneNumber     string
 	Email           string
 	Password        string
 	PasswordConfirm string
@@ -98,27 +101,33 @@ func (u *UserRegister) Validate(v *revel.Validation) {
 	v.Required(u.Sex).
 		Message("Sex required").
 		Key("userregister.Sex")
-	v.Required(u.Address).
+	v.Required(u.Address1).
 		Message("Address required").
-		Key("userregister.Address")
+		Key("userregister.Address1")
 	v.Required(u.City).
 		Message("City required").
 		Key("userregister.City")
 	v.Match(u.City, regexp.MustCompile(`[A-Za-z]+`)).
 		Message("Valid City required").
 		Key("userregister.City")
+	v.Required(u.State).
+		Message("State required").
+		Key("userregister.State")
 	v.Required(u.Zipcode).
 		Message("Zipcode required").
 		Key("userregister.Zipcode")
 	v.Match(u.Zipcode, regexp.MustCompile("^([0-9]){5}$")).
 		Message("Valid City required").
 		Key("userregister.City")
-	v.Required(u.Phnumber).
-		Message("Phnumber required").
-		Key("userregister.Phnumber")
+	v.Required(u.Country).
+		Message("Country required").
+		Key("userregister.Country")
+	v.Required(u.PhoneNumber).
+		Message("PhoneNumber required").
+		Key("userregister.PhoneNumber")
 	v.Match(u.Zipcode, regexp.MustCompile(`[0-9]{3}\-[0-9]{3}\-[0-9]{4}`)).
 		Message("Phone Number must be in format DDD-DDD-DDDD").
-		Key("userregister.Phnumber")
+		Key("userregister.PhoneNumber")
 	v.Required(u.Email).
 		Message("Email required").
 		Key("userregister.Email")
