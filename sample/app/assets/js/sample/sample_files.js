@@ -54,18 +54,26 @@ function init_dynatree() {
 
         },
         onExpand: function(flag, node) {
+            var childNodes = node.childList;
             if (flag) {
                 console.log("You expanded node with data title " + node.data.title);
 
-            }
-            var childNodes = node.childList;
-            console.log(childNodes);
-            /*var selectedKeys = $.map(childNodes, function(node){
+                console.log(childNodes);
+                /*var selectedKeys = $.map(childNodes, function(node){
                 return node.data.key;
             });*/
-            //console.log("Expanded keys: " + selectedKeys.join(", "));
-            //console.log(childNodes.length);
-            renderFileRightPanel(childNodes);
+                //console.log("Expanded keys: " + selectedKeys.join(", "));
+                //console.log(childNodes.length);
+                //console.log("about to call renderFileRightPanel with childnodes " + childNodes.data.title);
+
+                renderFileRightPanel(childNodes);
+
+            }
+            if (!flag) {
+                console.log("You collapsed node with data title " + node.data.title);
+                renderFileRightPanel(node.parent.childList);
+            }
+
 
         },
         /****************/
@@ -248,7 +256,7 @@ function getStoredFiles() {
             displayStoredFiles(req.responseText); // Another callback here
         }
     }
-    req.open("GET", "/files/query", false);
+    req.open("GET", "/files/query", true);
     req.send();
 }
 
@@ -317,3 +325,73 @@ function getStoredFileContents(node) {
     req.open("POST", "/files/content?data_id=" + node.data.data_id, false);
     req.send();
 }
+
+function renderFileRightPanel(fileNodes) {
+    var file_list_header = '<div class="row">
+                <div class="large-12 large-centered small-12 small-centered columns">
+                    <div id="user-fileview" class="panel">
+
+                        <div class="row">
+                            <div class="large-1 small-2 columns">
+                                Folder
+                            </div>
+                            <div class="large-3 small-2 columns">
+                                File Name
+                            </div>
+                            <div class="large-2 small-2 columns">
+                                Owner
+                            </div>
+                            
+
+                            <div class="large-6 small-6 columns">
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>';
+
+
+    // clear any existing files in the DOM list
+    $("#file-panel").empty();
+    // add header
+    $("#file-panel").append(file_list_header);
+    //console.log(fileNodes.length)
+
+    var template = Hogan.compile(file_row_template_text, {
+        delimiters: '<% %>'
+    });
+    for (var i = 0; i < fileNodes.length; i++) {
+        var output = template.render(fileNodes[i]);
+        $("#file-panel").append(output)
+    }
+}
+
+var file_row_template_text = [
+    '<div class="row">',
+    '     <div class="large-12 columns">',
+    '         <div class="row">',
+    '             <div class="small-2 columns">',
+    '                 <%data.isFolder%>',
+    '             </div>',
+    '             <div class="small-4 columns">',
+    '                 <%data.title%>',
+    '             </div>',
+    '             <div class="small-2 columns">',
+    '                 <%data.parent.data.key%>',
+    '             </div>',
+    '             <div class="small-4 columns">',
+    '                 <ul class="button-group">',
+    '        <li><a href="#" class="small button success">View</a>',
+    '        </li>',
+    '        <li><a href="#" class="small button warning">Edit</a>',
+    '        </li>',
+    '        <li><a href="#" class="small button alert">Delete</a>',
+    '            </li>',
+    '   </ul>,',
+    '             </div>',
+    '         </div>',
+    '     </div>',
+    ' </div>',
+].join("\n");

@@ -112,3 +112,15 @@ var row_template_text = [
 '            </div>',
 ].join("\n");
 
+
+function initMaillistCompose() {
+    // button handler
+}
+
+function handleMaillistComposeSaveDraft(event) {
+    console.log("Saving Draft");
+}
+
+
+
+

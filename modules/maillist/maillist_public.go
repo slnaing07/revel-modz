@@ -30,16 +30,16 @@ func GetAllUsers(db *gorm.DB) ([]MaillistUser, error) {
 	return getAllUsers(db)
 }
 
-func GetUsersByList(db *gorm.DB, list string) ([]*MaillistUser, error) {
+func GetUsersByList(db *gorm.DB, list string) ([]MaillistUser, error) {
 	return getUsersByList(db, list)
 }
 
-func SaveDraft(db *gorm.DB, author, list, subject, body, htmlbody string) error {
+func SaveDraft(db *gorm.DB, author, list, subject, textbody, htmlbody string) error {
 	mm := &MaillistMessage{
 		Author:    author,
 		List:      list,
 		Subject:   subject,
-		PlainBody: body,
+		PlainBody: textbody,
 		HtmlBody:  htmlbody,
 	}
 	err := saveDraftMessage(db, mm)

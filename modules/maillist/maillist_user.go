@@ -98,8 +98,8 @@ func getAllUsers(db *gorm.DB) ([]MaillistUser, error) {
 	return mus, nil
 }
 
-func getUsersByList(db *gorm.DB, list string) ([]*MaillistUser, error) {
-	var mus []*MaillistUser
+func getUsersByList(db *gorm.DB, list string) ([]MaillistUser, error) {
+	var mus []MaillistUser
 	err := db.Where(&MaillistUser{List: list}).Find(mus).Error
 	if err != nil {
 		return nil, err

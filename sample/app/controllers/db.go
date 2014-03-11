@@ -98,7 +98,7 @@ func dropTables() {
 	auth.DropTables(TestDB)
 	user.DropTables(TestDB)
 	maillist.DropTables(TestDB)
-	userfiles.DropTables(TestDB)
+	// userfiles.DropTables(TestDB)
 }
 
 func addTables() {

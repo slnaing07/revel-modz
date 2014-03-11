@@ -85,22 +85,3 @@ func (c Admin) AnalyticsFilter(group, id_str string) revel.Result {
 	}
 	return nil
 }
-
-// Changed versions of functions analytics module (analytics_public.go)
-// func GetVisitorPageRequestsByVisitorId(db *gorm.DB, id int) ([]VisitorPageRequest, error) {
-// 	var prs []VisitorPageRequest
-// 	err := db.Where(&VisitorPageRequest{VisitorId: id}).Find(&prs).Error
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return prs, nil
-// }
-
-// func GetUserPageRequestsByUserId(db *gorm.DB, id int) ([]UserPageRequest, error) {
-// 	var prs []UserPageRequest
-// 	err := db.Where(&UserPageRequest{UserId: id}).Find(&prs).Error
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return prs, nil
-// }
