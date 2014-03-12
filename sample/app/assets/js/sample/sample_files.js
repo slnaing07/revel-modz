@@ -1,4 +1,4 @@
-function init_dynatree() {
+ function init_dynatree() {
 
     $("#tree").dynatree({
         checkbox: true,

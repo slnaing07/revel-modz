@@ -99,7 +99,7 @@ func AddUserFile(db *gorm.DB, udt *UserFileInfo, content []byte) error {
 		return err
 	}
 	nextId := lastId + 1
-	revel.INFO.Println("Next DS id: ", nextId)
+	// revel.INFO.Println("Next DS id: ", nextId)
 	udt.FileId = nextId
 
 	err = db.Save(udt).Error

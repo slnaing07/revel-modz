@@ -45,10 +45,10 @@ func init() {
 
 	revel.OnAppStart(func() {
 		appPath := revel.BasePath
-		for _, AC := range compilers {
-			path := filepath.Join(appPath, AC.Path)
+		for _, gruntCompiler := range compilers {
+			path := filepath.Join(appPath, gruntCompiler.Path)
 			revel.INFO.Printf("Listening: %q\n", path)
-			revel.MainWatcher.Listen(AC, path)
+			revel.MainWatcher.Listen(gruntCompiler, path)
 		}
 	})
 
@@ -82,14 +82,14 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 	fc[0](c, fc[1:]) // Execute the next filter stage.
 }
 
-var compilers = []grunt.GruntCompiler{
-	// grunt.GruntCompiler{Name: "Gruntfile.js", Path: "Gruntfile.js", Grunt: "default"},
+var compilers = []*grunt.GruntCompiler{
+	grunt.NewCompiler("Gruntfile.js", "Gruntfile.js", "default"),
 
-	// grunt.GruntCompiler{Name: "Foundation JS", Path: "app/assets/js/foundation", Grunt: "uglify:foundation_js"},
-	// grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation", Grunt: "sass:foundation_css"},
-	// grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation_custom.scss", Grunt: "sass:foundation_css"},
+	grunt.NewCompiler("Foundation JS", "app/assets/js/foundation", "uglify:foundation_js"),
+	grunt.NewCompiler("Foundation SASS", "app/assets/sass/foundation", "sass:foundation_css"),
+	grunt.NewCompiler("Foundation SASS", "app/assets/sass/foundation_custom.scss", "sass:foundation_css"),
 
-	grunt.GruntCompiler{Name: "{{.AppName}} JS", Path: "app/assets/js/{{.AppName}}", Grunt: "uglify:{{.AppName}}_js"},
-	grunt.GruntCompiler{Name: "{{.AppName}} SASS", Path: "app/assets/sass/{{.AppName}}", Grunt: "sass:{{.AppName}}_css"},
-	grunt.GruntCompiler{Name: "{{.AppName}} SASS", Path: "app/assets/sass/{{.AppName}}.scss", Grunt: "sass:{{.AppName}}_css"},
+	grunt.NewCompiler("{{.AppName}} JS", "app/assets/js/{{.AppName}}", "uglify:{{.AppName}}_js"),
+	grunt.NewCompiler("{{.AppName}} SASS", "app/assets/sass/{{.AppName}}", "sass:{{.AppName}}_css"),
+	grunt.NewCompiler("{{.AppName}} SASS", "app/assets/sass/{{.AppName}}.scss", "sass:{{.AppName}}_css"),
 }
