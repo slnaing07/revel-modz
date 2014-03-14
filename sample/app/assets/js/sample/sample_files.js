@@ -347,10 +347,10 @@ function renderFileRightPanel(fileNodes) {
 
 var file_row_template_text = [
     '         <div class="row">',
-    '             <div class="small-2 columns"> <%data.isFolder%>         </div>',
+    '             <div class="small-1 columns"> <%data.isFolder%>         </div>',
     '             <div class="small-4 columns"> <%data.title%>            </div>',
     '             <div class="small-2 columns"> <%data.parent.data.key%>  </div>',
-    '             <div class="small-4 columns">',
+    '             <div class="small-5 columns">',
     '               <ul class="button-group">',
     '                  <li><a href="#" class="tiny button success">View</a></li>',
     '                  <li><a href="#" class="tiny button warning">Edit</a></li>',
