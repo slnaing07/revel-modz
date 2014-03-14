@@ -77,8 +77,11 @@ function update_maillist_results_table(results) {
     $("#maillist-listview-results").empty();
 
     // render results in panel
-    var template = Hogan.compile(maillist_row_template_text, { delimiters: '<% %>' });
+    if (results === null) {
+        return
+    }
 
+    var template = Hogan.compile(maillist_row_template_text, { delimiters: '<% %>' });
     if (results instanceof Array) {
         for (var i = 0; i < results.length; i++) {
             var output = template.render(results[i]);

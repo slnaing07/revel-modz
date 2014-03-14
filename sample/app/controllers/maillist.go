@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"fmt"
-
 	"github.com/iassic/revel-modz/modules/maillist"
 	"github.com/iassic/revel-modz/modules/user"
 	"github.com/revel/revel"
@@ -54,7 +52,16 @@ func (c Admin) MaillistFilter(list, email string) revel.Result {
 
 	if email != "" {
 		maillist_users, err := maillist.GetUserByEmail(c.Txn, email)
-		fmt.Println("Got here email", *maillist_users, err)
+		revel.INFO.Println("Got here email", *maillist_users, err)
+		if err != nil {
+			revel.ERROR.Println(err)
+			return c.RenderJson(err)
+		}
+		return c.RenderJson(maillist_users)
+
+	} else if list == "all" {
+		maillist_users, err := maillist.GetAllUsers(c.Txn)
+		revel.INFO.Println("Got here ALL", len(maillist_users), err)
 		if err != nil {
 			revel.ERROR.Println(err)
 			return c.RenderJson(err)
@@ -63,7 +70,7 @@ func (c Admin) MaillistFilter(list, email string) revel.Result {
 
 	} else if list != "" {
 		maillist_users, err := maillist.GetUsersByList(c.Txn, list)
-		fmt.Println("Got here list", len(maillist_users))
+		revel.INFO.Println("Got here list:", list, len(maillist_users), err)
 		if err != nil {
 			revel.ERROR.Println(err)
 			return c.RenderJson(err)
@@ -71,16 +78,9 @@ func (c Admin) MaillistFilter(list, email string) revel.Result {
 		return c.RenderJson(maillist_users)
 
 	} else {
-		println("Got here user")
-		maillist_users, err := maillist.GetAllUsers(c.Txn)
-		if err != nil {
-			revel.ERROR.Println(err)
-			return c.RenderJson(err)
-		}
-		return c.RenderJson(maillist_users)
-
+		revel.ERROR.Println("Shouldn't get HERE")
 	}
-
+	return nil
 }
 
 func (c Admin) MaillistCompose() revel.Result {

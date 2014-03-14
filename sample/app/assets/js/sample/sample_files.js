@@ -331,8 +331,13 @@ function renderFileRightPanel(fileNodes) {
     // clear any existing files in the DOM list
     $("#fileview-results").empty();
 
-    var template = Hogan.compile(file_row_template_text, { delimiters: '<% %>' });
+    // return if no fileNodes
+    if (fileNodes === null) {
+        return
+    }
 
+    // render the file Nodes
+    var template = Hogan.compile(file_row_template_text, { delimiters: '<% %>' });
     if (fileNodes instanceof Array) {
         for (var i = 0; i < fileNodes.length; i++) {
             var output = template.render(fileNodes[i]);
