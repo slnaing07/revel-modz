@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/iassic/revel-modz/modules/maillist"
 	"github.com/iassic/revel-modz/modules/user"
 	"github.com/revel/revel"
@@ -51,8 +53,8 @@ func (c Admin) MaillistView() revel.Result {
 func (c Admin) MaillistFilter(list, email string) revel.Result {
 
 	if email != "" {
-		println("Got here email")
 		maillist_users, err := maillist.GetUserByEmail(c.Txn, email)
+		fmt.Println("Got here email", *maillist_users, err)
 		if err != nil {
 			revel.ERROR.Println(err)
 			return c.RenderJson(err)
@@ -60,8 +62,8 @@ func (c Admin) MaillistFilter(list, email string) revel.Result {
 		return c.RenderJson(maillist_users)
 
 	} else if list != "" {
-		println("Got here list")
 		maillist_users, err := maillist.GetUsersByList(c.Txn, list)
+		fmt.Println("Got here list", len(maillist_users))
 		if err != nil {
 			revel.ERROR.Println(err)
 			return c.RenderJson(err)
