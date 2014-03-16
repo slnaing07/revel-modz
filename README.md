@@ -7,6 +7,16 @@ Modules, samples, and a skeleton for the Revel Framework
 Get the dependencies
 --------------
 
+Go:
+```Bash
+sudo apt-get install gcc libc6-dev mercurial git
+hg clone -u release https://code.google.com/p/go
+cd go/src
+./all.bash
+```
+
+Revel:
+
 grunt:
 
 ``` Bash
@@ -16,10 +26,13 @@ sudo npm install -g grunt-cli highlight.js
 sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
 ```
 
-databases:
+postgres:
 
 one of [postgres, mysql, sqlite]
 
+```
+
+```
 
 Installation
 --------------
