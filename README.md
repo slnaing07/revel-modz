@@ -3,6 +3,7 @@ revel-modz
 
 Modules, samples, and a skeleton for the Revel Framework
 
+Note, these instructions are based on an Ubuntu installation
 
 Get the dependencies
 --------------
@@ -53,11 +54,18 @@ source .profile
 
 Run the following commands
 ``` Bash
+cd $HOME
 sudo apt-get install nodejs npm ruby
 sudo gem install sass
-sudo npm install -g grunt-cli highlight.js
-sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
+sudo npm install -g grunt-cli
+sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less highlight.js
 ```
+
+Sometimes node screws up and makes root own the `.npm` director. Use this to fix it
+``` Bash
+sudo chown -R $USER:$USER .npm
+```
+
 
 ### Postgres: 
 
@@ -66,7 +74,7 @@ Install the packages
 sudo apt-get install postgresql postgresql-client
 ```
 
-Setup the database user
+Setup the database SUPAR-user (postgres password is `postgres`)
 ``` Bash
 sudo -u postgres createuser -s -P <username>
 ```
