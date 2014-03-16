@@ -8,16 +8,32 @@ Get the dependencies
 --------------
 
 Go:
-```Bash
+
+Install
+``` Bash
 sudo apt-get install gcc libc6-dev mercurial git
 hg clone -u release https://code.google.com/p/go
 cd go/src
 ./all.bash
+cd
+mkdir -p gocode/{src,bin,pkg}
+```
+
+Add the following to your `.profile`
+``` Bash
+export GOROOT=$HOME/go
+export GOBIN=$GOROOT/bin
+export GOPATH=$HOME/gocode
+export GO_BIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN:$GO_BIN:
 ```
 
 Revel:
+``` Bash
+go get -u github.com/revel/cmd/revel
+```
 
-grunt:
+Grunt:
 
 ``` Bash
 sudo apt-get install nodejs npm ruby
@@ -26,12 +42,15 @@ sudo npm install -g grunt-cli highlight.js
 sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
 ```
 
-postgres:
-
-one of [postgres, mysql, sqlite]
-
+Add the following to your `.profile`
+``` Bash
+alias node='nodejs '
 ```
 
+Postgres: 
+
+``` Bash
+sudo apt-get install postgresql postgresql-client
 ```
 
 Installation
