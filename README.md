@@ -7,7 +7,7 @@ Modules, samples, and a skeleton for the Revel Framework
 Get the dependencies
 --------------
 
-Go:
+### Go:
 
 Install
 ``` Bash
@@ -29,12 +29,12 @@ export GO_BIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN:$GO_BIN:
 ```
 
-Revel:
+### Revel:
 ``` Bash
 go get -u github.com/revel/cmd/revel
 ```
 
-Grunt:
+### Grunt:
 
 Add the following to your `.profile`
 ``` Bash
@@ -49,7 +49,7 @@ sudo npm install -g grunt-cli highlight.js
 sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
 ```
 
-Postgres: 
+### Postgres: 
 
 Install the packages
 ``` Bash
@@ -64,13 +64,13 @@ sudo -u postgres createuser -s -P <username>
 Installation
 --------------
 
-Install revel-modz
+### Install revel-modz
 
 ``` Bash
 go get -u github.com/iassic/revel-modz
 ```
 
-Setup the sample
+### Setup the sample
 
 ``` Bash
 cd $GOPATH/src/github.com/iassic/revel-modz/sample
@@ -96,7 +96,10 @@ export DB_PROD_NAME='sample_dev_db'
 
 Usage
 ---------------
+
 The following instructions will setup a new app from the revel-modz skeleton
+
+### Create the new app
 
 ``` Bash
 revel new <APP_NAME> github.com/iassic/revel-modz/skeleton
@@ -105,15 +108,18 @@ bash init.sh  (hit ctrl-c when prompted) [you will see a bunch of errors initial
 cd ..
 ```
 
-create a new database
+### Create the databases for the app
 
 ``` Bash
 createdb <APP_NAME>_dev_db
 createdb <APP_NAME>_prod_db
 ```
 
+### Setup the environment variables
+
 Add the following to your `.profile`
 (you may change the export names if you also change them in app.conf)
+[You can have several apps and DBs by altering the environment variables and respective app.conf's]
 ``` Bash
 export DB_DEV_USER='<username>'
 export DB_DEV_PASS='<password>'
@@ -123,14 +129,13 @@ export DB_PROD_PASS='<password>'
 export DB_PROD_NAME='<APP_NAME>_prod_db'
 ```
 
-Now run your new Revel application!
-
+### Run your new Revel application!
 
 ```
 revel run <APP_NAME>
 ```
 
-and  point your browser at `localhost:9000`
+View by pointing your browser at `localhost:9000`
 
 
 Features
