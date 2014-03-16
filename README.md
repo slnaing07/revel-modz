@@ -20,7 +20,7 @@ cd $HOME
 mkdir -p gocode/{src,bin,pkg}
 ```
 
-Add the following to your `.profile`
+Add the following to the end of your `.profile`
 ``` Bash
 export GOROOT=$HOME/go
 export GOBIN=$GOROOT/bin
@@ -29,6 +29,12 @@ export GO_BIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN:$GO_BIN:
 ```
 
+Now reload the changes:
+```
+source .profile
+```
+
+
 ### Revel:
 ``` Bash
 go get -u github.com/revel/cmd/revel
@@ -36,9 +42,13 @@ go get -u github.com/revel/cmd/revel
 
 ### Grunt:
 
-Add the following to your `.profile`
+Add the following to the end of your `.profile`
 ``` Bash
-alias node='nodejs '
+alias node='nodejs '  # note the trailing space is intentional
+```
+Now reload the changes:
+```
+source .profile
 ```
 
 Run the following commands
@@ -83,7 +93,7 @@ Create the sample database
 createdb sample_dev_db
 ```
 
-Add the following to your `.profile`
+Add the following to the end of your `.profile`
 ``` Bash
 export DB_DEV_USER='<username>'
 export DB_DEV_PASS='<password>'
@@ -91,7 +101,21 @@ export DB_DEV_NAME='sample_dev_db'
 export DB_PROD_USER='<username>'
 export DB_PROD_PASS='<password>'
 export DB_PROD_NAME='sample_dev_db'
+
+# these example values are for using Gmail to send emails
+export MAIL_SERVER='smtp.google.com'
+export MAIL_SENDER='username@gmail.com'
+export MAIL_PASSWD='app_password'
 ```
+
+To setup an `app_password` for your google account:
+
+1. Go to [your account security settings](https://www.google.com/settings/security)
+2. Click on App password `Settings` link
+3. Enter a name for the computer and then generate a password
+4. Copy the resulting password code into the `MAIL_PASSWD` value `app_password`
+
+note, you will have repeat this process for each computer on which you intend to setup revel-modz mail
 
 
 Usage
@@ -117,7 +141,7 @@ createdb <APP_NAME>_prod_db
 
 ### Setup the environment variables
 
-Add the following to your `.profile`
+Add the following to the end of your `.profile`
 (you may change the export names if you also change them in app.conf)
 [You can have several apps and DBs by altering the environment variables and respective app.conf's]
 ``` Bash
@@ -163,6 +187,7 @@ Features
 
 ### Modules:
 
+```
 - assets
  -- lots of css/js goodies
 - grunt
@@ -184,6 +209,7 @@ Features
  -- analytics
    --- page requests
    --- ui interaction testing
+```
 
 The individual modules have (will have) their own README's with more detail about each
 
