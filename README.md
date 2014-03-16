@@ -41,6 +41,7 @@ Add the following to your `.profile`
 alias node='nodejs '
 ```
 
+Run the following commands
 ``` Bash
 sudo apt-get install nodejs npm ruby
 sudo gem install sass
@@ -50,17 +51,46 @@ sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-ugli
 
 Postgres: 
 
+Install the packages
 ``` Bash
 sudo apt-get install postgresql postgresql-client
+```
+
+Setup the database user
+``` Bash
+sudo -u postgres createuser -s -P <username>
 ```
 
 Installation
 --------------
 
-`go get -u` revel-modz
+Install revel-modz
 
 ``` Bash
 go get -u github.com/iassic/revel-modz
+```
+
+Setup the sample
+
+``` Bash
+cd $GOPATH/src/github.com/iassic/revel-modz/sample
+bash init.sh (hit ctrl-c when prompted) [you will see a bunch of errors initially]
+```
+
+Create the sample database
+
+``` Bash
+createdb sample_dev_db
+```
+
+Add the following to your `.profile`
+``` Bash
+export DB_DEV_USER='<username>'
+export DB_DEV_PASS='<password>'
+export DB_DEV_NAME='sample_dev_db'
+export DB_PROD_USER='<username>'
+export DB_PROD_PASS='<password>'
+export DB_PROD_NAME='sample_dev_db'
 ```
 
 
@@ -75,20 +105,22 @@ bash init.sh  (hit ctrl-c when prompted) [you will see a bunch of errors initial
 cd ..
 ```
 
-create a new database and update the db.spec in app.conf 
+create a new database
 
-```
-createdb test_db  # or something similar
+``` Bash
+createdb <APP_NAME>_dev_db
+createdb <APP_NAME>_prod_db
 ```
 
-add the following environment variables to your `.profile` or `.bashrc`
-```
-export DB_DEV_USER='username'
-export DB_DEV_PASS='userpass'
-export DB_DEV_NAME='databasename'
-export DB_PROD_USER='username'
-export DB_PROD_PASS='userpass'
-export DB_PROD_NAME='databasename'
+Add the following to your `.profile`
+(you may change the export names if you also change them in app.conf)
+``` Bash
+export DB_DEV_USER='<username>'
+export DB_DEV_PASS='<password>'
+export DB_DEV_NAME='<APP_NAME>_dev_db'
+export DB_PROD_USER='<username>'
+export DB_PROD_PASS='<password>'
+export DB_PROD_NAME='<APP_NAME>_prod_db'
 ```
 
 Now run your new Revel application!
