@@ -11,11 +11,12 @@ Go:
 
 Install
 ``` Bash
+cd $HOME
 sudo apt-get install gcc libc6-dev mercurial git
 hg clone -u release https://code.google.com/p/go
 cd go/src
 ./all.bash
-cd
+cd $HOME
 mkdir -p gocode/{src,bin,pkg}
 ```
 
@@ -35,16 +36,16 @@ go get -u github.com/revel/cmd/revel
 
 Grunt:
 
+Add the following to your `.profile`
+``` Bash
+alias node='nodejs '
+```
+
 ``` Bash
 sudo apt-get install nodejs npm ruby
 sudo gem install sass
 sudo npm install -g grunt-cli highlight.js
 sudo npm install -g grunt-contrib-jshint grunt-contrib-concat grunt-contrib-uglify grunt-contrib-coffee grunt-markdown grunt-contrib-sass grunt-contrib-less
-```
-
-Add the following to your `.profile`
-``` Bash
-alias node='nodejs '
 ```
 
 Postgres: 
