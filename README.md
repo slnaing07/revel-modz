@@ -141,7 +141,7 @@ View by pointing your browser at `localhost:9000`
 Features
 ----------------
 
-Front-end:
+### Front-end:
 
 - Foundation 5.1.1
 - Headjs for asynchronous loading of assets
@@ -149,35 +149,41 @@ Front-end:
 - Templated includes for per page assets
 - An `appendjs` template function for inserting JS code
 
-Back-end:
+### Back-end:
 
 - JS/SASS app resources initialized in app/assets
-- Hot Code watch and recompile of app/assets with Grunt
+- Hot Code watch and recompile with Grunt
 - ORM with github.com/jinzhu/gorm
 
-Security:
+### Security:
 
 - User Authentication
 - CSRF protection
 - `X-Frame-Options` `X-XXS-Protection` and `X-Content-Type-Options` headers
 
-Modules:
+### Modules:
 
 - assets
+ -- lots of css/js goodies
 - grunt
+ -- manage per app assets
 
-- user
-- auth
-- user-files
-- 
+- user/auth
+ -- registration
+ -- authentication
+ -- profile
 
-- analytics
- -- page requests
- -- ui interaction testing
-- maillist
 - ws_comm
  -- client side
  -- server side
+
+- plugins
+ -- maillist
+ -- forums
+ -- user-files
+ -- analytics
+   --- page requests
+   --- ui interaction testing
 
 The individual modules have (will have) their own README's with more detail about each
 
