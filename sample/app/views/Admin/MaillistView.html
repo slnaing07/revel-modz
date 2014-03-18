@@ -1,61 +1,73 @@
 {{set . "title" "Admin ListView"}}
 
+{{append . "moreScripts" "/ipa/js/hogan-2.0.0.js"}}
+
+{{appendjs . "moreHead" "initMaillistView();"}}
+
 {{template "templates/header.html" .}}
 {{template "templates/menu.html" .}}
 
 <div class="row">
     <div class="large-12 large-centered small-12 small-centered columns">
+        <div class="small-4 columns">
+            <label>Select Box
+                <select id="maillist-listview-field-list">
+                    <option value="all">All</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="longer">Longer</option>
+                    <option value="promo">Promo</option>
+                    <option value="beta">Beta</option>
+                </select>
+            </label>
+
+        </div>
+        <div class="small-4 columns">
+            <input type="text" id="maillist-listview-field-email" placeholder="demo1@domain.com" />
+        </div>
+
+        <div class="small-4 columns">
+            <input type="hidden" name="csrf_token" id="csrf_token" value="{{ .csrf_token }}" />
+            <a class="button" id="maillist-listview-filter-button">Update</a>
+
+        </div>
 
     </div>
 </div>
 
+
+
 <div class="row">
     <div class="large-12 large-centered small-12 small-centered columns">
-        <div id="maillist_userlist" class="panel">
+        <div id="maillist-listview-panel" class="panel">
 
             <div class="row">
                 <div class="large-2 small-2 columns">
                     UserId
                 </div>
-    			<div class="large-2 small-2 columns">
-					Email
-    			</div>
-    			<div class="large-2 small-2 columns">
-					List
-    			</div>
-    			<div class="large-2 small-2 columns">
-					Activated
-    			</div>
+                <div class="large-2 small-2 columns">
+                    Email
+                </div>
+                <div class="large-2 small-2 columns">
+                    List
+                </div>
+                <div class="large-2 small-2 columns">
+                    Activated
+                </div>
 
-    			<div class="large-4 small-4 columns">
-    			</div>
-			</div>
-
-        	{{range $muser := .maillist_users}}
-			<div class="row">
-   				<div class="large-2 small-2 columns">
-					{{$muser.UserId}}
-    			</div>
-    			<div class="large-2 small-2 columns">
-					{{$muser.Email}}
-    			</div>
-    			<div class="large-2 small-2 columns">
-					{{$muser.List}}
-    			</div>
-    			<div class="large-2 small-2 columns">
-					{{$muser.Activated}}
-    			</div>
-
-    			<div class="large-4 small-4 columns">
+                <div class="large-4 small-4 columns">
                     <ul class="button-group">
-                        <li><a href="#" class="small button success">View</a></li>
-                        <li><a href="#" class="small button warning">Edit</a></li>
-                        <li><a href="#" class="small button alert">Delete</a></li>
+                        <!-- <li><a href="#" class="small button success">View</a>
+                        </li>
+                        <li><a href="#" class="small button warning">Edit</a>
+                        </li>
+                        <li><a href="#" class="small button alert">Delete</a>
+                        </li> -->
                     </ul>
-    			</div>
-			</div>
-			{{end}}
+                </div>
 
+            </div>
+            <div id="maillist-listview-results">
+            </div>
         </div>
     </div>
 </div>

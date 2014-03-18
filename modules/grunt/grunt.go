@@ -9,15 +9,38 @@ import (
 )
 
 type GruntCompiler struct {
-	Name  string
-	Path  string
-	Grunt string
+	Name       string
+	Path       string
+	Grunt      string
+	notOnStart bool
 }
 
-func (c GruntCompiler) Refresh() *revel.Error {
-	// It's start-up or a file changed.  Re-compile...
-	revel.INFO.Println("Compiling: ", c.Name)
+func NewCompiler(name, path, grunt_rule string) *GruntCompiler {
+	return &GruntCompiler{
+		Name:       name,
+		Path:       path,
+		Grunt:      grunt_rule,
+		notOnStart: true,
+	}
+}
 
+func NewCompilerOnStart(name, path, grunt_rule string) *GruntCompiler {
+	return &GruntCompiler{
+		Name:       name,
+		Path:       path,
+		Grunt:      grunt_rule,
+		notOnStart: false,
+	}
+}
+
+func (c *GruntCompiler) Refresh() *revel.Error {
+	// It's start-up or a file changed.  Re-compile...
+	if c.notOnStart {
+		c.notOnStart = false
+		return nil
+	}
+
+	revel.INFO.Println("Compiling: ", c.Name)
 	os.Chdir(revel.BasePath)
 
 	out, err := exec.Command("grunt", c.Grunt).Output()

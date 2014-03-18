@@ -91,16 +91,16 @@ func getUserByEmail(db *gorm.DB, email string) (*MaillistUser, error) {
 
 func getAllUsers(db *gorm.DB) ([]MaillistUser, error) {
 	var mus []MaillistUser
-	err := db.Debug().Find(&mus).Error
+	err := db.Find(&mus).Error
 	if err != nil {
 		return nil, err
 	}
 	return mus, nil
 }
 
-func getUsersByList(db *gorm.DB, list string) ([]*MaillistUser, error) {
-	var mus []*MaillistUser
-	err := db.Where(&MaillistUser{List: list}).Find(mus).Error
+func getUsersByList(db *gorm.DB, list string) ([]MaillistUser, error) {
+	var mus []MaillistUser
+	err := db.Where(&MaillistUser{List: list}).Find(&mus).Error
 	if err != nil {
 		return nil, err
 	}

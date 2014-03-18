@@ -38,6 +38,9 @@ func (c App) SignupPost(usersignup *models.UserSignup) revel.Result {
 	uuid, err := user.GenerateNewUserId(c.Txn)
 	checkERROR(err)
 
+	// update visitor info in DB with UserId
+	c.updateVisitorWithUserIdPanic()
+
 	// add user to tables
 	// TODO do something more with the errors
 	err = user.AddUserBasic(TestDB, uuid, usersignup.Email)
@@ -82,6 +85,9 @@ func (c App) RegisterPost(userregister *models.UserRegister) revel.Result {
 	uuid, err := user.GenerateNewUserId(c.Txn)
 	checkERROR(err)
 
+	// update visitor info in DB with UserId
+	c.updateVisitorWithUserIdPanic()
+
 	// add user to tables
 	// TODO do something more with the errors
 	err = user.AddUserBasic(TestDB, uuid, userregister.Email)
@@ -96,6 +102,21 @@ func (c App) RegisterPost(userregister *models.UserRegister) revel.Result {
 
 	// TODO add address / phone DB insert
 	// ...
+	addy := &user.UserAddress{
+		UserId:       uuid,
+		AddressType:  "default",
+		AddressLine1: userregister.Address1,
+		AddressLine2: userregister.Address2,
+		City:         userregister.City,
+		State:        userregister.State,
+		Zip:          userregister.Zipcode,
+		Country:      userregister.Country,
+	}
+	err = user.AddUserAddress(TestDB, addy)
+	checkERROR(err)
+
+	err = user.AddUserPhone(TestDB, uuid, "default", userregister.PhoneNumber)
+	checkERROR(err)
 
 	c.Flash.Out["heading"] = "Thanks for Joining!"
 	c.Flash.Out["message"] = "you should be receiving an email at " +

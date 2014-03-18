@@ -85,7 +85,7 @@ func (comm *WsComm) processMsg(msg string, outChan chan string) {
 		return
 	}
 
-	args := msg[len(tag):]
+	args := strings.TrimSpace(msg[len(tag):])
 
 	go handle(args, outChan)
 

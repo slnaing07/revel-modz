@@ -49,6 +49,10 @@ func (c App) LoginPost(userlogin *models.UserLogin) revel.Result {
 	if found && valid {
 		c.Session["user"] = UB.UserName
 		c.RenderArgs["user_basic"] = UB
+
+		// update visitor info in DB with UserId
+		c.updateVisitorWithUserIdPanic()
+
 		delete(c.Session, "v")
 		delete(c.RenderArgs, "visitor")
 		return c.Redirect(routes.User.Result())
@@ -64,5 +68,10 @@ func (c App) Logout() revel.Result {
 	for k := range c.Session {
 		delete(c.Session, k)
 	}
+
+	// update visitor info in DB with UserId
+	c.updateVisitorWithUserIdPanic()
+	// want to track them here, after they log out
+
 	return c.Redirect(routes.App.Index())
 }

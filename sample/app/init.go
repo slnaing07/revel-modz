@@ -45,10 +45,10 @@ func init() {
 
 	revel.OnAppStart(func() {
 		appPath := revel.BasePath
-		for _, AC := range compilers {
-			path := filepath.Join(appPath, AC.Path)
+		for _, gruntCompiler := range compilers {
+			path := filepath.Join(appPath, gruntCompiler.Path)
 			revel.INFO.Printf("Listening: %q\n", path)
-			revel.MainWatcher.Listen(AC, path)
+			revel.MainWatcher.Listen(gruntCompiler, path)
 		}
 	})
 
@@ -82,14 +82,14 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 	fc[0](c, fc[1:]) // Execute the next filter stage.
 }
 
-var compilers = []grunt.GruntCompiler{
-	// grunt.GruntCompiler{Name: "Gruntfile.js", Path: "Gruntfile.js", Grunt: "default"},
+var compilers = []*grunt.GruntCompiler{
+	grunt.NewCompiler("Gruntfile.js", "Gruntfile.js", "default"),
 
-	// grunt.GruntCompiler{Name: "Foundation JS", Path: "app/assets/js/foundation", Grunt: "uglify:foundation_js"},
-	// grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation", Grunt: "sass:foundation_css"},
-	// grunt.GruntCompiler{Name: "Foundation SASS", Path: "app/assets/sass/foundation_custom.scss", Grunt: "sass:foundation_css"},
+	grunt.NewCompiler("Foundation JS", "app/assets/js/foundation", "uglify:foundation_js"),
+	grunt.NewCompiler("Foundation SASS", "app/assets/sass/foundation", "sass:foundation_css"),
+	grunt.NewCompiler("Foundation SASS", "app/assets/sass/foundation_custom.scss", "sass:foundation_css"),
 
-	grunt.GruntCompiler{Name: "sample JS", Path: "app/assets/js/sample", Grunt: "uglify:sample_js"},
-	// grunt.GruntCompiler{Name: "sample SASS", Path: "app/assets/sass/sample", Grunt: "sass:sample_css"},
-	// grunt.GruntCompiler{Name: "sample SASS", Path: "app/assets/sass/sample.scss", Grunt: "sass:sample_css"},
+	grunt.NewCompiler("sample JS", "app/assets/js/sample", "uglify:sample_js"),
+	grunt.NewCompiler("sample SASS", "app/assets/sass/sample", "sass:sample_css"),
+	grunt.NewCompiler("sample SASS", "app/assets/sass/sample.scss", "sass:sample_css"),
 }

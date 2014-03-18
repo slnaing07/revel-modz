@@ -45,12 +45,42 @@ func (c App) MaillistPost(usermaillist *models.UserMaillist, list string) revel.
 
 // Admin functions
 func (c Admin) MaillistView() revel.Result {
-	maillist_users, err := maillist.GetAllUsers(c.Txn)
-	if err != nil {
-		revel.ERROR.Println(err)
-		return c.Render()
+	return c.Render()
+}
+
+func (c Admin) MaillistFilter(list, email string) revel.Result {
+
+	if email != "" {
+		maillist_users, err := maillist.GetUserByEmail(c.Txn, email)
+		revel.INFO.Println("Got here email", *maillist_users, err)
+		if err != nil {
+			revel.ERROR.Println(err)
+			return c.RenderJson(err)
+		}
+		return c.RenderJson(maillist_users)
+
+	} else if list == "all" {
+		maillist_users, err := maillist.GetAllUsers(c.Txn)
+		revel.INFO.Println("Got here ALL", len(maillist_users), err)
+		if err != nil {
+			revel.ERROR.Println(err)
+			return c.RenderJson(err)
+		}
+		return c.RenderJson(maillist_users)
+
+	} else if list != "" {
+		maillist_users, err := maillist.GetUsersByList(c.Txn, list)
+		revel.INFO.Println("Got here list:", list, len(maillist_users), err)
+		if err != nil {
+			revel.ERROR.Println(err)
+			return c.RenderJson(err)
+		}
+		return c.RenderJson(maillist_users)
+
+	} else {
+		revel.ERROR.Println("Shouldn't get HERE")
 	}
-	return c.Render(maillist_users)
+	return nil
 }
 
 func (c Admin) MaillistCompose() revel.Result {

@@ -13,17 +13,13 @@ func (c App) RecordPageRequest() revel.Result {
 
 	now := time.Now()
 
-	// pr, err := analytics.ParsePageRequest(c.Request.Request)
-	// checkERROR(err)
-	// revel.INFO.Printf("PageReq:\n%+v\n", pr)
-
 	var U *user.UserBasic
 	var V *user.Visitor
 
 	u := c.RenderArgs["user_basic"]
 	if u != nil {
 		U = u.(*user.UserBasic)
-		revel.INFO.Printf("user:\n%+v\n", U)
+		// revel.INFO.Printf("user:\n%+v\n", U)
 		err := analytics.SaveUserPageRequest(c.Txn, U.UserId, now, c.Request.Request)
 		checkERROR(err)
 		return nil
@@ -31,7 +27,7 @@ func (c App) RecordPageRequest() revel.Result {
 	v := c.RenderArgs["visitor"]
 	if v != nil {
 		V = v.(*user.Visitor)
-		revel.INFO.Printf("visitor:\n%+v\n", V)
+		// revel.INFO.Printf("visitor:\n%+v\n", V)
 		err := analytics.SaveVisitorPageRequest(c.Txn, V.VisitorId, now, c.Request.Request)
 		checkERROR(err)
 		return nil
@@ -41,15 +37,8 @@ func (c App) RecordPageRequest() revel.Result {
 	return nil
 }
 
-func (c App) AnalyticsPost() revel.Result {
+func (c App) RecordPageEvent() revel.Result {
 	return nil
-}
-
-// Admin functions
-func (c Admin) AnalyticsView() revel.Result {
-	analytic_data := "dummy"
-
-	return c.Render(analytic_data)
 }
 
 // helper functions
@@ -57,7 +46,7 @@ func (c App) addNewVisitor() (*user.Visitor, error) {
 
 	pr, err := analytics.ParsePageRequest(c.Request.Request)
 	checkERROR(err)
-	revel.WARN.Printf("PageReq: \n%+v\n", pr)
+	// revel.WARN.Printf("PageReq: \n%+v\n", pr)
 
 	vid, err := user.GenerateNewVisitorId(c.Txn)
 	checkERROR(err)
@@ -85,7 +74,7 @@ func (c App) updateVisitor(v *user.Visitor) error {
 
 	pr, err := analytics.ParsePageRequest(c.Request.Request)
 	checkERROR(err)
-	revel.WARN.Printf("PageReq: \n%+v\n", pr)
+	// revel.WARN.Printf("PageReq: \n%+v\n", pr)
 
 	// check ip addresses and do something
 	ip := "missing"
@@ -105,4 +94,9 @@ func (c App) updateVisitor(v *user.Visitor) error {
 	c.RenderArgs["visitor"] = v
 
 	return nil
+}
+
+func (c App) updateVisitorWithUserIdPanic() {
+	revel.ERROR.Println("PANIC!!! visitorId <-> userId not implemented")
+	// panic()
 }

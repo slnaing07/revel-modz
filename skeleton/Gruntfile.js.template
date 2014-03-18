@@ -21,7 +21,9 @@ var files = {
     "app/assets/js/{{ .AppName }}/{{ .AppName }}_util.js",
     "app/assets/js/{{ .AppName }}/{{ .AppName }}_comm.js",
     "app/assets/js/{{ .AppName }}/{{ .AppName }}_files.js",
-    "app/assets/js/{{ .AppName }}/{{ .AppName }}_markdown_editor.js"
+    "app/assets/js/{{ .AppName }}/{{ .AppName }}_markdown_editor.js",
+    "app/assets/js/{{ .AppName }}/{{ .AppName }}_maillist.js",
+    "app/assets/js/{{ .AppName }}/{{ .AppName }}_analytics.js"
   ]
 }
 

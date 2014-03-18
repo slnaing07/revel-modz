@@ -132,7 +132,7 @@ func GetUserBasicByName(db *gorm.DB, username string) (*UserBasic, error) {
 	return getUserBasicByName(db, username)
 }
 
-func AddUserAddress(db *gorm.DB, uId int64, u *UserAddress) error {
+func AddUserAddress(db *gorm.DB, u *UserAddress) error {
 	return addUserAddress(db, u)
 }
 
