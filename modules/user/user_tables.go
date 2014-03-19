@@ -62,3 +62,24 @@ func FillTables(db *gorm.DB) error {
 func TestTables(db *gorm.DB) error {
 	return errors.New("TODO")
 }
+
+var fillTables Users = []User{
+	User{
+		UserId: 100001,
+		Basic: UserBasic{
+
+		},
+		Detail: UserDetail{
+
+		},
+		Addresses: []UserAddress{
+			UserAddress{
+				
+			}
+
+		}
+
+
+	}
+}
+
