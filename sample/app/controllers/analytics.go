@@ -19,7 +19,7 @@ func (c App) RecordPageRequest() revel.Result {
 	u := c.RenderArgs["user_basic"]
 	if u != nil {
 		U = u.(*user.UserBasic)
-		revel.INFO.Printf("user:\n%+v\n", U)
+		// revel.INFO.Printf("user:\n%+v\n", U)
 		err := analytics.SaveUserPageRequest(c.Txn, U.UserId, now, c.Request.Request)
 		checkERROR(err)
 		return nil
@@ -27,7 +27,7 @@ func (c App) RecordPageRequest() revel.Result {
 	v := c.RenderArgs["visitor"]
 	if v != nil {
 		V = v.(*user.Visitor)
-		revel.INFO.Printf("visitor:\n%+v\n", V)
+		// revel.INFO.Printf("visitor:\n%+v\n", V)
 		err := analytics.SaveVisitorPageRequest(c.Txn, V.VisitorId, now, c.Request.Request)
 		checkERROR(err)
 		return nil
@@ -46,7 +46,7 @@ func (c App) addNewVisitor() (*user.Visitor, error) {
 
 	pr, err := analytics.ParsePageRequest(c.Request.Request)
 	checkERROR(err)
-	revel.WARN.Printf("PageReq: \n%+v\n", pr)
+	// revel.WARN.Printf("PageReq: \n%+v\n", pr)
 
 	vid, err := user.GenerateNewVisitorId(c.Txn)
 	checkERROR(err)
@@ -74,7 +74,7 @@ func (c App) updateVisitor(v *user.Visitor) error {
 
 	pr, err := analytics.ParsePageRequest(c.Request.Request)
 	checkERROR(err)
-	revel.WARN.Printf("PageReq: \n%+v\n", pr)
+	// revel.WARN.Printf("PageReq: \n%+v\n", pr)
 
 	// check ip addresses and do something
 	ip := "missing"

@@ -69,7 +69,7 @@ func InitDB() {
 	checkPANIC(err)
 
 	ndb.SetLogger(gorm.Logger{revel.INFO})
-	ndb.LogMode(true)
+	// ndb.LogMode(true)
 
 	TestDB = &ndb
 
@@ -98,7 +98,7 @@ func dropTables() {
 	auth.DropTables(TestDB)
 	user.DropTables(TestDB)
 	maillist.DropTables(TestDB)
-	userfiles.DropTables(TestDB)
+	// userfiles.DropTables(TestDB)
 }
 
 func addTables() {
