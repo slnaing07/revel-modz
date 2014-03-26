@@ -63,6 +63,7 @@ func TestTables(db *gorm.DB) error {
 	return errors.New("TODO")
 }
 
+/**
 var fillTables Users = []User{
 	User{
 		UserId: 100001,
@@ -74,7 +75,7 @@ var fillTables Users = []User{
 		},
 		Addresses: []UserAddress{
 			UserAddress{
-				
+
 			}
 
 		}
@@ -83,3 +84,4 @@ var fillTables Users = []User{
 	}
 }
 
+*/

@@ -2,20 +2,14 @@ package controllers
 
 import (
 	// "github.com/iassic/revel-modz/modules/user"
-	"github.com/revel/revel"
 	"github.com/iassic/revel-modz/modules/user"
 	"github.com/iassic/revel-modz/sample/app/models"
-	"github.com/iassic/revel-modz/modules/auth"
-	"github.com/iassic/revel-modz/modules/maillist"
-
-	"github.com/iassic/revel-modz/sample/app/routes"
-
-
+	"github.com/revel/revel"
 )
 
 func (c User) Account() revel.Result {
 
-	u:= c.userConnected()
+	u := c.userConnected()
 	UA, err := user.GetUserAddressesById(c.Txn, u.UserId)
 	checkERROR(err)
 	UD, err := user.GetUserDetailById(c.Txn, u.UserId)
@@ -24,22 +18,30 @@ func (c User) Account() revel.Result {
 	checkERROR(err)
 
 	ur := &models.UserRegister{
-		Fname:UD.FirstName,
-		Minit:UD.Middle,
-		Lname:UD.LastName,
-		Dob:UD.Dob,
-		Sex:UD.Sex,
-		Address1:UA.AddressLine1,
-		Address2:UA.AddressLine2,       
-		City:UA.City,            
-		State:UA.State,           
-		Zipcode:UA.Zip,        
-		Country:UA.Country,        
-		PhoneNumber:UP.PhoneNumber,               
+		Username: u.Email,
+		Email:    u.Email,
 	}
 
-	c.RenderArgs["ur"] = ur
+	if UD != nil {
+		ur.Fname = UD.FirstName
+		ur.MidInit = UD.Middle
+		ur.Lname = UD.LastName
+		ur.Dob = UD.Dob
+		ur.Sex = UD.Sex
+	}
 
+	if UA != nil && len(UA) > 0 {
+		ur.Address1 = UA[0].AddressLine1
+		ur.Address2 = UA[0].AddressLine2
+		ur.City = UA[0].City
+		ur.State = UA[0].State
+		ur.Zipcode = UA[0].Zip
+		ur.Country = UA[0].Country
+	}
+	if UP != nil && len(UP) > 0 {
+		ur.PhoneNumber = UP[0].PhoneNumber
+	}
+	c.RenderArgs["ur"] = ur
 
 	return c.Render()
 }
