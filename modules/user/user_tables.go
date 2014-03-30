@@ -16,6 +16,10 @@ func AddTables(db *gorm.DB) error {
 	if err != nil {
 		return err
 	}
+	err = db.AutoMigrate(UserDetail{}).Error
+	if err != nil {
+		return err
+	}
 	err = db.AutoMigrate(UserAddress{}).Error
 	if err != nil {
 		return err
@@ -38,6 +42,10 @@ func DropTables(db *gorm.DB) error {
 		return err
 	}
 	err = db.DropTable(UserBasic{}).Error
+	if err != nil {
+		return err
+	}
+	err = db.DropTable(UserDetail{}).Error
 	if err != nil {
 		return err
 	}
