@@ -1,4 +1,3 @@
-Profile
 <div class="row">
     <div class="large-6 large-centered small-8 small-centered columns">
         <div class="panel">
@@ -26,7 +25,7 @@ Profile
                         <div class="mi-field">
                             <label for="{{$field.Id}}">MI
                                 <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="MI" autofocus>
+                                    type="text" placeholder="MI">
                             </label>
                              {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                         </div>
@@ -39,7 +38,7 @@ Profile
                         <div class="lastname-field">
                             <label for="{{$field.Id}}">Last Name <small>required</small>
                                  <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="Doe" autofocus>
+                                    type="text" placeholder="Doe">
                             </label>
                             {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                         </div>
@@ -52,7 +51,7 @@ Profile
                 <div class="email-field">
                     <label for="{{$field.Id}}">Email<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="Dan@something.com" autofocus>
+                                    type="text" placeholder="Dan@something.com">
                     </label>
                     {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
@@ -62,7 +61,7 @@ Profile
                 <div class="dob-field">
                     <label for="{{$field.Id}}">Date of Birth<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="12-28-2014" autofocus>
+                                    type="text" placeholder="12-28-2014">
                     </label>
                     {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
@@ -72,7 +71,7 @@ Profile
                 <div class="sex-field">
                     <label for="{{$field.Id}}">Sex<small>required</small>
                          <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="M/F" autofocus>
+                                    type="text" placeholder="M/F">
                     </label>
                     {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
@@ -82,7 +81,7 @@ Profile
                 <div class="address1-field">
                     <label for="{{$field.Id}}">Address<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="177 rainbow rd" autofocus>
+                                    type="text" placeholder="177 rainbow rd">
                     </label>
                     {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
@@ -92,7 +91,7 @@ Profile
                 <div class="address2-field">
                     <label for="{{$field.Id}}">Address
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="apartment 4" autofocus>
+                                    type="text" placeholder="apartment 4">
                     </label>
                     {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
@@ -102,7 +101,7 @@ Profile
                 <div class="city-field">
                     <label for="{{$field.Id}}">City<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="New york city" autofocus>
+                                    type="text" placeholder="New york city">
                     </label>
                     {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
@@ -112,7 +111,7 @@ Profile
                 <div class="state-field">
                     <label for="{{$field.Id}}">State<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="NY" autofocus>
+                                    type="text" placeholder="NY">
                     </label>
                     {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
@@ -122,7 +121,7 @@ Profile
                 <div class="zipcode-field">
                     <label for="{{$field.Id}}">Zip Code<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="10001" autofocus>
+                                    type="text" placeholder="10001">
                     </label>
                     <small class="error">Your zip code is required.</small>
                 </div>
@@ -132,7 +131,7 @@ Profile
                 <div class="country-field">
                     <label for="{{$field.Id}}">Country<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="United States of America" autofocus>
+                                    type="text" placeholder="United States of America">
                     </label>
                     {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
@@ -142,7 +141,7 @@ Profile
                 <div class="phone-field">
                     <label for="{{$field.Id}}">Phone Number<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
-                                    type="text" placeholder="123-456-7891" autofocus>
+                                    type="text" placeholder="123-456-7891">
                     </label>
                     {{if $field.Error}}<span class="error">{{$field.Error}}</span>{{end}}
                 </div>
