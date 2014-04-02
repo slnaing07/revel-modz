@@ -8,7 +8,7 @@
 
                 <div class="row">
 
-                    {{with $field := field "userregister.Fname" .}}
+                    {{with $field := field "ur.Fname" .}}
                     <div class="large-5 columns">
                         <div class="firstname-field">
                             <label for="{{$field.Id}}">First Name <small>required</small>
@@ -20,7 +20,7 @@
                     </div>
                     {{end}}
 
-                    {{with $field := field "userregister.MidInit" .}}
+                    {{with $field := field "ur.MidInit" .}}
                     <div class="large-2 columns">
                         <div class="mi-field">
                             <label for="{{$field.Id}}">MI
@@ -33,7 +33,7 @@
                     {{end}}
 
 
-                    {{with $field := field "userregister.Lname" .}}
+                    {{with $field := field "ur.Lname" .}}
                     <div class="large-5 columns">
                         <div class="lastname-field">
                             <label for="{{$field.Id}}">Last Name <small>required</small>
@@ -47,7 +47,7 @@
 
                 </div>
 
-                {{with $field := field "userregister.Email" .}}
+                {{with $field := field "ur.Email" .}}
                 <div class="email-field">
                     <label for="{{$field.Id}}">Email<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
@@ -57,7 +57,7 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "userregister.Dob" .}}
+                {{with $field := field "ur.Dob" .}}
                 <div class="dob-field">
                     <label for="{{$field.Id}}">Date of Birth<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
@@ -67,7 +67,7 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "userregister.Sex" .}}
+                {{with $field := field "ur.Sex" .}}
                 <div class="sex-field">
                     <label for="{{$field.Id}}">Sex<small>required</small>
                          <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{$field.Flash}}" class="{{$field.ErrorClass}}"
@@ -77,7 +77,7 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "userregister.Address1" .}}
+                {{with $field := field "ur.Address1" .}}
                 <div class="address1-field">
                     <label for="{{$field.Id}}">Address<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
@@ -87,7 +87,7 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "userregister.Address2" .}}
+                {{with $field := field "ur.Address2" .}}
                 <div class="address2-field">
                     <label for="{{$field.Id}}">Address
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
@@ -97,7 +97,7 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "userregister.City" .}}
+                {{with $field := field "ur.City" .}}
                 <div class="city-field">
                     <label for="{{$field.Id}}">City<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
@@ -107,7 +107,7 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "userregister.State" .}}
+                {{with $field := field "ur.State" .}}
                 <div class="state-field">
                     <label for="{{$field.Id}}">State<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
@@ -117,7 +117,7 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "userregister.Zipcode" .}}
+                {{with $field := field "ur.Zipcode" .}}
                 <div class="zipcode-field">
                     <label for="{{$field.Id}}">Zip Code<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
@@ -127,7 +127,7 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "userregister.Country" .}}
+                {{with $field := field "ur.Country" .}}
                 <div class="country-field">
                     <label for="{{$field.Id}}">Country<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
@@ -137,7 +137,7 @@
                 </div>
                 {{end}}
 
-                {{with $field := field "userregister.PhoneNumber" .}}
+                {{with $field := field "ur.PhoneNumber" .}}
                 <div class="phone-field">
                     <label for="{{$field.Id}}">Phone Number<small>required</small>
                         <input id="{{$field.Id}}" name="{{$field.Name}}" value="{{firstof $field.Flash $field.Value}}" class="{{$field.ErrorClass}}"
